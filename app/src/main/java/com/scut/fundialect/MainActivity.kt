@@ -8,5 +8,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         //耶耶耶
+        //
+        u认为iu给v人hi ET
     }
 }
