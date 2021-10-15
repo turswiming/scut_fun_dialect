@@ -5,6 +5,11 @@ buildscript {
         mavenCentral()
     }
     dependencies {
+        //val lifecycle_version = "2.2.0"
+
+
+
+
         classpath "com.android.tools.build:gradle:7.0.1"
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.5.20"
 
