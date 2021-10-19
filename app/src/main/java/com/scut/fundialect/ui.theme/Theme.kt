@@ -1,4 +1,4 @@
-package com.scut.myapplication.ui.theme
+package com.scut.fundialect.ui.theme
 
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material.MaterialTheme
