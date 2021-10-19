@@ -9,6 +9,7 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -52,7 +53,7 @@ fun PreviewGreeting() {
 fun MessageCard(msg: Message) {
     Row(modifier = Modifier.padding(all = 8.dp)) {
         Image(
-            painter = painterResource(R.drawable.ic_launcher_background),
+            painter = painterResource(R.drawable.ic_launcher_foreground),
             contentDescription = null,
             modifier = Modifier
                 .size(40.dp)
@@ -64,12 +65,22 @@ fun MessageCard(msg: Message) {
 
         Column {
             Text(
-                text = msg.author ,
-                color = MaterialTheme.colors.secondaryVariant
+                text = msg.author,
+                color = MaterialTheme.colors.secondaryVariant ,
+                style = MaterialTheme.typography.subtitle2
             )
 
             Spacer(modifier = Modifier.height(4.dp))
-            Text(text = msg.body)
+            Surface(
+                shape = MaterialTheme.shapes.medium,
+                elevation = 1.dp
+            ) {
+                Text(
+                    text = msg.body,
+                    style = MaterialTheme.typography.body2
+                )
+            }
+
         }
     }
 }
