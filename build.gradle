@@ -3,6 +3,9 @@ buildscript {
     repositories {
         google()
         mavenCentral()
+        // To download the required version of the Kotlin-Gradle plugin,
+        // add the following repository.
+        maven { url 'https://dl.bintray.com/kotlin/kotlin-eap' }
     }
     dependencies {
         classpath "com.android.tools.build:gradle:7.0.1"
