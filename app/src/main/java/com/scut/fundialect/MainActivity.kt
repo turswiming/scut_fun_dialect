@@ -22,6 +22,8 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.scut.fundialect.helpClass.MyDataBaseHelper
+import com.scut.fundialect.helpClass.SampleData
 import com.scut.fundialect.ui.theme.ComposeTutorialTheme
 
 
@@ -38,6 +40,8 @@ class MainActivity : AppCompatActivity() {
             ComposeTutorialTheme() {
                 Conversation(SampleData.conversationSample)
             }
+            val dbHelper = MyDataBaseHelper(this,"main.db",1)
+            dbHelper.writableDatabase
             //Greeting(name = "lzq")
 
 

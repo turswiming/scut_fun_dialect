@@ -1,4 +1,6 @@
-package com.scut.fundialect
+package com.scut.fundialect.helpClass
+
+import com.scut.fundialect.Message
 
 object SampleData {
     // Sample conversation data
