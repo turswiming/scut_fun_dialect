@@ -39,9 +39,15 @@ class MainActivity : AppCompatActivity() {
                 Conversation(SampleData.conversationSample)
             }
             //Greeting(name = "lzq")
+
+
+
         }
     }
 }
+
+
+
 
 @Preview
 @Composable
