@@ -23,6 +23,7 @@ class MainActivity : AppCompatActivity() {
             //Greeting(name = "lzq")
 
         mainButtonTryDataBase.setOnClickListener {
+            dbHelper.initCityData(db)
             val value1 = ContentValues().apply {
                 put("userNickName", "The Da Vinci Code")
                 put("userMail", "Dan Brown@qq.com")
