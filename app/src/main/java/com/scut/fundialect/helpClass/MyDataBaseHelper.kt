@@ -5,6 +5,8 @@ import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import android.widget.Toast
+import java.io.File
+
 enum class sex{
     male,
     female
@@ -19,10 +21,20 @@ class MyDataBaseHelper(val context: Context,name:String,version:Int):
             "userSex integer," +
             "userCityId integer" +
             ")"
+    val path = "src/main/res/sqlData"
 
     override fun onCreate(db: SQLiteDatabase?) {
         db?.execSQL(createUserInfo)
         Toast.makeText(context,"创建成功",Toast.LENGTH_SHORT).show()
+        val value1 = ContentValues().apply {
+            put("userNickName", "李子祺")
+            put("userMail", "1431839116@qq.com")
+            put("userPassport", "12345678")
+            put("userSex", 1)
+            //put("userCityId", 0)
+
+        }
+        db?.insert("userinfo",null,value1)
 
     }
 
