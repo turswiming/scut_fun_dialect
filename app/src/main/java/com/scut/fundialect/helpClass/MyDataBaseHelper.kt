@@ -26,11 +26,13 @@ class MyDataBaseHelper(val context: Context,name:String,version:Int):
             "userMail text," +
             "userPassport text," +
             "userSex integer," +
-            "userCityId integer" +
+            "userCityId integer," +
+            "userSign text," +
+            "userPicFile text" +
             ")"
-    val path = ""
 
-    public fun initCityData(db: SQLiteDatabase?){
+
+    fun initCityData(db: SQLiteDatabase?){
         //这是一段屎山代码
         //包括
         //60000字长的字符串

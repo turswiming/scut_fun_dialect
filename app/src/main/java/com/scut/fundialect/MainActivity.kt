@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.widget.Toast
 
 import com.scut.fundialect.helpClass.MyDataBaseHelper
+import com.scut.fundialect.helpClass.VideoDataBaseHelper
 import kotlinx.android.synthetic.main.activity_main.*
 
 
@@ -24,19 +25,12 @@ class MainActivity : AppCompatActivity() {
         val dbHelper = MyDataBaseHelper(this,"main.db",2)
         val db = dbHelper.writableDatabase
             //Greeting(name = "lzq")
-
+        val VideoParentsHelper = VideoDataBaseHelper(this,"test.db",1)
+        val db2 = VideoParentsHelper.writableDatabase
         mainButtonTryDataBase.setOnClickListener {
             //val uri = Uri.parse("android.resource://$packageName/${R.raw.video}")
             //Toast.makeText(this, "$packageName", Toast.LENGTH_SHORT).show()
-            val value1 = ContentValues().apply {
-                put("userNickName", "The Da Vinci Code")
-                put("userMail", "Dan Brown@qq.com")
-                put("userPassport", "3423423")
-                put("userSex", 1)
-                put("userCityId", 0)
 
-            }
-            db.insert("userinfo",null,value1)
         }
 
         }
