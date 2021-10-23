@@ -1,8 +1,10 @@
 package com.scut.fundialect
 
 import android.content.ContentValues
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Toast
 
 import com.scut.fundialect.helpClass.MyDataBaseHelper
 import kotlinx.android.synthetic.main.activity_main.*
@@ -18,12 +20,14 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-            val dbHelper = MyDataBaseHelper(this,"main.db",1)
+
+        val dbHelper = MyDataBaseHelper(this,"main.db",2)
         val db = dbHelper.writableDatabase
             //Greeting(name = "lzq")
 
         mainButtonTryDataBase.setOnClickListener {
-            dbHelper.initCityData(db)
+            //val uri = Uri.parse("android.resource://$packageName/${R.raw.video}")
+            //Toast.makeText(this, "$packageName", Toast.LENGTH_SHORT).show()
             val value1 = ContentValues().apply {
                 put("userNickName", "The Da Vinci Code")
                 put("userMail", "Dan Brown@qq.com")
