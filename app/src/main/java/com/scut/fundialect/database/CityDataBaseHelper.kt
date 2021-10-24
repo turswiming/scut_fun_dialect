@@ -1,4 +1,4 @@
-package com.scut.fundialect.helpClass
+package com.scut.fundialect.database
 
 import android.annotation.SuppressLint
 import android.content.Context

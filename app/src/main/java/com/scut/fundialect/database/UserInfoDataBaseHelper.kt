@@ -1,4 +1,4 @@
-package com.scut.fundialect.helpClass
+package com.scut.fundialect.database
 
 import android.content.ContentValues
 import android.content.Context

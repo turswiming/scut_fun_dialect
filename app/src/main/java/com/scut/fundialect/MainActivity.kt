@@ -3,9 +3,9 @@ package com.scut.fundialect
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.scut.fundialect.helpClass.UserInfoDataBaseHelper
+import com.scut.fundialect.database.UserInfoDataBaseHelper
 
-import com.scut.fundialect.helpClass.VideoDataBaseHelper
+import com.scut.fundialect.database.VideoDataBaseHelper
 import kotlinx.android.synthetic.main.activity_main.*
 
 
