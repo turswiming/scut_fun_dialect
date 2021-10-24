@@ -12,10 +12,16 @@
         android:orientation="vertical">
 
         <Button
-            android:id="@+id/mainButtonTryDataBase"
+            android:id="@+id/takePhotoBtn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="输入数据" />
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:srcCompat="@tools:sample/avatars" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
