@@ -13,13 +13,20 @@ class DubedVideoDataBaseHelper(context: Context, name:String, version:Int):
     //这一行的意思是屏蔽报错......绝了
     @SuppressLint("Range")
     fun convertdata(fromData:SQLiteDatabase, id:Int, thisData:SQLiteDatabase){
-        val results =  fromData.query("videoInfo",null,"where id = $id",null,null,null,null,null)
+        val results =  fromData.query("videoInfo",
+            null,
+            "where id = $id",
+            null,
+            null,
+            null,
+            null,
+            null)
         var videoFileName:String =""
         var videoName:String=""
         var videoBelongCityId:Int = 0
         if (results.moveToFirst()) {
             do {
-                // 遍历Cursor对象，取出数据并打印
+                // 遍历Cursor对象，取出数据
                 videoFileName = results.getString(results.getColumnIndex("videoFileName"))
                 videoName = results.getString(results.getColumnIndex("videoName"))
                 videoBelongCityId = results.getInt(results.getColumnIndex("videoBelongCityId"))
