@@ -47,17 +47,38 @@ class CityDataBaseHelper(val context: Context, name:String, version:Int):
 
     @SuppressLint("Range")
     fun getCityId(db: SQLiteDatabase,CityName:String):Int{
-        val results = db.query(tableName, null, "where cityname = $CityName", null, null, null, null, null)
+        val results = db.query(tableName,
+            null,
+            "where cityname = $CityName",
+            null,
+            null,
+            null,
+            null,
+            null)
         val cityId = results.getInt(results.getColumnIndex("id"))
         results?.close()
         return cityId
     }
     @SuppressLint("Range")
     fun getParentCity(db: SQLiteDatabase,thisId:Int) :CityData {
-        val results = db.query(tableName, null, "where id = $thisId", null, null, null, null, null)
+        val results = db.query(tableName,
+            null,
+            "where id = $thisId",
+            null,
+            null,
+            null,
+            null,
+            null)
         val parientId = results.getInt(results.getColumnIndex("pid"))
         results?.close()
-        val results2 = db.query(tableName, null, "where id = $parientId", null, null, null, null, null)
+        val results2 = db.query(tableName,
+            null,
+            "where id = $parientId",
+            null,
+            null,
+            null,
+            null,
+            null)
         val CityName = results2.getString(results2.getColumnIndex("cityname"))
         results2?.close()
         val out = CityData(parientId,CityName)
@@ -65,10 +86,24 @@ class CityDataBaseHelper(val context: Context, name:String, version:Int):
     }
     @SuppressLint("Range")
     fun getParentCity(db: SQLiteDatabase,thisCityName:String) :CityData {
-        val results = db.query(tableName, null, "where cityname = $thisCityName", null, null, null, null, null)
+        val results = db.query(tableName,
+            null,
+            "where cityname = $thisCityName",
+            null,
+            null,
+            null,
+            null,
+            null)
         val parientId = results.getInt(results.getColumnIndex("pid"))
         results?.close()
-        val results2 = db.query(tableName, null, "where id = $parientId", null, null, null, null, null)
+        val results2 = db.query(tableName,
+            null,
+            "where id = $parientId",
+            null,
+            null,
+            null,
+            null,
+            null)
         val CityName = results2.getString(results2.getColumnIndex("cityname"))
         results2?.close()
         val out = CityData(parientId,CityName)
@@ -76,11 +111,25 @@ class CityDataBaseHelper(val context: Context, name:String, version:Int):
     }
     @SuppressLint("Range")
     fun getChildCity(db:SQLiteDatabase,thisCityName:String) :MutableList<CityData>{
-        val results = db.query(tableName, null, "where cityname = $thisCityName", null, null, null, null, null)
+        val results = db.query(tableName,
+            null,
+            "where cityname = $thisCityName",
+            null,
+            null,
+            null,
+            null,
+            null)
         val childPid = results?.getInt(results.getColumnIndex("id"))
         results?.close()
         val list: MutableList<CityData> = mutableListOf<CityData>()
-        val results2 =  db.query(tableName,null,"where pid = $childPid",null,null,null,null,null)
+        val results2 =  db.query(tableName,
+            null,
+            "where pid = $childPid",
+            null,
+            null,
+            null,
+            null,
+            null)
         if (results2.moveToFirst()) {
             do {
 
