@@ -5,8 +5,8 @@ import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
+import com.scut.fundialect.helpClass.UserInfoDataBaseHelper
 
-import com.scut.fundialect.helpClass.MyDataBaseHelper
 import com.scut.fundialect.helpClass.VideoDataBaseHelper
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -22,8 +22,9 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
 
-        val dbHelper = MyDataBaseHelper(this,"main.db",2)
+        val dbHelper = UserInfoDataBaseHelper(this,"main.db",2)
         val db = dbHelper.writableDatabase
+
             //Greeting(name = "lzq")
         val VideoParentsHelper = VideoDataBaseHelper(this,"test.db",1)
         val db2 = VideoParentsHelper.writableDatabase
