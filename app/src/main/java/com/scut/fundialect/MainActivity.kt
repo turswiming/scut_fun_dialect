@@ -1,10 +1,8 @@
 package com.scut.fundialect
 
-import android.content.ContentValues
-import android.net.Uri
+
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Toast
 import com.scut.fundialect.helpClass.UserInfoDataBaseHelper
 
 import com.scut.fundialect.helpClass.VideoDataBaseHelper
@@ -22,7 +20,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
 
-        val dbHelper = UserInfoDataBaseHelper(this,"main.db",2)
+        val dbHelper = UserInfoDataBaseHelper(this,"userinfo.db",2)
         val db = dbHelper.writableDatabase
 
             //Greeting(name = "lzq")

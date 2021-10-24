@@ -4,7 +4,7 @@ import android.annotation.SuppressLint
 import android.content.ContentValues
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
-import android.database.sqlite.SQLiteOpenHelper
+
 
 class LearnVideoDataBaseHelper( context: Context, name:String, version:Int):
     VideoDataBaseHelper(context,name,version) {
@@ -35,7 +35,7 @@ class LearnVideoDataBaseHelper( context: Context, name:String, version:Int):
                 put("videoName",videoName)
                 put("videoBelongCityId",videoBelongCityId)
             }
-            thisData?.insert("videoInfo",null,value1)
+            thisData.insert("videoInfo",null,value1)
         }
         results.close()
     }

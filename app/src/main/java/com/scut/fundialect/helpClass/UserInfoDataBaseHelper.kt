@@ -5,13 +5,8 @@ import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import android.net.Uri
-import android.util.Log
 import android.widget.Toast
-import com.scut.fundialect.R
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import java.nio.charset.Charset
+
 
 
 
@@ -20,6 +15,7 @@ class UserInfoDataBaseHelper(val context: Context,name:String,version:Int):
     SQLiteOpenHelper(context,name,null,version) {
     //定义包名变量
     val packageName = "com.scut.fundialect"
+    public val dbFileName = "userinfo.db"
     private val createUserInfo = "create table userinfo (" +
             " id integer primary key autoincrement," +
             "userNickName text," +
