@@ -1,23 +1,12 @@
 package com.scut.fundialect
 
 
-import android.app.Activity
 import android.content.Intent
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
-import android.graphics.Matrix
-import android.media.ExifInterface
 import android.net.Uri
-import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.provider.MediaStore
-import androidx.core.app.ActivityCompat
-import androidx.core.content.FileProvider
-import com.scut.fundialect.database.UserInfoDataBaseHelper
-
-import com.scut.fundialect.database.VideoDataBaseHelper
 import com.scut.fundialect.help.PicManager
+import com.scut.fundialect.help.VideoHelper
 import kotlinx.android.synthetic.main.activity_main.*
 import java.io.File
 
@@ -34,21 +23,13 @@ class MainActivity : AppCompatActivity() {
 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
+        VideoHelper.outputVideo = File(externalCacheDir, "output_image.jpg")
         takePhotoBtn.setOnClickListener {
-            gitPic(fromAlbum)
+            PicManager.gitPic(fromAlbum,this)
         }
    }
 
-    private fun MainActivity.gitPic(fromAlbum: Int) {
-        // 打开文件选择器
-        val intent = Intent(Intent.ACTION_OPEN_DOCUMENT)
-        intent.addCategory(Intent.CATEGORY_OPENABLE)
-        // 指定只显示图片
-        intent.type = "image/*"
-        startActivityForResult(intent, fromAlbum)
 
-    }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
     super.onActivityResult(requestCode, resultCode, data)
