@@ -11,7 +11,6 @@ import kotlinx.android.synthetic.main.activity_main.*
 import java.io.File
 
 
-data class Message(val author: String,val body:String)
 
 
 class MainActivity : AppCompatActivity() {
@@ -25,7 +24,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         VideoHelper.outputVideo = File(externalCacheDir, "output_image.jpg")
         takePhotoBtn.setOnClickListener {
-            PicManager.gitPic(fromAlbum,this)
+            PicManager.gitPicFromCamera(this)
         }
    }
 

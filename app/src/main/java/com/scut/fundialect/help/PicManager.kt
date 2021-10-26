@@ -1,6 +1,5 @@
 package com.scut.fundialect.help
 
-import android.R.attr
 import android.app.Activity
 import android.content.ContentResolver
 import android.content.Intent
@@ -9,22 +8,14 @@ import android.graphics.BitmapFactory
 import android.graphics.Matrix
 import android.media.ExifInterface
 import android.net.Uri
-import android.os.Environment
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.ActivityCompat
-import androidx.core.app.ActivityCompat.startActivityForResult
-import com.scut.fundialect.MainActivity
 import com.scut.fundialect.R
-import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.coroutines.Dispatchers
 import java.io.File
 import java.net.URI
-import java.text.SimpleDateFormat
-import java.util.*
-import android.R.attr.path
 import android.content.Context
 import android.os.Build
 import android.provider.MediaStore
+import android.widget.Toast
 import androidx.core.content.FileProvider
 import androidx.core.net.toUri
 
@@ -43,19 +34,24 @@ object PicManager {
         }
         outputImage.createNewFile()
         imageUri = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            //Toast.makeText(context, "进入函数，执行fileProvider", Toast.LENGTH_SHORT).show()
             FileProvider.getUriForFile(context, "com.scut.fundialect", outputImage)
+
+
+
         } else {
+            Toast.makeText(context, "进入函数，从file获取", Toast.LENGTH_SHORT).show()
             Uri.fromFile(outputImage)
         }
         // 启动相机程序
         val intent = Intent("android.media.action.IMAGE_CAPTURE")
         intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri)
-
-        activity.startActivityForResult(intent, takePhoto)
+        Toast.makeText(context, "进入函数，马上启动相机程序", Toast.LENGTH_SHORT).show()
+        activity.startActivityForResult(intent, this.takePhoto)
     }
 
 
-    public fun gitPic(fromAlbum: Int,context: Context) {
+    public fun gitPicFromAlbum(context: Context) {
 
         // 打开文件选择器
         val intent = Intent(Intent.ACTION_OPEN_DOCUMENT)
@@ -66,7 +62,7 @@ object PicManager {
         //把context强制转换成activity
         //然后执行调用此类的activity内的函数
         val mActivity :AppCompatActivity = context as AppCompatActivity
-        mActivity.startActivityForResult(intent, fromAlbum)
+        mActivity.startActivityForResult(intent, this.fromAlbum)
 
     }
     public fun getPicUri(
@@ -102,7 +98,7 @@ object PicManager {
     }
 
     private fun defaultUri() =
-        Uri.parse("android.resource://" + "com.scut.fundialect" + "/" + R.raw.defaultPic)
+        Uri.parse("android.resource://" + "com.scut.fundialect" + "/" + R.raw.defaultpic)
 
     private fun getBitmapFromUri(uri: Uri, contentResolver: ContentResolver) {
         return contentResolver.openFileDescriptor(uri, "r").use {

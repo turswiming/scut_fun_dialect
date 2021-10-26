@@ -1,6 +1,5 @@
 package com.scut.fundialect.database
 
-import com.scut.fundialect.Message
 
 object SampleData {
     // Sample conversation data
@@ -72,3 +71,4 @@ object SampleData {
         ),
     )
 }
+class Message(val author: String,val body:String)

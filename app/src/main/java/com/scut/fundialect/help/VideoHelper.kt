@@ -44,13 +44,13 @@ object VideoHelper {
     }
 
 
-    public fun gitPic(fromAlbum: Int,context: Context) {
+    public fun gitVideoFromAlbum(fromAlbum: Int,context: Context) {
 
         // 打开文件选择器
         val intent = Intent(Intent.ACTION_OPEN_DOCUMENT)
         intent.addCategory(Intent.CATEGORY_OPENABLE)
         // 指定只显示图片
-        intent.type = "image/*"
+        intent.type = "video/*"
 
         //把context强制转换成activity
         //然后执行调用此类的activity内的函数
@@ -91,7 +91,7 @@ object VideoHelper {
     }
 
     private fun defaultUri() =
-        Uri.parse("android.resource://" + "com.scut.fundialect" + "/" + R.raw.defaultPic)
+        Uri.parse("android.resource://" + "com.scut.fundialect" + "/" + R.raw.defaultpic)
 
     private fun getBitmapFromUri(uri: Uri, contentResolver: ContentResolver) {
         return contentResolver.openFileDescriptor(uri, "r").use {
