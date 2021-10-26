@@ -32,7 +32,7 @@ object VideoHelper {
         }
         outputVideo.createNewFile()
         videoUri = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            FileProvider.getUriForFile(context, "com.scut.fundialect", outputVideo)
+            FileProvider.getUriForFile(context, "com.scut.fundialect.fileprovider", outputVideo)
         } else {
             Uri.fromFile(outputVideo)
         }

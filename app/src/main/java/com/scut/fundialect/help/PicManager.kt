@@ -35,7 +35,7 @@ object PicManager {
         outputImage.createNewFile()
         imageUri = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             //Toast.makeText(context, "进入函数，执行fileProvider", Toast.LENGTH_SHORT).show()
-            FileProvider.getUriForFile(context, "com.scut.fundialect", outputImage)
+            FileProvider.getUriForFile(context, "com.scut.fundialect.fileprovider", outputImage)
 
 
 
