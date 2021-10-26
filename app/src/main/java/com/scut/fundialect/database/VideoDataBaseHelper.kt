@@ -124,7 +124,15 @@ open class VideoDataBaseHelper(val context: Context, name:String, version:Int):
     //这一行的意思是屏蔽报错......绝了
     @SuppressLint("Range")
     fun convertdataDeafult(fromData:SQLiteDatabase, id:Int, thisData:SQLiteDatabase){
-        val results =  fromData.query("videoInfo",null,"where id = $id",null,null,null,null,null)
+        val results =  fromData.query(
+            "videoInfo",
+            null,
+            "where id = $id",
+            null,
+            null,
+            null,
+            null,
+            null)
         var videoFileName:String =""
         var videoName:String=""
         var videoBelongCityId:Int = 0
