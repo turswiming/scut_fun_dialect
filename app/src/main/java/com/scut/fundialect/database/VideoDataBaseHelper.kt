@@ -11,9 +11,10 @@ open class VideoDataBaseHelper(val context: Context, name:String, version:Int):
     SQLiteOpenHelper(context,name,null,version) {
     val initVideoDatabase = "create table videoInfo (" +
             "id integer primary key autoincrement," +
-            "videoFileName text," +
+            "videoUri text," +
             "videoName text," +
             "videoLike integer," +
+            "videoUploaderId integer," +
             "videoIsLiked integer," +
             "videoCollect integer," +
             "videoIsCollect integer," +
@@ -35,7 +36,8 @@ open class VideoDataBaseHelper(val context: Context, name:String, version:Int):
     val DatePattern = "yyyy-MM-dd HH:mm:ss.SSS"
     fun initVideoDatabase(db: SQLiteDatabase?){
         val value1 = ContentValues().apply {
-            put("videoFileName", "video1.mp4")
+            // TODO: 2021/10/26
+            put("videoUri", "")
             put("videoName", "欣赏黑色")
             put("videoLike", 342)
             put("videoIsLiked", 0)
