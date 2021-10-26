@@ -5,6 +5,8 @@ import android.content.ContentValues
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
+import android.net.Uri
+import com.scut.fundialect.R
 import java.util.*
 
 open class VideoDataBaseHelper(val context: Context, name:String, version:Int):
@@ -20,6 +22,7 @@ open class VideoDataBaseHelper(val context: Context, name:String, version:Int):
             "videoIsCollect integer," +
             "videoIntroduce text," +
             "videoUpdateTime integer," +
+            "videoPicUri text, " +
             "videoBelongCityId integer" +
             ")"
     val initCommetDatabase = "create table commentInfo (" +
@@ -36,8 +39,7 @@ open class VideoDataBaseHelper(val context: Context, name:String, version:Int):
     val DatePattern = "yyyy-MM-dd HH:mm:ss.SSS"
     fun initVideoDatabase(db: SQLiteDatabase?){
         val value1 = ContentValues().apply {
-            // TODO: 2021/10/26
-            put("videoUri", "")
+//            put("videoUri", Uri.parse( "android.resource://" + getPackageName() + "/" + R.raw.video1))
             put("videoName", "欣赏黑色")
             put("videoLike", 342)
             put("videoIsLiked", 0)
@@ -92,7 +94,7 @@ open class VideoDataBaseHelper(val context: Context, name:String, version:Int):
 
     }
     fun initCommentInfoDatabase(db: SQLiteDatabase?){
-        repeat(30){
+        repeat(1000){
             val value1 = ContentValues().apply {
                 put("parentId", (0..3).random())
                 put("commenterId", 1)
@@ -105,7 +107,7 @@ open class VideoDataBaseHelper(val context: Context, name:String, version:Int):
             }
             db?.insert("commentInfo",null,value1)
         }
-        repeat(30){
+        repeat(3000){
             val value1 = ContentValues().apply {
                 put("parentId", (0..3).random())
                 put("commenterId", 1)
@@ -148,7 +150,7 @@ open class VideoDataBaseHelper(val context: Context, name:String, version:Int):
                 put("videoName",videoName)
                 put("videoBelongCityId",videoBelongCityId)
             }
-            thisData?.insert("videoInfo",null,value1)
+            thisData.insert("videoInfo",null,value1)
         }
         results.close()
     }
