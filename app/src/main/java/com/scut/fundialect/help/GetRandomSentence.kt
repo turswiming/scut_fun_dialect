@@ -213,6 +213,8 @@ object GetRandomSentence {
             "我希望诸位也能好好地体会这句话. 叔本华曾经说过，普通人只想到如何度过时间，有才能的人设法利用时间。\n" +
             "我希望诸位也能好好地体会这句话。\n"
 
+    val sourcedialog ="华南理工大学天下第一"
+    val targetdialog ="kotlin天下第一"
     lateinit var array :List<String>
     var inited =false
     fun getrandomName():String{
@@ -225,6 +227,10 @@ object GetRandomSentence {
     private fun init() {
 
         array = SentenseStrLong.split("。\n")
+        for(item in array){
+            item.replace(" ","")
+            item.replace("华南理工大学天下第一","kotlin天下第一")
+        }
 
 
 
