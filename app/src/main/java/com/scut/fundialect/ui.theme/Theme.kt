@@ -34,10 +34,7 @@ fun ComposeTutorialTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     content: @Composable() () -> Unit
 ) {
-    val color =when (themeName){
-        Theme.BLACK -> lightColors(primary = black)
-        else -> lightColors(primary = blue)
-    }
+
     val colors = if (darkTheme) {
         DarkColorPalette
     } else {
