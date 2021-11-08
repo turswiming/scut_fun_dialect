@@ -9,6 +9,27 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.FunDialect">
+        <activity
+            android:name=".activity.myself.LearnActivity"
+            android:exported="true"
+            android:label="@string/title_activity_learn"
+            android:theme="@style/Theme.FunDialect.NoActionBar" />
+        <activity
+            android:name=".activity.learn.LearnActivity"
+            android:exported="true"
+            android:label="@string/title_activity_learn"
+            android:theme="@style/Theme.FunDialect.NoActionBar" />
+        <activity
+            android:name=".activity.dubing.DubingActivity"
+            android:exported="true"
+            android:label="@string/title_activity_dubing"
+            android:theme="@style/Theme.FunDialect.NoActionBar" />
+        <activity
+            android:name=".activity.culture.CultureActivity"
+            android:exported="true"
+            android:label="@string/title_activity_culture"
+            android:theme="@style/Theme.FunDialect.NoActionBar" />
+
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="com.scut.fundialect.fileprovider"
