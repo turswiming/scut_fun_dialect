@@ -8,9 +8,10 @@ import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
+import com.scut.fundialect.activity.BaseComposeActivity
 import com.scut.fundialect.activity.learn.ui.theme.FunDialectTheme
 
-class LearnActivity : ComponentActivity() {
+class LearnActivity : BaseComposeActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
