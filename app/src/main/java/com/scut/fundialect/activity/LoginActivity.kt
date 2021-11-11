@@ -1,11 +1,10 @@
 package com.scut.fundialect.activity
 
 
+import android.content.Context
 import android.content.Intent
 import android.net.Uri
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Toast
 import androidx.activity.compose.setContent
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.animateContentSize
@@ -15,26 +14,24 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material.OutlinedTextField
-import androidx.compose.material.Surface
+import androidx.compose.material.*
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.compositeOver
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.scut.fundialect.R
+import com.scut.fundialect.activity.culture.CultureActivity
 import com.scut.fundialect.database.*
 import com.scut.fundialect.help.PicManager
 import com.scut.fundialect.help.VideoHelper
 import com.scut.fundialect.ui.theme.ComposeTutorialTheme
 import kotlinx.android.synthetic.main.activity_main.*
 import java.io.File
-
 
 
 //所有ACTIVITY都应该继承baseactivity，这样就可以执行一些全局操作。
@@ -53,14 +50,14 @@ class LoginActivity : BaseActivity() {
         }
         test()
         setContent {
-            loginPage()
+            loginPage(this,SampleData.conversationSample)
         }
 
    }
 
 
 
-
+    //这个函数会在下层Activity返回的时候执行。
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
     super.onActivityResult(requestCode, resultCode, data)
         val uri = PicManager.getPicUri(requestCode, resultCode, data,contentResolver)
@@ -96,14 +93,26 @@ class LoginActivity : BaseActivity() {
 
     }
 
-
-
-
     @Composable
-    fun loginPage(){
-        Column() {
+    fun MessageRow(message: SampleData.Message){
+    }
+    //@Preview(this,)
+    @Composable
+    fun loginPage(context:Context,messages:List<SampleData.Message>){
+        Column(
+            modifier = Modifier
+                .padding(8.dp)
+                .fillMaxWidth()
+                .fillMaxHeight()
+            ,
+            horizontalAlignment = Alignment.CenterHorizontally,
+        ) {
             var username by remember { mutableStateOf("") }
             var userpassword by remember { mutableStateOf("") }
+
+            var buttonEnable by remember {
+                mutableStateOf(false)
+            }
 
             OutlinedTextField(
                 value = username,
@@ -115,14 +124,44 @@ class LoginActivity : BaseActivity() {
                 onValueChange = { userpassword = it },
                 label = { Text("密码") }
             )
+            buttonEnable = checkPassWord(username,userpassword)
+            Button(
+                onClick = {
+                    val intent = Intent(context,CultureActivity::class.java)
+                    startActivity(intent)
+                },
+                enabled = buttonEnable,
+                // Custom colors for different states
+                colors = ButtonDefaults.buttonColors(
+                    backgroundColor = MaterialTheme.colors.secondary,
+                    disabledBackgroundColor = MaterialTheme.colors.onBackground
+                        .copy(alpha = 0.2f)
+                        .compositeOver(MaterialTheme.colors.background)
+                    // Also contentColor and disabledContentColor
+                ),
+                // Custom elevation for different states
+                elevation = ButtonDefaults.elevation(
+                    defaultElevation = 8.dp,
+                    disabledElevation = 2.dp,
+                    // Also pressedElevation
+                )
+            ) { /* ... */ }
         }
+    }
+
+    private fun checkPassWord(username:String,userpassword:String):Boolean {
+        if(username != "" && userpassword != ""){
+            //设置按钮为高亮
+            return true
+        }
+        return false
     }
 
     fun gotoActivity():Unit{
 
     }
     @Composable
-    fun MessageCard(msg:Message) {
+    fun MessageCard(msg: SampleData.Message) {
         Row(
             modifier = Modifier.padding(all = 8.dp)
         ) {
@@ -182,16 +221,16 @@ class LoginActivity : BaseActivity() {
 
     }
 
-    @Preview
+
     @Composable
     fun PreviewMessageCard() {
         MessageCard(
-            msg = Message("name","this is an info")
+            msg = SampleData.Message("name", "this is an info")
         )
     }
 
     @Composable
-    fun Conversation(messages: List<Message>) {
+    fun Conversation(messages: List<SampleData.Message>) {
         LazyColumn {
             items(messages) { message ->
                 MessageCard(message)
@@ -199,7 +238,7 @@ class LoginActivity : BaseActivity() {
         }
     }
 
-    @Preview
+    //@Preview
     @Composable
     fun PreviewConversation() {
         ComposeTutorialTheme {

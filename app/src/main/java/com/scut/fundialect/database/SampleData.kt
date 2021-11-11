@@ -2,6 +2,8 @@ package com.scut.fundialect.database
 
 
 object SampleData {
+    class Message(val author: String,val body:String)
+
     // Sample conversation data
     val conversationSample = listOf(
         Message(
@@ -71,4 +73,3 @@ object SampleData {
         ),
     )
 }
-class Message(val author: String,val body:String)
