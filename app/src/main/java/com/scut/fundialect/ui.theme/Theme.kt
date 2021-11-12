@@ -5,7 +5,7 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.darkColors
 import androidx.compose.material.lightColors
 import androidx.compose.runtime.Composable
-import com.scut.fundialect.help.Theme
+import com.scut.fundialect.help.ColorThemeNow
 
 private val DarkColorPalette = darkColors(
     primary = Purple200,
@@ -30,7 +30,7 @@ private val LightColorPalette = lightColors(
 
 @Composable
 fun ComposeTutorialTheme(
-    themeName:Theme =Theme.RED,
+    themeName: ColorThemeNow.Theme = ColorThemeNow.Theme.RED,
     darkTheme: Boolean = isSystemInDarkTheme(),
     content: @Composable() () -> Unit
 ) {

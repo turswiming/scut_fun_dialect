@@ -21,9 +21,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.compositeOver
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.scut.fundialect.R
 import com.scut.fundialect.activity.culture.CultureActivity
 import com.scut.fundialect.database.*
@@ -97,6 +100,11 @@ class LoginActivity : BaseActivity() {
     fun MessageRow(message: SampleData.Message){
     }
     //@Preview(this,)
+    @Preview
+    @Composable
+    fun preview(){
+        loginPage(this,SampleData.conversationSample)
+    }
     @Composable
     fun loginPage(context:Context,messages:List<SampleData.Message>){
         Column(
@@ -107,13 +115,26 @@ class LoginActivity : BaseActivity() {
             ,
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
+            Spacer(
+                modifier = Modifier.height(40.dp)
+            )
+            Image(
+                painter = painterResource(id = R.drawable.ic_launcher_foreground),
+                contentDescription = "Contact profile picture",
+                modifier = Modifier
+                    .size(80.dp)
+                    .clip(CircleShape)
+                    .border(3.dp, MaterialTheme.colors.secondary, CircleShape)
+            )
             var username by remember { mutableStateOf("") }
             var userpassword by remember { mutableStateOf("") }
 
             var buttonEnable by remember {
                 mutableStateOf(false)
             }
-
+            Spacer(
+                modifier = Modifier.height(40.dp)
+            )
             OutlinedTextField(
                 value = username,
                 onValueChange = { username = it },
@@ -124,8 +145,12 @@ class LoginActivity : BaseActivity() {
                 onValueChange = { userpassword = it },
                 label = { Text("密码") }
             )
+            Spacer(
+                modifier = Modifier.height(40.dp)
+            )
             buttonEnable = checkPassWord(username,userpassword)
             Button(
+                modifier = Modifier.width(120.dp).height(50.dp),
                 onClick = {
                     val intent = Intent(context,CultureActivity::class.java)
                     startActivity(intent)
@@ -145,7 +170,10 @@ class LoginActivity : BaseActivity() {
                     disabledElevation = 2.dp,
                     // Also pressedElevation
                 )
-            ) { /* ... */ }
+            ) {
+                Text(text = "登录",
+                fontSize = 20.sp)
+            }
         }
     }
 
