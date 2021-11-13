@@ -40,71 +40,19 @@ class CultureActivity : BaseComposeActivity() {
     @Composable
     private fun handpage(showedPage:Int, showedCityId:List<Int>,state: Int) {
 
-        
+        var state1  by remember { mutableStateOf(state) }
+
         val titles = listOf("精选", "词库")
         Scaffold(
             topBar = {
-                var state1  by remember { mutableStateOf(state) }
-                TopAppBar(
-                    backgroundColor = MaterialTheme.colors.primary
-                ) { /* Top app bar content */
-                    Row(
-                        modifier = Modifier
-                            .padding(8.dp)
-                            .fillMaxWidth()
-                            .fillMaxHeight(),
-                        horizontalArrangement = Arrangement.SpaceBetween,
-                    ) {
-                        Image(
-                            painter = painterResource(id = R.drawable.ic_launcher_foreground),
-                            contentDescription = "logo"
-                        )
-
-
-                        // Screen content
-                        TabRow(
-                            selectedTabIndex = state1,
-                            Modifier.width(200.dp)
-                        ) {
-                            titles.forEachIndexed { index, title ->
-                                Tab(
-                                    text = { Text(title) },
-                                    selected = state1 == index,
-                                    onClick = {
-                                        state1 = index
-                                        switchState(index)
-                                    }
-                                )
-                            }
-                        }
-
-
-                        Button(
-                            onClick = { /*TODO*/ },
-                            contentPadding = PaddingValues(
-                                start = 0.dp,
-                                top = 0.dp,
-                                end = 0.dp,
-                                bottom = 0.dp
-                            )
-                        ) {
-                            Text(text = "${state1.toString()}")
-
-                            Image(
-                                painter = painterResource(id = R.drawable.ic_launcher_foreground),
-                                contentDescription = "search icon"
-                            )
-                        }
-                    }
-
-                }
+                topAppBar(state1, titles,onStateChange = {state1 = it })
 
             }
         ) {
             // Screen content
             Row() {
-                Text(text = "${state.toString()}")
-                if(state==0){
+                //Text(text = "${state1.toString()}")
+                if(state1==0){
                     selectedPage(showedCityId)
                 }
                 else{
@@ -115,6 +63,63 @@ class CultureActivity : BaseComposeActivity() {
         }
     }
 
+    @Composable
+    private fun topAppBar(state1: Int, titles: List<String>,onStateChange: (Int) -> Unit) {
+        var state11 = state1
+        TopAppBar(
+            backgroundColor = MaterialTheme.colors.primary
+        ) { /* Top app bar content */
+            Row(
+                modifier = Modifier
+                    .padding(8.dp)
+                    .fillMaxWidth()
+                    .fillMaxHeight(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+            ) {
+                Image(
+                    painter = painterResource(id = R.drawable.ic_launcher_foreground),
+                    contentDescription = "logo"
+                )
+
+
+                // Screen content
+                TabRow(
+                    selectedTabIndex = state11,
+                    Modifier.width(200.dp)
+                ) {
+                    titles.forEachIndexed { index, title ->
+                        Tab(
+                            text = { Text(title) },
+                            selected = state11 == index,
+                            onClick = {
+                                state11 = index
+                                onStateChange(index)
+                            }
+                        )
+                    }
+                }
+
+
+                Button(
+                    onClick = { /*TODO*/ },
+                    contentPadding = PaddingValues(
+                        start = 0.dp,
+                        top = 0.dp,
+                        end = 0.dp,
+                        bottom = 0.dp
+                    )
+                ) {
+                    Text(text = "${state11.toString()}")
+
+                    Image(
+                        painter = painterResource(id = R.drawable.ic_launcher_foreground),
+                        contentDescription = "search icon"
+                    )
+                }
+            }
+
+        }
+    }
 
 
     @Composable
