@@ -1,22 +1,22 @@
-package com.scut.fundialect.database
+package com.scut.fundialect.database.helper
 
 import android.annotation.SuppressLint
 import android.content.ContentValues
-import android.content.Context
 import android.database.sqlite.SQLiteDatabase
+import com.scut.fundialect.MyApplication
+import com.scut.fundialect.database.CityDataBaseHelper
+import com.scut.fundialect.database.VideoDataBaseHelper
 
-class DubedVideoDataBaseHelper(context: Context, name:String, version:Int):
-    VideoDataBaseHelper(context,name,version)  {
-    override fun onCreate(db: SQLiteDatabase?) {
-        super.onCreate(db)
-    }
-
-    override fun onUpgrade(db: SQLiteDatabase?, oldVersion: Int, newVersion: Int) {
-        super.onUpgrade(db, oldVersion, newVersion)
+object VideoHelper {
+    private  var videoDB: SQLiteDatabase
+    init {
+        val videoDataBaseHelper = VideoDataBaseHelper(MyApplication.context,"video.db",1)
+        videoDB = videoDataBaseHelper.writableDatabase
     }
     @SuppressLint("Range")
-    fun convertdata(fromData: SQLiteDatabase, id:Int, thisData: SQLiteDatabase){
-        val results =  fromData.query("videoInfo",
+    fun convertdataDeafult(id:Int,fromData: SQLiteDatabase){
+        val results =  fromData.query(
+            "videoInfo",
             null,
             "where id = $id",
             null,
@@ -29,7 +29,7 @@ class DubedVideoDataBaseHelper(context: Context, name:String, version:Int):
         var videoBelongCityId:Int = 0
         if (results.moveToFirst()) {
             do {
-                // 遍历Cursor对象，取出数据
+                // 遍历Cursor对象，取出数据并打印
                 videoFileName = results.getString(results.getColumnIndex("videoFileName"))
                 videoName = results.getString(results.getColumnIndex("videoName"))
                 videoBelongCityId = results.getInt(results.getColumnIndex("videoBelongCityId"))
@@ -39,7 +39,7 @@ class DubedVideoDataBaseHelper(context: Context, name:String, version:Int):
                 put("videoName",videoName)
                 put("videoBelongCityId",videoBelongCityId)
             }
-            thisData?.insert("videoInfo",null,value1)
+            videoDB.insert("videoInfo",null,value1)
         }
         results.close()
     }

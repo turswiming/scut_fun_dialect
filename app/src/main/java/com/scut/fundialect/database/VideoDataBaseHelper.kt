@@ -11,7 +11,9 @@ import java.util.*
 
 open class VideoDataBaseHelper(val context: Context, name:String, version:Int):
     SQLiteOpenHelper(context,name,null,version) {
-    val initVideoDatabase = "create table videoInfo (" +
+    val  videoTableName = "videoInfo"
+    val commentTableName ="commentInfo"
+    val initVideoDatabase = "create table "+videoTableName+" (" +
             "id integer primary key autoincrement," +
             "videoUri text," +
             "videoName text," +
@@ -25,7 +27,7 @@ open class VideoDataBaseHelper(val context: Context, name:String, version:Int):
             "videoPicUri text, " +
             "videoBelongCityId integer" +
             ")"
-    val initCommetDatabase = "create table commentInfo (" +
+    val initCommetDatabase = "create table "+commentTableName+" (" +
             "id integer primary key autoincrement," +
             "parentId integer," +//指向视频
             "commenterId integer," +
@@ -124,36 +126,7 @@ open class VideoDataBaseHelper(val context: Context, name:String, version:Int):
     }
 
     //这一行的意思是屏蔽报错......绝了
-    @SuppressLint("Range")
-    fun convertdataDeafult(fromData:SQLiteDatabase, id:Int, thisData:SQLiteDatabase){
-        val results =  fromData.query(
-            "videoInfo",
-            null,
-            "where id = $id",
-            null,
-            null,
-            null,
-            null,
-            null)
-        var videoFileName:String =""
-        var videoName:String=""
-        var videoBelongCityId:Int = 0
-        if (results.moveToFirst()) {
-            do {
-                // 遍历Cursor对象，取出数据并打印
-                videoFileName = results.getString(results.getColumnIndex("videoFileName"))
-                videoName = results.getString(results.getColumnIndex("videoName"))
-                videoBelongCityId = results.getInt(results.getColumnIndex("videoBelongCityId"))
-            } while (results.moveToNext())
-            val value1= ContentValues().apply {
-                put("videoFileName",videoFileName)
-                put("videoName",videoName)
-                put("videoBelongCityId",videoBelongCityId)
-            }
-            thisData.insert("videoInfo",null,value1)
-        }
-        results.close()
-    }
+
     override fun onCreate(db: SQLiteDatabase?) {
         db?.execSQL(initVideoDatabase)
         initVideoDatabase(db)
