@@ -1,9 +1,12 @@
 package com.scut.fundialect.database.helper
 
 import android.annotation.SuppressLint
+import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
+import android.widget.Toast
 import com.scut.fundialect.MyApplication.Companion.context
 import com.scut.fundialect.database.CityDataBaseHelper
+import java.lang.Exception
 
 object CityHelper {
     private  var cityDB:SQLiteDatabase
@@ -16,16 +19,49 @@ object CityHelper {
     fun getCityId(CityName:String):Int{
         val results = cityDB.query(tableName,
             null,
-            "where cityname = $CityName",
+            "cityname = $CityName",
             null,
             null,
             null,
             null,
             null)
+        results.moveToFirst()
         val cityId = results.getInt(results.getColumnIndex("id"))
         results?.close()
         return cityId
     }
+    @SuppressLint("Range")
+    fun getCityName(cityId:Int):String{
+        //Toast.makeText(context, "进入查询函数", Toast.LENGTH_SHORT).show()
+        try {
+            val results = cityDB.query(
+                tableName,
+                null,
+                "id = $cityId",
+                null,
+                null,
+                null,
+                null,
+                null)
+            val index = results.getColumnIndex("cityname")
+            //Toast.makeText(context, "获取查询结果"+index, Toast.LENGTH_SHORT).show()
+            //将指针移到第一行
+            results.moveToFirst()
+            val cityName = results.getString(index)
+            //Toast.makeText(context, "准备关闭", Toast.LENGTH_SHORT).show()
+            results.close()
+            //Toast.makeText(context, "准备返回", Toast.LENGTH_SHORT).show()
+
+            return cityName
+        } catch (e:Exception){
+            Toast.makeText(context, e.localizedMessage, Toast.LENGTH_SHORT).show()
+
+            return e.localizedMessage
+        }
+
+
+    }
+
     @SuppressLint("Range")
     fun getParentCity(thisId:Int) : CityDataBaseHelper.CityData {
         val results = cityDB.query(tableName,

@@ -11,7 +11,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.scut.fundialect.activity.BaseComposeActivity
 import com.scut.fundialect.activity.myself.ui.theme.FunDialectTheme
 
-class LearnActivity : BaseComposeActivity() {
+class MyselfActivity : BaseComposeActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {

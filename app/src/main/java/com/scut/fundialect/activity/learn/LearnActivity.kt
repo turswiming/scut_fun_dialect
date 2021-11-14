@@ -5,6 +5,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
@@ -14,6 +15,7 @@ import androidx.compose.ui.unit.dp
 import com.scut.fundialect.R
 import com.scut.fundialect.activity.BaseComposeActivity
 import com.scut.fundialect.activity.learn.ui.theme.FunDialectTheme
+import com.scut.fundialect.database.helper.CityHelper
 
 class LearnActivity : BaseComposeActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -22,31 +24,21 @@ class LearnActivity : BaseComposeActivity() {
             FunDialectTheme {
                 // A surface container using the 'background' color from the theme
                 Surface(color = MaterialTheme.colors.background) {
-                    handpage(0,listOf(1,1,1,2),0)
+                    handpage()
                 }
             }
         }
     }
 }
 
-@Composable
-fun Greeting3(name: String) {
-    Text(text = "Hello $name!")
-}
 
-@Preview(showBackground = true)
 @Composable
-fun DefaultPreview3() {
-    FunDialectTheme {
-        Greeting3("Android")
+private fun handpage() {
+
+    var state1  by remember { mutableStateOf(0) }
+    var showedPage1 = remember {
+        mutableStateListOf<Int>(1,2,3,4)
     }
-}
-
-@Composable
-private fun handpage(showedPage:Int, showedCityId:List<Int>,state: Int) {
-
-    var state1  by remember { mutableStateOf(state) }
-
     val titles = listOf("精选", "词库")
     Scaffold(
         topBar = {
@@ -58,7 +50,7 @@ private fun handpage(showedPage:Int, showedCityId:List<Int>,state: Int) {
         Row() {
             //Text(text = "${state1.toString()}")
             if(state1==0){
-                selectedPage(showedCityId)
+                selectedPage(showedPage1,onStateChange = {key,value -> showedPage1[key] = value })
             }
             else{
 
@@ -114,7 +106,7 @@ private fun topAppBar(state1: Int, titles: List<String>,onStateChange: (Int) -> 
                     bottom = 0.dp
                 )
             ) {
-                Text(text = "${state11.toString()}")
+                //Text(text = "${state11.toString()}")
 
                 Image(
                     painter = painterResource(id = R.drawable.ic_launcher_foreground),
@@ -129,7 +121,7 @@ private fun topAppBar(state1: Int, titles: List<String>,onStateChange: (Int) -> 
 
 
 @Composable
-private fun selectedPage(showedCityId: List<Int>) {
+private fun selectedPage(showedCityId: List<Int>,onStateChange: (key:Int,value:Int) -> Unit) {
     Scaffold(
         bottomBar = {
             BottomAppBar { /* Bottom app bar content */ }
@@ -137,23 +129,49 @@ private fun selectedPage(showedCityId: List<Int>) {
     ) {
         var cityStateNow by remember { mutableStateOf(0) }
         // Screen content
-        TabRow(
-            selectedTabIndex = cityStateNow,
+        Column() {
+            TabRow(
+                selectedTabIndex = cityStateNow,
 
-            ) {
-            showedCityId.forEachIndexed { index, cityId ->
+                ) {
                 Tab(
-                    text = { Text("TODO") },
-                    selected = cityStateNow == index,
-                    onClick = { cityStateNow = index }
+                    text = { Text("推荐") },
+                    selected = cityStateNow == 0,
+                    onClick = { cityStateNow = 0 }
                 )
+                showedCityId.forEachIndexed { index, cityId ->
+                    Tab(
+                        text = {
+                            Text(CityHelper.getCityName(cityId)+"话")
+                        },
+                        selected = cityStateNow == index+1,
+                        onClick = { cityStateNow = index+1
+                        }
+                    )
+
+                }
+                Tab(selected = cityStateNow == -1,
+                    onClick = { cityStateNow = -1 }){
+                    Image(
+                        painter = painterResource(id = R.drawable.ic_launcher_background),
+                        contentDescription = "加号")
+                }
+            }
+            //LazyColumn(content = )
+            if(cityStateNow == -1){
+                Box(modifier = Modifier.height(400.dp)) {
+
+                }
+
             }
         }
+        
+
     }
 }
 
 @Preview
 @Composable
 fun preview(){
-    handpage(0,listOf(1,1,1,2),0)
+    handpage()
 }

@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
+import android.widget.Toast
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -31,7 +32,7 @@ class CityDataBaseHelper(val context: Context, name:String, version:Int):
                 db?.execSQL(it.substring(0,it.length-1))
 
             }
-            //Toast.makeText(context, "完成城市数据库初始化", Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, "完成城市数据库初始化", Toast.LENGTH_SHORT).show()
         }
 
     }

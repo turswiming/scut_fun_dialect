@@ -28,6 +28,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.scut.fundialect.R
 import com.scut.fundialect.activity.culture.CultureActivity
+import com.scut.fundialect.activity.learn.LearnActivity
 import com.scut.fundialect.database.*
 import com.scut.fundialect.help.PicManager
 import com.scut.fundialect.help.VideoHelper
@@ -95,10 +96,7 @@ class LoginActivity : BaseActivity() {
 
     }
 
-    @Composable
-    fun MessageRow(message: SampleData.Message){
-    }
-    //@Preview(this,)
+
     @Preview
     @Composable
     fun preview(){
@@ -151,8 +149,7 @@ class LoginActivity : BaseActivity() {
             Button(
                 modifier = Modifier.width(120.dp).height(50.dp),
                 onClick = {
-                    val intent = Intent(context,CultureActivity::class.java)
-                    startActivity(intent)
+                    gotoLearnActiviy(context)
                 },
                 enabled = buttonEnable,
                 // Custom colors for different states
@@ -176,6 +173,12 @@ class LoginActivity : BaseActivity() {
         }
     }
 
+
+    private fun gotoLearnActiviy(context: Context) {
+        val intent = Intent(context, LearnActivity::class.java)
+        startActivity(intent)
+    }
+
     private fun checkPassWord(username:String,userpassword:String):Boolean {
         if(username != "" && userpassword != ""){
             //设置按钮为高亮
@@ -183,7 +186,7 @@ class LoginActivity : BaseActivity() {
         }
         return false
     }
-
+    //下面的是学习用范例，别删，但是也没啥用
     fun gotoActivity():Unit{
 
     }
