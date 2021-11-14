@@ -1,6 +1,7 @@
 package com.scut.fundialect.activity.learn
 
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
@@ -42,6 +43,7 @@ class LearnActivity : BaseComposeActivity() {
                 }
             }
         }
+
     }
 }
 
@@ -82,6 +84,7 @@ private fun handpage(cityList: MutableList<CityDataBaseHelper.CityData>) {
 @Composable
 private fun topAppBar(state1: Int, titles: List<String>,onStateChange: (Int) -> Unit) {
     var state11 = state1
+    //界面最上面的选择框框，包括精选和词库
     TopAppBar(
         backgroundColor = MaterialTheme.colors.primary
     ) { /* Top app bar content */
@@ -117,7 +120,7 @@ private fun topAppBar(state1: Int, titles: List<String>,onStateChange: (Int) -> 
 
 
             Button(
-                onClick = { /*TODO*/ },
+                onClick = { },
                 contentPadding = PaddingValues(
                     start = 0.dp,
                     top = 0.dp,
@@ -152,9 +155,7 @@ private fun selectedPage(
         }
     ) {
         var cityStateNow by remember { mutableStateOf(0) }
-        var cityStateLast by remember {
-            mutableStateOf(1)
-        }
+        var cityStateLast=0
         // Screen content
         Column(modifier = Modifier.fillMaxWidth()) {
             TabRow(
@@ -202,10 +203,11 @@ private fun selectedPage(
             }
             //LazyColumn(content = )
             if(cityStateNow == 5){
-                Surface(modifier = Modifier
+                Surface(
+                    modifier = Modifier
                     .height(200.dp)
                     .fillMaxWidth(),
-                    shape = RoundedCornerShape (0. dp,0.dp,10.dp,10.dp),
+                    shape = RoundedCornerShape (0. dp,0.dp,25.dp,25.dp),
                     color = black
                 ) {
                     LazyVerticalGrid(

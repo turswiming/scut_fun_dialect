@@ -106,7 +106,6 @@ class LoginActivity : BaseActivity() {
     fun loginPage(context:Context,messages:List<SampleData.Message>){
         Column(
             modifier = Modifier
-                .padding(8.dp)
                 .fillMaxWidth()
                 .fillMaxHeight()
             ,
