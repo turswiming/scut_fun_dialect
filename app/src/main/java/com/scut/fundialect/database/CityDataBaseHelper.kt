@@ -12,7 +12,12 @@ import java.nio.charset.Charset
 
 class CityDataBaseHelper(val context: Context, name:String, version:Int):
     SQLiteOpenHelper(context,name,null,version) {
-    class CityData(cityId:Int,cityName:String)
+    class CityData(cityId:Int,cityName:String){
+        var name:String = cityName
+        fun getTheName():String{
+            return name
+        }
+    }
     fun initCityData(db: SQLiteDatabase?){
         //这是一段屎山代码
         //包括

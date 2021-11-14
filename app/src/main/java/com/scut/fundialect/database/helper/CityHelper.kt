@@ -66,7 +66,7 @@ object CityHelper {
     fun getParentCity(thisId:Int) : CityDataBaseHelper.CityData {
         val results = cityDB.query(tableName,
             null,
-            "where id = $thisId",
+            " id = $thisId",
             null,
             null,
             null,
@@ -76,7 +76,7 @@ object CityHelper {
         results?.close()
         val results2 = cityDB.query(tableName,
             null,
-            "where id = $parientId",
+            " id = $parientId",
             null,
             null,
             null,
@@ -91,7 +91,7 @@ object CityHelper {
     fun getParentCity(thisCityName:String) : CityDataBaseHelper.CityData {
         val results = cityDB.query(tableName,
             null,
-            "where cityname = $thisCityName",
+            " cityname = $thisCityName",
             null,
             null,
             null,
@@ -101,7 +101,7 @@ object CityHelper {
         results?.close()
         val results2 = cityDB.query(tableName,
             null,
-            "where id = $parientId",
+            " id = $parientId",
             null,
             null,
             null,
@@ -116,7 +116,7 @@ object CityHelper {
     fun getChildCity(thisCityName:String) :MutableList<CityDataBaseHelper.CityData>{
         val results = cityDB.query(tableName,
             null,
-            "where cityname = $thisCityName",
+            " cityname = $thisCityName",
             null,
             null,
             null,
@@ -127,7 +127,31 @@ object CityHelper {
         val list: MutableList<CityDataBaseHelper.CityData> = mutableListOf<CityDataBaseHelper.CityData>()
         val results2 =  cityDB.query(tableName,
             null,
-            "where pid = $childPid",
+            " pid = $childPid",
+            null,
+            null,
+            null,
+            null,
+            null)
+        if (results2.moveToFirst()) {
+            do {
+
+                // 遍历Cursor对象，取出数据并打印
+                val cityID = results2.getInt(results2.getColumnIndex("id"))
+                val cityName = results2.getString(results2.getColumnIndex("cityname"))
+                val item = CityDataBaseHelper.CityData(cityID, cityName)
+                list.add(item)
+            } while (results2.moveToNext())
+        }
+        results2.close()
+        return list
+    }
+    @SuppressLint("Range")
+    fun getChildCity(thisCityid:Int) :MutableList<CityDataBaseHelper.CityData>{
+        val list: MutableList<CityDataBaseHelper.CityData> = mutableListOf<CityDataBaseHelper.CityData>()
+        val results2 =  cityDB.query(tableName,
+            null,
+            " pid = $thisCityid",
             null,
             null,
             null,
