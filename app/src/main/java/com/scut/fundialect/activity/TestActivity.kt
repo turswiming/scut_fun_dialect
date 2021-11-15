@@ -1,15 +1,9 @@
 package com.scut.fundialect.activity
 
-import android.net.Uri
-import androidx.appcompat.app.AppCompatActivity
+
 import android.os.Bundle
-import android.widget.MediaController
+import androidx.appcompat.app.AppCompatActivity
 import com.scut.fundialect.R
-
-
-import android.widget.VideoView
-
-
 
 
 class TestActivity : AppCompatActivity() {
