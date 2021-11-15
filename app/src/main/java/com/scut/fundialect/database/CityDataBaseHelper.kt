@@ -19,6 +19,7 @@ class CityDataBaseHelper(val context: Context, name:String, version:Int):
         }
     }
     fun initCityData(db: SQLiteDatabase?){
+        /**
         //这是一段屎山代码
         //包括
         //60000字长的字符串
@@ -26,6 +27,7 @@ class CityDataBaseHelper(val context: Context, name:String, version:Int):
         //循环执行3000次数据库操作
         //以及暴力协程
         //请程序员自备降压药，谢谢。
+        */
         val fileName = "citydata.sql"
         val input = context.assets.open(fileName)
         var content = input.readBytes().toString(Charset.defaultCharset())

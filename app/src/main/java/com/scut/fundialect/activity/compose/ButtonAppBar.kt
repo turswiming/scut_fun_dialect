@@ -62,6 +62,7 @@ public fun MyButtonAppBar(
                         /**
                          * 每个下面下巴导航栏的图标**/
                         Image(
+
                             painter = painterResource(id = title.getTheImage()),
                             contentDescription = "title.getTheName()"
                         )
