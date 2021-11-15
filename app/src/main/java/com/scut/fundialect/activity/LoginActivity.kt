@@ -27,7 +27,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.scut.fundialect.R
-import com.scut.fundialect.activity.culture.CultureActivity
 import com.scut.fundialect.activity.learn.LearnActivity
 import com.scut.fundialect.database.*
 import com.scut.fundialect.help.PicManager
@@ -77,8 +76,7 @@ class LoginActivity : BaseActivity() {
         val dubedDB =dubedVideoDataBaseHelper.writableDatabase
         //Toast.makeText(this, "dubedDB初始化成功", Toast.LENGTH_SHORT).show()
 
-        val learnVideoDataBaseHelper = LearnVideoDataBaseHelper(this,"Learn.db",1)
-        val learnDB =dubedVideoDataBaseHelper.writableDatabase
+
         //Toast.makeText(this, "LearnDB初始化成功", Toast.LENGTH_SHORT).show()
 
         val modelVideoDataBaseHelper =ModelVideoDataBaseHelper(this,"Model.db",1)

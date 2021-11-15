@@ -12,6 +12,7 @@ import androidx.compose.foundation.lazy.LazyVerticalGrid
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.AnnotatedString
@@ -19,7 +20,6 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.scut.fundialect.R
 import com.scut.fundialect.activity.BaseComposeActivity
-import com.scut.fundialect.activity.compose.ButtonAppBar
 import com.scut.fundialect.activity.compose.MyButtonAppBar
 import com.scut.fundialect.activity.learn.ui.theme.FunDialectTheme
 import com.scut.fundialect.activity.learn.ui.theme.white
@@ -87,7 +87,7 @@ private fun MainPage(context: Context) {
 
 @Composable
 fun MyWordLibraryPage(context: Context) {
-    MyButtonAppBar(onStateChange = {}, context = context)
+    MyButtonAppBar(onStateChange = {}, context = context,0)
 }
 
 @Composable
@@ -157,96 +157,102 @@ private fun MySelectedPage(
     showedCityId: List<Int>,
     onStateChange: (key: Int, value: Int) -> Unit
 ) {
-    var cityStateNow by remember { mutableStateOf(0) }
-    var cityStateLast = 0
-    // Screen content
-    Column(modifier = Modifier.fillMaxWidth()) {
-        TabRow(
-            selectedTabIndex = cityStateNow,
+    Column(Modifier.fillMaxSize(),
+            horizontalAlignment = Alignment.CenterHorizontally
 
-            ) {
-            Tab(
-                text = { Text("推荐") },
-                selected = cityStateNow == 0,
-                onClick = { cityStateNow = 0 }
-            )
-            showedCityId.forEachIndexed { index, cityId ->
-                Tab(
-                    text = {
-                        Text(CityHelper.getCityName(cityId)+"话")
-                    },
-                    selected = cityStateNow == index+1,
-                    onClick = { cityStateLast=cityStateNow
-                        cityStateNow = index+1
+        ) {
+        var cityStateNow by remember { mutableStateOf(0) }
+        var cityStateLast = 0
+        // Screen content
+        Column(modifier = Modifier.fillMaxWidth()) {
+            TabRow(
+                selectedTabIndex = cityStateNow,
 
-                    }
-                )
-
-            }
-            Tab(
-                selected = cityStateNow == 5,
-                onClick = {
-                    /**
-                     * 如果之前选中的不是第五个按钮：
-                     *      -那就选中第五个按钮
-                     * 如果之前选中了第五个按钮
-                     *      -那就选中第五个按钮之前的按钮
-                     * **/
-                    if(cityStateNow != 5){
-                        cityStateLast = cityStateNow
-                        cityStateNow = 5
-                    }else{
-                        cityStateNow = cityStateLast
-                    }
-                }
-            ){
-                Image(
-                    painter = painterResource(id = R.drawable.ic_launcher_background),
-                    contentDescription = "加号")
-            }
-        }
-        //LazyColumn(content = )
-        if(cityStateNow == 5){
-            Surface(
-                modifier = Modifier
-                    .height(200.dp)
-                    .fillMaxWidth(),
-                shape = RoundedCornerShape (0. dp,0.dp,25.dp,25.dp),
-                color = black
-            ) {
-                LazyVerticalGrid(
-                    cells = GridCells.Adaptive(minSize = 64.dp)
                 ) {
-                    val cityList = getChildCity(1)
-                    items(cityList.size) { index ->
-                        Box(modifier = Modifier
-                            .clickable {
-                                onStateChange(cityStateLast, index)
-                            }
-                            .width(64.dp)
-                            .height(32.dp),
+                Tab(
+                    text = { Text("推荐") },
+                    selected = cityStateNow == 0,
+                    onClick = { cityStateNow = 0 }
+                )
+                showedCityId.forEachIndexed { index, cityId ->
+                    Tab(
+                        text = {
+                            Text(CityHelper.getCityName(cityId)+"话")
+                        },
+                        selected = cityStateNow == index+1,
+                        onClick = { cityStateLast=cityStateNow
+                            cityStateNow = index+1
 
-
-                            ) {
-                            Text(
-                                text = AnnotatedString(cityList[index].getTheName()),
-                                color = white,
-                                textAlign = TextAlign.Center,
-                                modifier = Modifier.fillMaxWidth()
-
-
-                            )
                         }
+                    )
 
-
+                }
+                Tab(
+                    selected = cityStateNow == 5,
+                    onClick = {
+                        /**
+                         * 如果之前选中的不是第五个按钮：
+                         *      -那就选中第五个按钮
+                         * 如果之前选中了第五个按钮
+                         *      -那就选中第五个按钮之前的按钮
+                         * **/
+                        if(cityStateNow != 5){
+                            cityStateLast = cityStateNow
+                            cityStateNow = 5
+                        }else{
+                            cityStateNow = cityStateLast
+                        }
                     }
+                ){
+                    Image(
+                        painter = painterResource(id = R.drawable.ic_launcher_background),
+                        contentDescription = "加号")
+                }
+            }
+            //LazyColumn(content = )
+            if(cityStateNow == 5){
+                Surface(
+                    modifier = Modifier
+                        .height(200.dp)
+                        .fillMaxWidth(),
+                    shape = RoundedCornerShape (0. dp,0.dp,25.dp,25.dp),
+                    color = black
+                ) {
+                    LazyVerticalGrid(
+                        cells = GridCells.Adaptive(minSize = 64.dp)
+                    ) {
+                        val cityList = getChildCity(1)
+                        items(cityList.size) { index ->
+                            Box(modifier = Modifier
+                                .clickable {
+                                    onStateChange(cityStateLast, index)
+                                }
+                                .width(64.dp)
+                                .height(32.dp),
+
+
+                                ) {
+                                Text(
+                                    text = AnnotatedString(cityList[index].getTheName()),
+                                    color = white,
+                                    textAlign = TextAlign.Center,
+                                    modifier = Modifier.fillMaxWidth()
+
+
+                                )
+                            }
+
+
+                        }
+                    }
+
+
                 }
 
-
             }
-
         }
     }
+
 
 }
 

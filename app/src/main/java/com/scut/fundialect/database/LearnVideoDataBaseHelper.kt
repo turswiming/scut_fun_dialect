@@ -8,11 +8,11 @@ import android.database.sqlite.SQLiteDatabase
 
 class LearnVideoDataBaseHelper( context: Context, name:String, version:Int):
     VideoDataBaseHelper(context,name,version) {
-
+    public val tableName ="videoInfo"
     //这一行的意思是屏蔽报错......绝了
     @SuppressLint("Range")
     fun convertdata(fromData:SQLiteDatabase, id:Int, thisData:SQLiteDatabase){
-        val results =  fromData.query("videoInfo",
+        val results =  fromData.query(tableName,
             null,
             "where id = $id",
             null,

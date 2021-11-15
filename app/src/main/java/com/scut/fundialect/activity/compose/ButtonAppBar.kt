@@ -10,7 +10,6 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
-import com.scut.fundialect.MyApplication.Companion.context
 import com.scut.fundialect.R
 import com.scut.fundialect.activity.culture.CultureActivity
 import com.scut.fundialect.activity.dubing.DubingActivity
@@ -39,10 +38,11 @@ fun MyPreview(){
 @Composable
 public fun MyButtonAppBar(
     onStateChange: (Int) -> Unit,
-    context: Context
+    context: Context,
+    initPageIndex: Int
 ) {
     BottomAppBar {
-        var buttomStateNow by remember { mutableStateOf(0) }
+        var buttomStateNow by remember { mutableStateOf(initPageIndex) }
         TabRow(selectedTabIndex = buttomStateNow) {
             val titles = listOf<ButtonAppBar.ButtomTitles>(
                 ButtonAppBar.ButtomTitles("学习", R.drawable.ic_launcher_foreground),

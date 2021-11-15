@@ -1,8 +1,6 @@
 package com.scut.fundialect.activity
 
-import android.content.Context
 import android.os.Bundle
-import androidx.activity.ComponentActivity
 import androidx.appcompat.app.AppCompatActivity
 
 open class BaseActivity: AppCompatActivity() {

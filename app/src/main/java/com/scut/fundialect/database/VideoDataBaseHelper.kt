@@ -41,7 +41,7 @@ open class VideoDataBaseHelper(val context: Context, name:String, version:Int):
     val DatePattern = "yyyy-MM-dd HH:mm:ss.SSS"
     fun initVideoDatabase(db: SQLiteDatabase?){
         val value1 = ContentValues().apply {
-//            put("videoUri", Uri.parse( "android.resource://" + getPackageName() + "/" + R.raw.video1))
+            put("videoUri","video1.mp4")
             put("videoName", "欣赏黑色")
             put("videoLike", 342)
             put("videoIsLiked", 0)
