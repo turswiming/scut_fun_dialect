@@ -185,7 +185,9 @@ class LoginActivity : BaseActivity() {
         }
         return false
     }
-    //下面的是学习用范例，别删，但是也没啥用
+    /**
+     * 下面的是学习用范例，别删，但是也没啥用
+     * **/
     fun gotoActivity():Unit{
 
     }
