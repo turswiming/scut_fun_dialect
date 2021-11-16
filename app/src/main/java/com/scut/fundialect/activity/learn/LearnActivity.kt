@@ -17,16 +17,17 @@ import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.github.stuxuhai.jpinyin.PinyinFormat
 import com.github.stuxuhai.jpinyin.PinyinHelper
 import com.scut.fundialect.MyApplication.Companion.context
 import com.scut.fundialect.R
 import com.scut.fundialect.activity.BaseComposeActivity
-import com.scut.fundialect.activity.compose.ButtonAppBar
 import com.scut.fundialect.activity.compose.MyButtonAppBar
 import com.scut.fundialect.activity.compose.VideScreen
 import com.scut.fundialect.activity.learn.ui.theme.FunDialectTheme
@@ -36,7 +37,7 @@ import com.scut.fundialect.activity.learn.ui.theme.white
 import com.scut.fundialect.database.helper.CityHelper
 import com.scut.fundialect.database.helper.CityHelper.getChildCity
 import com.scut.fundialect.database.helper.LearnVideoHelper
-import com.scut.fundialect.database.helper.LearnVideoHelper.getCommitName
+import com.scut.fundialect.database.helper.LearnVideoHelper.getCommitNumber
 import com.scut.fundialect.ui.theme.black
 import com.scut.fundialect.ui.theme.blackTransparent
 
@@ -355,8 +356,8 @@ private fun MySelectedPage(
 @ExperimentalMaterialApi
 @Composable
 private fun VideoPlayerWithText(videoInfo: LearnVideoHelper.VideoInfo,videoId:Int) {
-    val videoId1  = videoId
 
+    var videoId1  = videoId
 
     var uri by remember { mutableStateOf(videoInfo.videoUri) }
     var name by remember { mutableStateOf(videoInfo.videoName) }
@@ -371,14 +372,10 @@ private fun VideoPlayerWithText(videoInfo: LearnVideoHelper.VideoInfo,videoId:In
     var videoIsLiked by remember { mutableStateOf(videoInfo.videoIsLiked) }
     var videoIsCollect by remember { mutableStateOf(videoInfo.videoIsCollect) }
     var commitNum by remember {
-        mutableStateOf(getCommitName(videoId))
+        mutableStateOf(getCommitNumber(videoId))
     }
-
-
-
-
-    Box(modifier = Modifier.width(videoId1.dp)) {
-        if(videoId!=videoId1){
+    Box(modifier = Modifier.width(videoId.dp)) {
+//        if(videoId!=videoId1){
             uri = videoInfo.videoUri
             name =videoInfo.videoName
             introduce=videoInfo.videoIntroduce
@@ -391,10 +388,19 @@ private fun VideoPlayerWithText(videoInfo: LearnVideoHelper.VideoInfo,videoId:In
             videoIsLiked=videoInfo.videoIsLiked
             videoIsCollect=videoInfo.videoIsCollect
             Toast.makeText(context,"视频重组",Toast.LENGTH_SHORT).show()
-            commitNum = getCommitName(videoId)
+            commitNum = getCommitNumber(videoId)
 
-        }
+//        }
     }
+    //var videoIdOld = videoId1
+
+
+
+
+
+
+
+
 
 
     /**
@@ -457,13 +463,17 @@ private fun VideoPlayerWithText(videoInfo: LearnVideoHelper.VideoInfo,videoId:In
                 Column(modifier = Modifier
                     .fillMaxHeight()
                     .width(300.dp)
-                    .background(Purple700)
+                    .background(Purple700),
+                    verticalArrangement = Arrangement.Top,
+                    horizontalAlignment = Alignment.Start
+
+
                 ) {
                     Row(
                         modifier = Modifier
                             .fillMaxWidth(),
                         verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.SpaceBetween
+                        horizontalArrangement = Arrangement.Center
                     ) {
 
                         name.forEach { char ->
@@ -473,19 +483,38 @@ private fun VideoPlayerWithText(videoInfo: LearnVideoHelper.VideoInfo,videoId:In
                                 PinyinFormat.WITH_TONE_MARK
                             )
                             Column(horizontalAlignment = Alignment.CenterHorizontally){
-                                Text(text = pinyin,color = white)
-                                Spacer(modifier = Modifier.height(4.dp))
-                                Text(text = char.toString(),color = white,modifier = Modifier.background(Purple200))
+                                Text(
+                                    text = pinyin,
+                                    color = white,
+                                    modifier = Modifier
+                                        .width(50.dp),
+                                    textAlign = TextAlign.Center
+                                )
+                                Spacer(modifier = Modifier.height(10.dp))
+                                Box(modifier = Modifier.size(35.dp)) {
+                                    Image(
+                                        painter = painterResource(id = R.drawable.ic_launcher_background),
+                                        contentDescription = "文字背景")
+                                    Text(
+                                        text = char.toString(),
+                                        color = white,
+                                        fontSize = 30.sp
+                                    )
+                                }
+
                             }
 
                         }
                         Surface(
                             shape = CircleShape,
+                            modifier = Modifier.size(60.dp),
                             onClick = {
-                            TODO("把他收藏了")
+
+                                videoIsCollect =!videoIsCollect
+                                LearnVideoHelper.switchColiect(videoId)
                         }) {
                             Image(
-                                painter = painterResource(R.drawable.ic_launcher_background) ,
+                                painter = swicherPainter(R.drawable.ic_launcher_foreground,R.drawable.ic_launcher_background,videoIsCollect),
                                 contentDescription = ""
                             )
                         }
@@ -503,7 +532,7 @@ private fun VideoPlayerWithText(videoInfo: LearnVideoHelper.VideoInfo,videoId:In
                     modifier = Modifier
                         .fillMaxHeight()
                         .width(100.dp)
-                        .background(white)
+                        //.background(white)
 
                 )
             }
@@ -522,25 +551,58 @@ private fun VideoPlayerWithText(videoInfo: LearnVideoHelper.VideoInfo,videoId:In
                 .height(200.dp)
                 .fillMaxWidth()
             )
-            Row(horizontalArrangement = Arrangement.SpaceBetween) {
+            Row(
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
                 Spacer(modifier = Modifier
                     .fillMaxHeight()
-                    .width(200.dp))
-                Box(modifier = Modifier
-                    .fillMaxHeight()
-                    .width(200.dp)) {
-                    FloatButton("配音",R.drawable.ic_launcher_background,onClick = {
+                    .width(300.dp))
+                Column(
+                    modifier = Modifier
+                        .fillMaxHeight()
+                        .width(200.dp),
+                    verticalArrangement = Arrangement.SpaceBetween,
+                    horizontalAlignment = Alignment.CenterHorizontally,
+
+                ) {
+                    /**
+                     *
+                     * 配音的按钮。
+                     * */
+                    FloatButton("配音",{R.drawable.ic_launcher_background}, onClick = {
                         TODO("")
                     })
-                    FloatButton(likeNumber.toString(),R.drawable.ic_launcher_background,onClick = {
+                    /**
+                     * 下面的是点赞的按钮。
+                     *
+                     * 两个图片各自是点赞和没有点赞时候显示的内容
+                     * */
+                    FloatButton(likeNumber.toString(),
+                        image = {
+                        if(videoIsLiked){
+                            R.drawable.ic_launcher_background
+                        }
+                        else{
+                            R.drawable.ic_launcher_foreground
+                        }
+                    }) {
+                        videoIsLiked = !videoIsLiked
+                        LearnVideoHelper.switchLike(videoId)
+
+                    }
+                    /**
+                     *
+                     * 评论的按钮。
+                     * */
+                    FloatButton(commitNum.toString(),{R.drawable.ic_launcher_background}, onClick = {
                         TODO("")
 
                     })
-                    FloatButton(commitNum.toString(),R.drawable.ic_launcher_background,onClick = {
-                        TODO("")
-
-                    })
-                    FloatButton("分享",R.drawable.ic_launcher_background,onClick = {
+                    /**
+                     *
+                     * 分享的按钮。
+                     * */
+                    FloatButton("分享",{R.drawable.ic_launcher_background}, onClick = {
                         TODO("")
 
                     })
@@ -550,12 +612,40 @@ private fun VideoPlayerWithText(videoInfo: LearnVideoHelper.VideoInfo,videoId:In
     }
 }
 
+@Composable
+private fun swicherPainter(truePic: Int,falsePic:Int,boolean: Boolean):Painter{
+if (boolean){
+    return painterResource(id = truePic)
+}else{
+    return painterResource(id = falsePic)
+}
+}
+
 
 @Composable
 fun FloatButton(
     text:String,
-    image:Int,
-    onClick: (Int) -> Unit,
+    image: () -> Int,
+    onClick: () -> Unit,
 ) {
-    TODO("Not yet implemented")
+    Column(
+        Modifier
+            .clickable {
+            onClick()
+                       },
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Surface(
+            shape = CircleShape,
+            modifier = Modifier.size(60.dp)
+        ){
+            Image(
+                painter = painterResource(id = image()) ,
+                contentDescription = text,
+                modifier = Modifier.fillMaxSize()
+            )
+        }
+
+        Text(text = text,color = white)
+    }
 }

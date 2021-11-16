@@ -9,7 +9,6 @@ import com.scut.fundialect.activity.culture.ui.theme.FunDialectTheme
 
 class CultureActivity : BaseComposeActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
-
         super.onCreate(savedInstanceState)
         setContent {
             FunDialectTheme {
@@ -23,6 +22,4 @@ class CultureActivity : BaseComposeActivity() {
 
     }
 
-
 }
-
