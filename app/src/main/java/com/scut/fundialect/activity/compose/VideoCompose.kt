@@ -19,7 +19,7 @@ class VideoCompose {
 
 }
 @Composable
-fun VideScreen (){
+fun VideScreen (uri:String){
     val context = LocalContext.current
     val exoPlayer = SimpleExoPlayer.Builder(context)
         .build()
@@ -27,7 +27,9 @@ fun VideScreen (){
             playWhenReady = false
         }
     //uri可以时网络url资源，这里我adb push了一个视频到使用sd卡根目录
-    val mediaItem = MediaItem.fromUri(Uri.parse("android.resource://"+ context.packageName +"/"+ R.raw.video1))
+    //val mediaItem = MediaItem.fromUri(Uri.parse("android.resource://"+ context.packageName +"/"+ R.raw.video1))
+    val mediaItem = MediaItem.fromUri(Uri.parse(uri))
+
     exoPlayer.setMediaItem(mediaItem)
     exoPlayer.prepare()
     exoPlayer.play()

@@ -18,6 +18,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -75,7 +76,14 @@ private fun MainPage(context: Context) {
             //Text(text = "${state1.toString()}")
             if(state1==0){
                 /**
+                 *
+                 *
+                 *
                  * 这里是“精选”页面的全部内容，包括一个视频播放器，不包括下面的bar
+                 *
+                 *
+                 *
+                 *
                  * **/
                 MySelectedPage(showedPage1,
                     onStateChange = {
@@ -87,7 +95,13 @@ private fun MainPage(context: Context) {
                     })
             }else{
                 /**
+                 *
+                 *
+                 *
                  * 这里是“词库”页面的全部内容，不包括下面的bar
+                 *
+                 *
+                 *
                  * **/
                 MyWordLibraryPage(context)
             }
@@ -96,7 +110,15 @@ private fun MainPage(context: Context) {
 
     }
 }
-
+/**
+ *
+ *
+ *
+ * 这里是“词库”页面的全部内容，不包括下面的bar
+ *
+ *
+ *
+ * **/
 @Composable
 fun MyWordLibraryPage(context: Context) {
     Scaffold(
@@ -115,7 +137,7 @@ private fun MyTopAppBar(state1: Int, titles: List<String>, onStateChange: (Int) 
     //界面最上面的选择框框，包括精选和词库
     TopAppBar(
         backgroundColor = MaterialTheme.colors.primary
-    ) { /* Top app bar content */
+    ) { /** Top app bar content */
         Row(
             modifier = Modifier
                 .padding(8.dp)
@@ -146,7 +168,12 @@ private fun MyTopAppBar(state1: Int, titles: List<String>, onStateChange: (Int) 
                 }
             }
 
-            //搜索按钮
+            /**
+             *
+             * 搜索按钮
+             *
+             *
+             * */
             Button(
                 onClick = { },
                 contentPadding = PaddingValues(
@@ -169,7 +196,16 @@ private fun MyTopAppBar(state1: Int, titles: List<String>, onStateChange: (Int) 
 }
 
 
-
+/**
+ *
+ *
+ *
+ * 这里是“精选”页面的全部内容，包括一个视频播放器，不包括下面的bar
+ *
+ *
+ *
+ *
+ * **/
 @ExperimentalFoundationApi
 @Composable
 private fun MySelectedPage(
@@ -231,6 +267,16 @@ private fun MySelectedPage(
             //LazyColumn(content = )
 
         }
+
+        /**
+         *
+         *
+         *
+         * 这个if里面是选择地区，更改地区的向下弹出的菜单*
+         *
+         *
+         *
+         * */
         if(cityStateNow == 5){
             Surface(
                 modifier = Modifier
@@ -242,6 +288,16 @@ private fun MySelectedPage(
                 LazyVerticalGrid(
                     cells = GridCells.Adaptive(minSize = 64.dp)
                 ) {
+                    /**
+                     *
+                     *
+                     *
+                     * 这个下面的东西代表着每一个单独的写有城市名字的小按钮*
+                     *
+                     *
+                     *
+                     * */
+
                     val cityList = getChildCity(1)
                     items(cityList.size) { index ->
                         Box(
@@ -279,9 +335,38 @@ private fun MySelectedPage(
             }
 
         }
-        //这个盒子里面是视频播放器和一系列的漂浮文字
+        /**
+         *
+         *
+         *
+         * 这个盒子里面是视频播放器和一系列的漂浮文字*
+         *
+         *
+         *
+         * */
         Box(modifier = Modifier.fillMaxSize()) {
-            VideScreen()
+            /**
+             *
+             *
+             *
+             * 这个盒子里面是一系列的漂浮文字*
+             *
+             *
+             *
+             * */
+            Box(modifier = Modifier.fillMaxSize()) {
+
+            }
+            /**
+             *
+             *
+             * 视频播放器，很明显这个东西需要放在最下面，因此不使用任何的排版方式
+             *
+             *
+             * **/
+            var uri by remember { mutableStateOf("") }
+
+            VideScreen(uri)
         }
     }
 
