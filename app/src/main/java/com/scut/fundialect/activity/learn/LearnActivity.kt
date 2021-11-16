@@ -1,6 +1,7 @@
 package com.scut.fundialect.activity.learn
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.compose.setContent
@@ -31,7 +32,6 @@ import com.scut.fundialect.activity.BaseComposeActivity
 import com.scut.fundialect.activity.compose.MyButtonAppBar
 import com.scut.fundialect.activity.compose.VideScreen
 import com.scut.fundialect.activity.learn.ui.theme.FunDialectTheme
-import com.scut.fundialect.activity.learn.ui.theme.Purple200
 import com.scut.fundialect.activity.learn.ui.theme.Purple700
 import com.scut.fundialect.activity.learn.ui.theme.white
 import com.scut.fundialect.database.helper.CityHelper
@@ -56,8 +56,12 @@ class LearnActivity : BaseComposeActivity() {
             }
         }
     }
-}
 
+}
+fun goToSearchPage(context: Context) {
+    val intent = Intent(context, LearnSearchActivity::class.java)
+    context.startActivity(intent)
+}
 
 @ExperimentalMaterialApi
 @ExperimentalFoundationApi
@@ -74,7 +78,7 @@ private fun MainPage(context: Context) {
             /**
              * 最上面的bar，包括精选和词库
              * **/
-            MyTopAppBar(state1, titles,onStateChange = {state1 = it })
+            MyTopAppBar(context,state1, titles,onStateChange = {state1 = it })
 
         }
     ) {
@@ -139,7 +143,7 @@ fun MyWordLibraryPage(context: Context) {
 }
 
 @Composable
-private fun MyTopAppBar(state1: Int, titles: List<String>, onStateChange: (Int) -> Unit) {
+private fun MyTopAppBar(context: Context,state1: Int, titles: List<String>, onStateChange: (Int) -> Unit) {
     var state11 = state1
     //界面最上面的选择框框，包括精选和词库
     TopAppBar(
@@ -182,7 +186,10 @@ private fun MyTopAppBar(state1: Int, titles: List<String>, onStateChange: (Int) 
              *
              * */
             Button(
-                onClick = { },
+                onClick = {
+                    goToSearchPage(context)
+
+                },
                 contentPadding = PaddingValues(
                     start = 0.dp,
                     top = 0.dp,
@@ -195,12 +202,15 @@ private fun MyTopAppBar(state1: Int, titles: List<String>, onStateChange: (Int) 
                 Image(
                     painter = painterResource(id = R.drawable.ic_launcher_foreground),
                     contentDescription = "search icon"
+
                 )
             }
         }
 
     }
 }
+
+
 
 
 /**

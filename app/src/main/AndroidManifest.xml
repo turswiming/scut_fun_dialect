@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.scut.fundialect" >
+    package="com.scut.fundialect">
 
     <uses-permission android:name="android.permission.INTERNET" />
 
@@ -11,7 +11,10 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.FunDialect" >
+        android:theme="@style/Theme.FunDialect">
+        <activity
+            android:name=".activity.learn.LearnSearchActivity"
+            android:exported="false" />
         <activity
             android:name=".activity.TestActivity"
             android:exported="false" />
@@ -40,7 +43,7 @@
             android:name="androidx.core.content.FileProvider"
             android:authorities="com.scut.fundialect.fileprovider"
             android:exported="false"
-            android:grantUriPermissions="true" >
+            android:grantUriPermissions="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_paths" />
@@ -48,7 +51,7 @@
 
         <activity
             android:name=".activity.LoginActivity"
-            android:exported="true" >
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
