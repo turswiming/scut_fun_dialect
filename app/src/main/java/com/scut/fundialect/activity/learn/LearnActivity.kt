@@ -12,6 +12,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.GridCells
 import androidx.compose.foundation.lazy.LazyVerticalGrid
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.*
@@ -46,8 +47,15 @@ import com.scut.fundialect.database.helper.CityHelper.getChildCity
 import com.scut.fundialect.database.helper.LearnVideoHelper
 import com.scut.fundialect.ui.theme.black
 import com.scut.fundialect.ui.theme.blackTransparent
+import com.github.stuxuhai.jpinyin.PinyinFormat
+
+import com.github.stuxuhai.jpinyin.PinyinHelper
+
+
+
 
 class LearnActivity : BaseComposeActivity() {
+    @ExperimentalMaterialApi
     @ExperimentalFoundationApi
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -63,6 +71,7 @@ class LearnActivity : BaseComposeActivity() {
 }
 
 
+@ExperimentalMaterialApi
 @ExperimentalFoundationApi
 @Composable
 private fun MainPage(context: Context) {
@@ -216,6 +225,7 @@ private fun MyTopAppBar(state1: Int, titles: List<String>, onStateChange: (Int) 
  *
  *
  * **/
+@ExperimentalMaterialApi
 @ExperimentalFoundationApi
 @Composable
 private fun MySelectedPage(
@@ -355,6 +365,7 @@ private fun MySelectedPage(
 
 }
 
+@ExperimentalMaterialApi
 @Composable
 private fun VideoPlayerWithText(videoInfo: LearnVideoHelper.VideoInfo,videoId:Int) {
     val videoId1  = videoId
@@ -466,8 +477,29 @@ private fun VideoPlayerWithText(videoInfo: LearnVideoHelper.VideoInfo,videoId:In
                     ) {
 
                         name.forEach { char ->
-                            Text(text = char.toString(),color = white,modifier = Modifier.background(Purple200))
+                            val pinyin = PinyinHelper.convertToPinyinString(
+                                char.toString(),
+                                ",",
+                                PinyinFormat.WITH_TONE_MARK
+                            )
+                            Column(horizontalAlignment = Alignment.CenterHorizontally){
+                                Text(text = pinyin,color = white)
+                                Spacer(modifier = Modifier.height(4.dp))
+                                Text(text = char.toString(),color = white,modifier = Modifier.background(Purple200))
+                            }
+
                         }
+                        Surface(
+                            shape = CircleShape,
+                            onClick = {
+                            TODO("把他收藏了")
+                        }) {
+                            Image(
+                                painter = painterResource(R.drawable.ic_launcher_background) ,
+                                contentDescription = ""
+                            )
+                        }
+
                     }
                     Text(text = "释义",color = white)
                     Text(text = introduce,color = white)
