@@ -28,6 +28,7 @@ import com.google.android.exoplayer2.ui.PlayerView
 import com.scut.fundialect.R
 import com.scut.fundialect.activity.BaseComposeActivity
 import com.scut.fundialect.activity.compose.MyButtonAppBar
+import com.scut.fundialect.activity.compose.VideScreen
 import com.scut.fundialect.activity.learn.ui.theme.FunDialectTheme
 import com.scut.fundialect.activity.learn.ui.theme.white
 import com.scut.fundialect.database.helper.CityHelper
@@ -285,38 +286,4 @@ private fun MySelectedPage(
     }
 
 
-}
-
-@Composable
-fun VideScreen (){
-    val context = LocalContext.current
-    val exoPlayer = SimpleExoPlayer.Builder(context)
-        .build()
-        .apply {
-            playWhenReady = false
-        }
-    //uri可以时网络url资源，这里我adb push了一个视频到使用sd卡根目录
-    val mediaItem = MediaItem.fromUri(Uri.parse("android.resource://"+ context.packageName +"/"+R.raw.video1))
-    exoPlayer.setMediaItem(mediaItem)
-    exoPlayer.prepare()
-    exoPlayer.play()
-    PlayerSurface(modifier = Modifier.width(400.dp).height(400.dp)){
-        it.player = exoPlayer
-    }
-}
-
-@Composable
-fun PlayerSurface(
-    modifier: Modifier,
-    onPlayerViewAvailable: (PlayerView) -> Unit = {}
-) {
-    AndroidView(
-        factory = { context ->
-            PlayerView(context).apply {
-                useController = true
-                onPlayerViewAvailable(this)
-            }
-        },
-        modifier = modifier
-    )
 }

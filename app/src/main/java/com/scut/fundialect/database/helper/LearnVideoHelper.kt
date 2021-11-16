@@ -12,9 +12,20 @@ object LearnVideoHelper {
         val learnVideoDataBaseHelper = LearnVideoDataBaseHelper(context,"Learn.db",1)
         learnDB =learnVideoDataBaseHelper.writableDatabase
     }
+    var lastShowedVideo = 0
+    /**
+     * 自动获取下一个视频。
+     * 视频内容不会重样
+     * 所有查询语句都封装好了，你一点都看不着。
+     * **/
     fun getNextVideo():VideoInfo{
-        val videoInfo = VideoInfo(1)
-        return videoInfo
+        try {
+            return VideoInfo(++lastShowedVideo)
+
+        } catch (e: Exception) {
+            lastShowedVideo=1
+            return VideoInfo(1)
+        }
     }
 
     @SuppressLint("Range", "Recycle")
