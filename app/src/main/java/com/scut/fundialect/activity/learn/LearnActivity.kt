@@ -1,7 +1,6 @@
 package com.scut.fundialect.activity.learn
 
 import android.content.Context
-import android.net.Uri
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.compose.setContent
@@ -18,24 +17,16 @@ import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.layout.AlignmentLine
-import androidx.compose.ui.layout.FirstBaseline
-import androidx.compose.ui.layout.layout
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.viewinterop.AndroidView
-import com.google.android.exoplayer2.MediaItem
-import com.google.android.exoplayer2.SimpleExoPlayer
-import com.google.android.exoplayer2.ui.PlayerView
+import com.github.stuxuhai.jpinyin.PinyinFormat
+import com.github.stuxuhai.jpinyin.PinyinHelper
 import com.scut.fundialect.MyApplication.Companion.context
 import com.scut.fundialect.R
 import com.scut.fundialect.activity.BaseComposeActivity
+import com.scut.fundialect.activity.compose.ButtonAppBar
 import com.scut.fundialect.activity.compose.MyButtonAppBar
 import com.scut.fundialect.activity.compose.VideScreen
 import com.scut.fundialect.activity.learn.ui.theme.FunDialectTheme
@@ -45,13 +36,9 @@ import com.scut.fundialect.activity.learn.ui.theme.white
 import com.scut.fundialect.database.helper.CityHelper
 import com.scut.fundialect.database.helper.CityHelper.getChildCity
 import com.scut.fundialect.database.helper.LearnVideoHelper
+import com.scut.fundialect.database.helper.LearnVideoHelper.getCommitName
 import com.scut.fundialect.ui.theme.black
 import com.scut.fundialect.ui.theme.blackTransparent
-import com.github.stuxuhai.jpinyin.PinyinFormat
-
-import com.github.stuxuhai.jpinyin.PinyinHelper
-
-
 
 
 class LearnActivity : BaseComposeActivity() {
@@ -383,8 +370,9 @@ private fun VideoPlayerWithText(videoInfo: LearnVideoHelper.VideoInfo,videoId:In
 
     var videoIsLiked by remember { mutableStateOf(videoInfo.videoIsLiked) }
     var videoIsCollect by remember { mutableStateOf(videoInfo.videoIsCollect) }
-
-
+    var commitNum by remember {
+        mutableStateOf(getCommitName(videoId))
+    }
 
 
 
@@ -403,6 +391,8 @@ private fun VideoPlayerWithText(videoInfo: LearnVideoHelper.VideoInfo,videoId:In
             videoIsLiked=videoInfo.videoIsLiked
             videoIsCollect=videoInfo.videoIsCollect
             Toast.makeText(context,"视频重组",Toast.LENGTH_SHORT).show()
+            commitNum = getCommitName(videoId)
+
         }
     }
 
@@ -518,6 +508,54 @@ private fun VideoPlayerWithText(videoInfo: LearnVideoHelper.VideoInfo,videoId:In
                 )
             }
         }
+        /**
+         *
+         *
+         *
+         * 这个盒子里面是一系列的漂浮按鈕*
+         *
+         *
+         *
+         * */
+        Column(modifier = Modifier.fillMaxSize()) {
+            Spacer(modifier = Modifier
+                .height(200.dp)
+                .fillMaxWidth()
+            )
+            Row(horizontalArrangement = Arrangement.SpaceBetween) {
+                Spacer(modifier = Modifier
+                    .fillMaxHeight()
+                    .width(200.dp))
+                Box(modifier = Modifier
+                    .fillMaxHeight()
+                    .width(200.dp)) {
+                    FloatButton("配音",R.drawable.ic_launcher_background,onClick = {
+                        TODO("")
+                    })
+                    FloatButton(likeNumber.toString(),R.drawable.ic_launcher_background,onClick = {
+                        TODO("")
 
+                    })
+                    FloatButton(commitNum.toString(),R.drawable.ic_launcher_background,onClick = {
+                        TODO("")
+
+                    })
+                    FloatButton("分享",R.drawable.ic_launcher_background,onClick = {
+                        TODO("")
+
+                    })
+                }
+            }
+        }
     }
+}
+
+
+@Composable
+fun FloatButton(
+    text:String,
+    image:Int,
+    onClick: (Int) -> Unit,
+) {
+    TODO("Not yet implemented")
 }

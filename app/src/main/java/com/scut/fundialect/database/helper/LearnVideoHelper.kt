@@ -12,6 +12,10 @@ object LearnVideoHelper {
         val learnVideoDataBaseHelper = LearnVideoDataBaseHelper(context,"Learn.db",1)
         learnDB =learnVideoDataBaseHelper.writableDatabase
     }
+    fun getCommitName(videoId: Int):Int {
+        TODO("完成评论数量内容")
+        return 666
+    }
     var lastShowedVideo = 0
     /**
      * 自动获取下一个视频。

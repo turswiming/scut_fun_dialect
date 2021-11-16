@@ -13,7 +13,7 @@ class CultureActivity : BaseComposeActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             FunDialectTheme {
-                // A surface container using the 'background' color from the theme
+                /** A surface container using the 'background' color from the theme*/
                 Surface(color = MaterialTheme.colors.background) {
 
 
