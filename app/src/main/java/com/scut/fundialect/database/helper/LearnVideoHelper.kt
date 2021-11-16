@@ -41,6 +41,7 @@ object LearnVideoHelper {
         val videoCollect:Int
         val videoUpdateTime:Int
         val videoBelongCityId:Int
+
         val videoIsLiked:Boolean
         val videoIsCollect:Boolean
 

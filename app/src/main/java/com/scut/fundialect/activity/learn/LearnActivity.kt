@@ -3,6 +3,7 @@ package com.scut.fundialect.activity.learn
 import android.content.Context
 import android.net.Uri
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
@@ -16,24 +17,33 @@ import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.AlignmentLine
+import androidx.compose.ui.layout.FirstBaseline
+import androidx.compose.ui.layout.layout
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import com.google.android.exoplayer2.MediaItem
 import com.google.android.exoplayer2.SimpleExoPlayer
 import com.google.android.exoplayer2.ui.PlayerView
+import com.scut.fundialect.MyApplication.Companion.context
 import com.scut.fundialect.R
 import com.scut.fundialect.activity.BaseComposeActivity
 import com.scut.fundialect.activity.compose.MyButtonAppBar
 import com.scut.fundialect.activity.compose.VideScreen
 import com.scut.fundialect.activity.learn.ui.theme.FunDialectTheme
+import com.scut.fundialect.activity.learn.ui.theme.Purple200
+import com.scut.fundialect.activity.learn.ui.theme.Purple700
 import com.scut.fundialect.activity.learn.ui.theme.white
 import com.scut.fundialect.database.helper.CityHelper
 import com.scut.fundialect.database.helper.CityHelper.getChildCity
+import com.scut.fundialect.database.helper.LearnVideoHelper
 import com.scut.fundialect.ui.theme.black
 import com.scut.fundialect.ui.theme.blackTransparent
 
@@ -335,40 +345,147 @@ private fun MySelectedPage(
             }
 
         }
-        /**
-         *
-         *
-         *
-         * 这个盒子里面是视频播放器和一系列的漂浮文字*
-         *
-         *
-         *
-         * */
-        Box(modifier = Modifier.fillMaxSize()) {
-            /**
-             *
-             *
-             *
-             * 这个盒子里面是一系列的漂浮文字*
-             *
-             *
-             *
-             * */
-            Box(modifier = Modifier.fillMaxSize()) {
+        val videoInfo=LearnVideoHelper.VideoInfo(1)
+        val videoId by remember {
+            mutableStateOf(1)
+        }
+        VideoPlayerWithText(videoInfo,videoId)
+    }
 
-            }
-            /**
-             *
-             *
-             * 视频播放器，很明显这个东西需要放在最下面，因此不使用任何的排版方式
-             *
-             *
-             * **/
-            var uri by remember { mutableStateOf("") }
 
-            VideScreen(uri)
+}
+
+@Composable
+private fun VideoPlayerWithText(videoInfo: LearnVideoHelper.VideoInfo,videoId:Int) {
+    val videoId1  = videoId
+
+
+    var uri by remember { mutableStateOf(videoInfo.videoUri) }
+    var name by remember { mutableStateOf(videoInfo.videoName) }
+    var introduce by remember { mutableStateOf(videoInfo.videoIntroduce) }
+
+    var likeNumber by remember { mutableStateOf(videoInfo.videoLike) }
+    var videoUploaderId by remember { mutableStateOf(videoInfo.videoUploaderId) }
+    var videoCollect by remember { mutableStateOf(videoInfo.videoCollect) }
+    var videoUpdateTime by remember { mutableStateOf(videoInfo.videoUpdateTime) }
+    var videoBelongCityId by remember { mutableStateOf(videoInfo.videoBelongCityId) }
+
+    var videoIsLiked by remember { mutableStateOf(videoInfo.videoIsLiked) }
+    var videoIsCollect by remember { mutableStateOf(videoInfo.videoIsCollect) }
+
+
+
+
+
+
+    Box(modifier = Modifier.width(videoId1.dp)) {
+        if(videoId!=videoId1){
+            uri = videoInfo.videoUri
+            name =videoInfo.videoName
+            introduce=videoInfo.videoIntroduce
+
+            likeNumber=videoInfo.videoLike
+            videoUploaderId=videoInfo.videoUploaderId
+            videoCollect=videoInfo.videoCollect
+            videoUpdateTime=videoInfo.videoUpdateTime
+            videoBelongCityId=videoInfo.videoBelongCityId
+            videoIsLiked=videoInfo.videoIsLiked
+            videoIsCollect=videoInfo.videoIsCollect
+            Toast.makeText(context,"视频重组",Toast.LENGTH_SHORT).show()
         }
     }
 
 
+    /**
+     *
+     *
+     *
+     * 这个盒子里面是视频播放器和一系列的漂浮文字*
+     *
+     *
+     *
+     * */
+    Box(modifier = Modifier.fillMaxSize()) {
+        /**
+         *
+         *
+         * 视频播放器，很明显这个东西需要放在最下面，因此不使用任何的排版方式
+         *
+         *
+         * **/
+
+        VideScreen(uri)
+        /**
+         *
+         *
+         *
+         * 这个盒子里面是一系列的漂浮文字*
+         *
+         *
+         *
+         * */
+        Column(
+            modifier = Modifier.fillMaxSize(),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.SpaceBetween
+
+        ) {
+            /**
+             * 上面的空白
+             * */
+            Spacer(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(300.dp),
+            )
+            /**
+             * 下面的内容
+             * */
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceBetween
+
+            ) {
+                /**
+                 *
+                 * 左下角的所有文字和按钮们
+                 *
+                 * */
+                Column(modifier = Modifier
+                    .fillMaxHeight()
+                    .width(300.dp)
+                    .background(Purple700)
+                ) {
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth(),
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.SpaceBetween
+                    ) {
+
+                        name.forEach { char ->
+                            Text(text = char.toString(),color = white,modifier = Modifier.background(Purple200))
+                        }
+                    }
+                    Text(text = "释义",color = white)
+                    Text(text = introduce,color = white)
+
+                }
+
+                /**
+                 * 为悬浮按钮让出的空白
+                 * */
+                Box(
+                    modifier = Modifier
+                        .fillMaxHeight()
+                        .width(100.dp)
+                        .background(white)
+
+                )
+            }
+        }
+
+    }
 }

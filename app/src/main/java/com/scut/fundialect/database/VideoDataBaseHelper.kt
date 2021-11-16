@@ -41,7 +41,7 @@ open class VideoDataBaseHelper(val context: Context, name:String, version:Int):
     val DatePattern = "yyyy-MM-dd HH:mm:ss.SSS"
     fun initVideoDatabase(db: SQLiteDatabase?){
         val value1 = ContentValues().apply {
-            put("videoUri","video1.mp4")
+            put("videoUri","android.resource://"+ context.packageName +"/"+ R.raw.video1)
             put("videoName", "欣赏黑色")
             put("videoLike", 342)
             put("videoIsLiked", 0)
@@ -55,6 +55,7 @@ open class VideoDataBaseHelper(val context: Context, name:String, version:Int):
         }
         db?.insert("videoInfo",null,value1)
         val value2 = ContentValues().apply {
+            put("videoUri","android.resource://"+ context.packageName +"/"+ R.raw.video2)
             put("videoFileName", "video2.mp4")
             put("videoName", "欣赏蓝色")
             put("videoLike", 3420)
@@ -68,6 +69,8 @@ open class VideoDataBaseHelper(val context: Context, name:String, version:Int):
         }
         db?.insert("videoInfo",null,value2)
         val value3 = ContentValues().apply {
+            put("videoUri","android.resource://"+ context.packageName +"/"+ R.raw.video3)
+
             put("videoFileName", "video1.mp4")
             put("videoName", "欣赏橙色")
             put("videoLike", 1342)
@@ -81,6 +84,8 @@ open class VideoDataBaseHelper(val context: Context, name:String, version:Int):
         }
         db?.insert("videoInfo",null,value3)
         val value4 = ContentValues().apply {
+            put("videoUri","android.resource://"+ context.packageName +"/"+ R.raw.video4)
+
             put("videoFileName", "video1.mp4")
             put("videoName", "欣赏绿色")
             put("videoLike", 342)
