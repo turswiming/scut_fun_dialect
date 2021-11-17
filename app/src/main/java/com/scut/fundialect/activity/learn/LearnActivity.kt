@@ -3,44 +3,18 @@ package com.scut.fundialect.activity.learn
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.widget.Toast
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.GridCells
-import androidx.compose.foundation.lazy.LazyVerticalGrid
-import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.*
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.AnnotatedString
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
-import com.github.stuxuhai.jpinyin.PinyinFormat
-import com.github.stuxuhai.jpinyin.PinyinHelper
-import com.scut.fundialect.MyApplication.Companion.context
 import com.scut.fundialect.R
 import com.scut.fundialect.activity.BaseComposeActivity
-import com.scut.fundialect.activity.compose.MyButtonAppBar
-import com.scut.fundialect.activity.compose.VideScreen
 import com.scut.fundialect.activity.learn.ui.theme.FunDialectTheme
-import com.scut.fundialect.activity.learn.ui.theme.Purple700
-import com.scut.fundialect.activity.learn.ui.theme.white
-import com.scut.fundialect.database.helper.CityHelper
-import com.scut.fundialect.database.helper.CityHelper.getChildCity
-import com.scut.fundialect.database.helper.LearnVideoHelper
-import com.scut.fundialect.database.helper.LearnVideoHelper.getCommitNumber
-import com.scut.fundialect.ui.theme.black
-import com.scut.fundialect.ui.theme.blackTransparent
-import kotlinx.coroutines.launch
 
 
 class LearnActivity : BaseComposeActivity() {
@@ -119,26 +93,6 @@ private fun MainPage(context: Context) {
             }
 
         }
-
-    }
-}
-/**
- *
- *
- *
- * 这里是“词库”页面的全部内容，不包括下面的bar
- *
- *
- *
- * **/
-@Composable
-fun MyWordLibraryPage(context: Context) {
-    Scaffold(
-        bottomBar =  {
-            MyButtonAppBar(onStateChange = {}, context = context,0)
-
-        }
-    ){
 
     }
 }
