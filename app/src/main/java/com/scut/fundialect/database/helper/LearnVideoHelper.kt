@@ -3,6 +3,7 @@ package com.scut.fundialect.database.helper
 import android.annotation.SuppressLint
 import android.content.ContentValues
 import android.database.sqlite.SQLiteDatabase
+import android.widget.Toast
 import com.scut.fundialect.MyApplication.Companion.context
 import com.scut.fundialect.database.LearnVideoDataBaseHelper
 
@@ -94,6 +95,8 @@ object LearnVideoHelper {
 
     @SuppressLint("Range")
     fun switchCommentLike(commitId: Int) {
+//        Toast.makeText(context,"即将查询",Toast.LENGTH_SHORT).show()
+
         val results = learnDB.query(
             "commentInfo",
             null,
@@ -104,19 +107,29 @@ object LearnVideoHelper {
             null,
             null)
         results.moveToFirst()
-        //Toast.makeText(context,"即将解析表格行数",Toast.LENGTH_SHORT).show()
+//        Toast.makeText(context,"即将解析表格行数",Toast.LENGTH_SHORT).show()
         val isLiked = results.getInt(results.getColumnIndex("isLiked"))
+        var numberLiked = results.getInt(results.getColumnIndex("numberLiked"))
+        if (isLiked==0){
+            numberLiked+=1
+        }else{
+            numberLiked-=1
+        }
         results.close()
         val values = ContentValues()
         //下面这句话那个三层嵌套函数意思是，把数字转成bool再取反，再转成数字。我懒得写lambda了
         values.put("isLiked", toInt(!toBool(isLiked)))
-        //Toast.makeText(context,"即将进行改表",Toast.LENGTH_SHORT).show()
+        values.put("numberLiked",numberLiked)
+//        Toast.makeText(context,"即将进行改表",Toast.LENGTH_SHORT).show()
         learnDB.update(
-            "videoInfo",
+            "commentInfo",
             values,
             "id = $commitId",
             null)
+//        Toast.makeText(context,"改表完成,准备返回",Toast.LENGTH_SHORT).show()
+
     }
+
     @SuppressLint("Range", "Recycle")
     class VideoInfo(id:Int) {
         val videoUri:String

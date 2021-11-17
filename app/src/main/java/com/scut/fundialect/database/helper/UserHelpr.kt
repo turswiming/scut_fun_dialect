@@ -2,7 +2,9 @@ package com.scut.fundialect.database.helper
 
 import android.annotation.SuppressLint
 import android.database.sqlite.SQLiteDatabase
+import android.widget.Toast
 import com.scut.fundialect.MyApplication
+import com.scut.fundialect.MyApplication.Companion.context
 import com.scut.fundialect.database.UserInfoDataBaseHelper
 
 object UserHelpr {
@@ -27,8 +29,10 @@ object UserHelpr {
 
 
         init{
+//            Toast.makeText(context,"准备查询",Toast.LENGTH_SHORT).show()
+
             val results = userDB.query(
-                "commentInfo",
+                "userinfo",
                 null,
                 "id = $userId",
                 null,
@@ -37,9 +41,11 @@ object UserHelpr {
                 null,
                 null)
             results.moveToFirst()
+//            Toast.makeText(context,"准备获取昵称",Toast.LENGTH_SHORT).show()
             userNickName = results.getString(results.getColumnIndex("userNickName"))
             userMail = results.getString(results.getColumnIndex("userMail"))
             userPassport = results.getString(results.getColumnIndex("userPassport"))
+//            Toast.makeText(context,"准备获取用户签名",Toast.LENGTH_SHORT).show()
             userSign = results.getString(results.getColumnIndex("userSign"))
             userPicFile = results.getString(results.getColumnIndex("userPicFile"))
 

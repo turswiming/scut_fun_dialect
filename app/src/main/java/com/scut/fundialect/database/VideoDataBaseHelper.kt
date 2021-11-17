@@ -101,11 +101,11 @@ open class VideoDataBaseHelper(val context: Context, name:String, version:Int):
 
     }
     fun initCommentInfoDatabase(db: SQLiteDatabase?){
-        repeat(1000){
+        repeat(10){
             val value1 = ContentValues().apply {
                 put("parentId", (0..3).random())
                 put("commenterId", 1)
-                put("comment", "太哲学了，"+(2..5).random()+"简直是我看过最好看的")
+                put("comment", "太哲学了，"+(2..50).random()+"简直是我看过最好看的")
                 put("commentTime", Date().time -100000*(0..100).random())
                 put("isLiked", (0..1).random())
                 put("numberLiked", (0..1000).random())
@@ -114,7 +114,7 @@ open class VideoDataBaseHelper(val context: Context, name:String, version:Int):
             }
             db?.insert("commentInfo",null,value1)
         }
-        repeat(3000){
+        repeat(30){
             val value1 = ContentValues().apply {
                 put("parentId", (0..3).random())
                 put("commenterId", 1)

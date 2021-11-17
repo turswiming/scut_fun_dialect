@@ -33,6 +33,7 @@ import com.scut.fundialect.database.helper.CityHelper
 import com.scut.fundialect.database.helper.LearnVideoHelper
 import com.scut.fundialect.database.helper.LearnVideoHelper.getVideoComment
 import com.scut.fundialect.database.helper.LearnVideoHelper.switchCommentLike
+import com.scut.fundialect.database.helper.UserHelpr
 import com.scut.fundialect.help.switch
 import com.scut.fundialect.ui.theme.black
 import com.scut.fundialect.ui.theme.blackTransparent
@@ -194,7 +195,6 @@ fun MySelectedPage(
         ModalBottomSheetLayout(
             sheetState = state,
             sheetContent = {
-                //TODO("完成评论页面")
                 val videoCommit  = getVideoComment(videoId)
                 Column {
                     videoCommit.forEach { it->
@@ -247,6 +247,7 @@ private fun comment(it: LearnVideoHelper.CommentInfo) {
     var numberLiked by remember {
         mutableStateOf(it.numberLiked )
     }
+    val commiterInfo = UserHelpr.UserInfo(it.commenterId)
     Row(
         verticalAlignment = Alignment.Top,
         horizontalArrangement = Arrangement.Start,
@@ -264,6 +265,9 @@ private fun comment(it: LearnVideoHelper.CommentInfo) {
         Column(verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.Start,
         modifier = Modifier.width(150.dp)) {
+            Text(text = commiterInfo.userNickName)
+
+            Text(text = it.comment.toString())
 
         }
         Column(
@@ -271,11 +275,11 @@ private fun comment(it: LearnVideoHelper.CommentInfo) {
                 .width(40.dp)
                 .clickable {
                     //处理compose内ui层逻辑
-                    isLike=!isLike
-                    if (isLike){
-                        numberLiked+1
-                    }else{
-                        numberLiked-1
+                    isLike = !isLike
+                    if (isLike) {
+                        numberLiked += 1
+                    } else {
+                        numberLiked -= 1
                     }
                     switchCommentLike(it.CommitId)
                 },
@@ -297,7 +301,6 @@ private fun comment(it: LearnVideoHelper.CommentInfo) {
 
     }
 
-    Text(text = it.comment.toString())
 }
 
 
@@ -312,7 +315,8 @@ private fun VideoPlayerWithText(
     openSharePage:(videoId: Int)->Unit
 ) {
 
-    var videoId1  = videoId
+    //var videoId1  = videoId
+    var videoIdBackup by remember { mutableStateOf(1) }
 
     var uri by remember { mutableStateOf(videoInfo.videoUri) }
     var name by remember { mutableStateOf(videoInfo.videoName) }
@@ -330,22 +334,27 @@ private fun VideoPlayerWithText(
         mutableStateOf(LearnVideoHelper.getCommitNumber(videoId))
     }
     Box(modifier = Modifier.width(videoId.dp)) {
-//        if(videoId!=videoId1){
-        uri = videoInfo.videoUri
-        name =videoInfo.videoName
-        introduce=videoInfo.videoIntroduce
+        val scope = rememberCoroutineScope()
+        if(videoId!=videoIdBackup){
+            videoIdBackup = videoId
+            scope.launch {
+                uri = videoInfo.videoUri
+                name =videoInfo.videoName
+                introduce=videoInfo.videoIntroduce
 
-        likeNumber=videoInfo.videoLike
-        videoUploaderId=videoInfo.videoUploaderId
-        videoCollect=videoInfo.videoCollect
-        videoUpdateTime=videoInfo.videoUpdateTime
-        videoBelongCityId=videoInfo.videoBelongCityId
-        videoIsLiked=videoInfo.videoIsLiked
-        videoIsCollect=videoInfo.videoIsCollect
-        Toast.makeText(MyApplication.context,"视频重组", Toast.LENGTH_SHORT).show()
-        commitNum = LearnVideoHelper.getCommitNumber(videoId)
+                likeNumber=videoInfo.videoLike
+                videoUploaderId=videoInfo.videoUploaderId
+                videoCollect=videoInfo.videoCollect
+                videoUpdateTime=videoInfo.videoUpdateTime
+                videoBelongCityId=videoInfo.videoBelongCityId
+                videoIsLiked=videoInfo.videoIsLiked
+                videoIsCollect=videoInfo.videoIsCollect
+                Toast.makeText(MyApplication.context,"视频重组", Toast.LENGTH_SHORT).show()
+                commitNum = LearnVideoHelper.getCommitNumber(videoId)
 
-//        }
+            }
+        }
+
     }
     //var videoIdOld = videoId1
     /**
@@ -556,12 +565,14 @@ private fun VideoPlayerWithText(
                             R.drawable.ic_launcher_background,
                             R.drawable.ic_launcher_foreground,
                             videoIsLiked
-                        )
-                    ) {
-                        videoIsLiked = !videoIsLiked
-                        LearnVideoHelper.switchLike(videoId)
+                        ),
+                        onClick = {
+                            videoIsLiked = !videoIsLiked
+                            LearnVideoHelper.switchLike(videoId)
 
-                    }
+                        }
+
+                    )
                     /**
                      *
                      * 评论的按钮。

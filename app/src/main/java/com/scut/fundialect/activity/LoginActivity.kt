@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.compose.setContent
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.animateContentSize
@@ -26,6 +27,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.scut.fundialect.MyApplication
 import com.scut.fundialect.R
 import com.scut.fundialect.activity.learn.LearnActivity
 import com.scut.fundialect.database.*
@@ -85,6 +87,7 @@ class LoginActivity : BaseActivity() {
 
         val userInfoDataBaseHelper = UserInfoDataBaseHelper(this,"userinfo.db",1)
         val userinfoDB = userInfoDataBaseHelper.writableDatabase
+        Toast.makeText(MyApplication.context,"数据库已经预先载入完成，请您下一步操作", Toast.LENGTH_SHORT).show()
 
 //        setContent {
 //            PreviewConversation()

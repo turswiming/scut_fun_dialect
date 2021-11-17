@@ -3,6 +3,7 @@ package com.scut.fundialect.activity.learn
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
@@ -12,6 +13,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import com.scut.fundialect.MyApplication.Companion.context
 import com.scut.fundialect.R
 import com.scut.fundialect.activity.BaseComposeActivity
 import com.scut.fundialect.activity.learn.ui.theme.FunDialectTheme
@@ -22,6 +24,7 @@ class LearnActivity : BaseComposeActivity() {
     @ExperimentalFoundationApi
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        Toast.makeText(context,"准备载入compose", Toast.LENGTH_SHORT).show()
         setContent {
             FunDialectTheme {
                 // A surface container using the 'background' color from the theme
