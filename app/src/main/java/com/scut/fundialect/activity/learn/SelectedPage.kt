@@ -1,19 +1,20 @@
 package com.scut.fundialect.activity.learn
 
 import android.widget.Toast
-import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
+import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.GridCells
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyVerticalGrid
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.AnnotatedString
@@ -24,11 +25,15 @@ import com.github.stuxuhai.jpinyin.PinyinFormat
 import com.github.stuxuhai.jpinyin.PinyinHelper
 import com.scut.fundialect.MyApplication
 import com.scut.fundialect.R
-import com.scut.fundialect.activity.compose.VideScreen
+import com.scut.fundialect.activity.learn.ui.theme.Purple200
+import com.scut.fundialect.activity.publicCompose.VideScreen
 import com.scut.fundialect.activity.learn.ui.theme.Purple700
 import com.scut.fundialect.activity.learn.ui.theme.white
 import com.scut.fundialect.database.helper.CityHelper
 import com.scut.fundialect.database.helper.LearnVideoHelper
+import com.scut.fundialect.database.helper.LearnVideoHelper.getVideoComment
+import com.scut.fundialect.database.helper.LearnVideoHelper.switchCommentLike
+import com.scut.fundialect.help.switch
 import com.scut.fundialect.ui.theme.black
 import com.scut.fundialect.ui.theme.blackTransparent
 import kotlinx.coroutines.launch
@@ -181,70 +186,119 @@ fun MySelectedPage(
         val videoId by remember {
             mutableStateOf(1)
         }
-        val commentState = rememberBottomSheetScaffoldState()
-        val commentScope = rememberCoroutineScope()
 
-        val sharePageState = rememberBottomSheetScaffoldState()
-        val sharePageScope = rememberCoroutineScope()
-
-
-        BottomSheetScaffold(
-            scaffoldState = commentState,
+        val state = rememberModalBottomSheetState(
+            ModalBottomSheetValue.Hidden
+        )
+        val scope = rememberCoroutineScope()
+        ModalBottomSheetLayout(
+            sheetState = state,
             sheetContent = {
-                // Sheet content
-            },
-            // Defaults to BottomSheetScaffoldDefaults.SheetPeekHeight
-            sheetPeekHeight = 128.dp,
-            // Defaults to true
-            sheetGesturesEnabled = false
+                //TODO("完成评论页面")
+                val videoCommit  = getVideoComment(videoId)
+                Column {
+                    videoCommit.forEach { it->
+                        comment(it)
 
-        ) {
-            // Screen content
-            BottomSheetScaffold(
-                scaffoldState = sharePageState,
-
-                sheetContent = {
-                    // Sheet content
-                },
-                // Defaults to BottomSheetScaffoldDefaults.SheetPeekHeight
-                sheetPeekHeight = 256.dp,
-                // Defaults to true
-                sheetGesturesEnabled = false
-
-            ) {
-                // Screen content
-                VideoPlayerWithText(
-                    videoInfo = videoInfo,
-                    videoId = videoId,
-                    openComment = {
-                        commentScope.launch {
-                            commentState.bottomSheetState.apply {
-                                if (isCollapsed) expand() else collapse()
-                            }
-                        }
-                        commentScope.apply {
-
-                        }
-
-                    },
-                    openSharePage = {
-                        sharePageScope.launch {
-                            sharePageState.bottomSheetState.apply {
-                                if (isCollapsed) expand() else collapse()
-                            }
-                        }
                     }
-                )
 
+                }
             }
+        ) {
+            VideoPlayerWithText(
+                videoInfo = videoInfo,
+                videoId = videoId,
+                openComment = {
+                    scope.launch { state.show() }
 
+
+                },
+                openSharePage = {
+//                    sharePageScope.launch {
+//                        sharePageState.bottomSheetState.apply {
+////                                if (isCollapsed) expand() else collapse()
+//                        }
+//                    }
+                }
+            )
+//            Column(
+//                modifier = Modifier.fillMaxSize().padding(16.dp),
+//                horizontalAlignment = Alignment.CenterHorizontally
+//            ) {
+//                Text("Rest of the UI")
+//                Spacer(Modifier.height(20.dp))
+//                Button(onClick = { scope.launch { state.show() } }) {
+//                    Text("Click to show sheet")
+//                }
+//            }
         }
+
 
     }
 
 
 }
 
+@Composable
+private fun comment(it: LearnVideoHelper.CommentInfo) {
+    var isLike by remember {
+        mutableStateOf(it.isLiked )
+    }
+    var numberLiked by remember {
+        mutableStateOf(it.numberLiked )
+    }
+    Row(
+        verticalAlignment = Alignment.Top,
+        horizontalArrangement = Arrangement.Start,
+        modifier = Modifier.fillMaxWidth()
+    ) {
+        Image(
+            painter = painterResource(id = R.drawable.ic_launcher_background),
+            contentDescription = "头像",
+            modifier = Modifier
+                /**这个是描边*/
+                .border(2.dp, Color.Black, shape = CircleShape)
+                .size(30.dp)
+
+        )
+        Column(verticalArrangement = Arrangement.Top,
+        horizontalAlignment = Alignment.Start,
+        modifier = Modifier.width(150.dp)) {
+
+        }
+        Column(
+            modifier = Modifier
+                .width(40.dp)
+                .clickable {
+                    //处理compose内ui层逻辑
+                    isLike=!isLike
+                    if (isLike){
+                        numberLiked+1
+                    }else{
+                        numberLiked-1
+                    }
+                    switchCommentLike(it.CommitId)
+                },
+            verticalArrangement = Arrangement.Top,
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Image(
+                painter = painterResource(
+                    id = switch(
+                        R.drawable.ic_launcher_background,
+                        R.drawable.exo_ic_default_album_image,
+                        isLike
+                    )
+                ),
+                contentDescription = "点赞"
+            )
+            Text(text = numberLiked.toString())
+        }
+
+    }
+
+    Text(text = it.comment.toString())
+}
 
 
 
@@ -423,7 +477,7 @@ private fun VideoPlayerWithText(
                             onClick = {
 
                                 videoIsCollect =!videoIsCollect
-                                LearnVideoHelper.switchColiect(videoId)
+                                LearnVideoHelper.switchCollect(videoId)
                             }) {
                             Image(
                                 painter = swicherPainter(
@@ -488,7 +542,7 @@ private fun VideoPlayerWithText(
                      * 配音的按钮。
                      * */
 
-                    FloatButton("配音",{ R.drawable.ic_launcher_background}, onClick = {
+                    FloatButton("配音",R.drawable.ic_launcher_background, onClick = {
                         TODO("")
                     })
                     /**
@@ -498,14 +552,12 @@ private fun VideoPlayerWithText(
                      * */
 
                     FloatButton(likeNumber.toString(),
-                        image = {
-                            if(videoIsLiked){
-                                R.drawable.ic_launcher_background
-                            }
-                            else{
-                                R.drawable.ic_launcher_foreground
-                            }
-                        }) {
+                        image = switch(
+                            R.drawable.ic_launcher_background,
+                            R.drawable.ic_launcher_foreground,
+                            videoIsLiked
+                        )
+                    ) {
                         videoIsLiked = !videoIsLiked
                         LearnVideoHelper.switchLike(videoId)
 
@@ -515,7 +567,7 @@ private fun VideoPlayerWithText(
                      * 评论的按钮。
                      * */
 
-                    FloatButton(commitNum.toString(),{ R.drawable.ic_launcher_background}, onClick = {
+                    FloatButton(commitNum.toString(),R.drawable.ic_launcher_background, onClick = {
                         openComment(videoId)
                     })
                     /**
@@ -523,7 +575,7 @@ private fun VideoPlayerWithText(
                      * 分享的按钮。
                      * */
 
-                    FloatButton("分享",{ R.drawable.ic_launcher_background}, onClick = {
+                    FloatButton("分享", R.drawable.ic_launcher_background, onClick = {
                         openSharePage(videoId)
                     })
                 }
@@ -545,7 +597,7 @@ private fun swicherPainter(truePic: Int,falsePic:Int,boolean: Boolean): Painter 
 @Composable
 fun FloatButton(
     text:String,
-    image: () -> Int,
+    image: Int,
     onClick: () -> Unit,
 ) {
     Column(
@@ -560,7 +612,7 @@ fun FloatButton(
             modifier = Modifier.size(60.dp)
         ){
             Image(
-                painter = painterResource(id = image()) ,
+                painter = painterResource(id = image) ,
                 contentDescription = text,
                 modifier = Modifier
                     .fillMaxSize()

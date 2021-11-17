@@ -3,7 +3,6 @@ package com.scut.fundialect.database.helper
 import android.annotation.SuppressLint
 import android.content.ContentValues
 import android.database.sqlite.SQLiteDatabase
-import android.widget.Toast
 import com.scut.fundialect.MyApplication.Companion.context
 import com.scut.fundialect.database.LearnVideoDataBaseHelper
 
@@ -32,7 +31,92 @@ object LearnVideoHelper {
             return VideoInfo(1)
         }
     }
+    @SuppressLint("Range")
+    fun getVideoComment(videoId: Int):List<CommentInfo> {
+        val results = learnDB.query(
+            "commentInfo",
+            null,
+            "parentId = $videoId",
+            null,
+            null,
+            null,
+            null)
+        var commentInfoList: MutableList<CommentInfo> = mutableListOf<CommentInfo>()
 
+
+        if (results.moveToFirst()) {
+            do {
+                // 遍历Cursor对象，取出数据并打印
+                val id = results.getInt(results.getColumnIndex("id"))
+                commentInfoList+=CommentInfo(id)
+
+            } while (results.moveToNext())
+        }
+        results.close()
+
+
+        return commentInfoList
+    }
+    @SuppressLint("Range")
+    class CommentInfo(CommitId: Int){
+        val CommitId = CommitId
+        val comment:String
+        val commentTime:String
+
+        val numberLiked:Int
+        val commenterId:Int
+
+
+        val isLiked:Boolean
+
+        init{
+            val results = learnDB.query(
+                "commentInfo",
+                null,
+                "id = $CommitId",
+                null,
+                null,
+                null,
+                null,
+                null)
+            results.moveToFirst()
+            comment = results.getString(results.getColumnIndex("comment"))
+            commentTime = results.getString(results.getColumnIndex("commentTime"))
+
+            numberLiked = results.getInt(results.getColumnIndex("numberLiked"))
+            commenterId = results.getInt(results.getColumnIndex("commenterId"))
+
+            isLiked = toBool(results.getInt(results.getColumnIndex("isLiked")))
+            results.close()
+
+        }
+    }
+
+    @SuppressLint("Range")
+    fun switchCommentLike(commitId: Int) {
+        val results = learnDB.query(
+            "commentInfo",
+            null,
+            "id = $commitId",
+            null,
+            null,
+            null,
+            null,
+            null)
+        results.moveToFirst()
+        //Toast.makeText(context,"即将解析表格行数",Toast.LENGTH_SHORT).show()
+        val isLiked = results.getInt(results.getColumnIndex("isLiked"))
+        results.close()
+        val values = ContentValues()
+        //下面这句话那个三层嵌套函数意思是，把数字转成bool再取反，再转成数字。我懒得写lambda了
+        values.put("isLiked", toInt(!toBool(isLiked)))
+        //Toast.makeText(context,"即将进行改表",Toast.LENGTH_SHORT).show()
+        learnDB.update(
+            "videoInfo",
+            values,
+            "id = $commitId",
+            null)
+    }
     @SuppressLint("Range", "Recycle")
     class VideoInfo(id:Int) {
         val videoUri:String
@@ -101,7 +185,7 @@ object LearnVideoHelper {
         return 0
     }
     @SuppressLint("Range")
-    public fun switchLike(videoId: Int) {
+    fun switchLike(videoId: Int) {
         //Toast.makeText(context,"即将进行查询",Toast.LENGTH_SHORT).show()
         val results = learnDB.query(
             "videoInfo",
@@ -128,7 +212,7 @@ object LearnVideoHelper {
 
     }
     @SuppressLint("Range")
-    public fun switchColiect(videoId: Int) {
+    fun switchCollect(videoId: Int) {
         //Toast.makeText(context,"即将进行查询",Toast.LENGTH_SHORT).show()
         val results = learnDB.query(
             "videoInfo",
@@ -152,6 +236,35 @@ object LearnVideoHelper {
             values,
             "id = $videoId",
             null)
+
+    }
+
+    @SuppressLint("Range")
+    fun getCollectedVideo():List<VideoInfo> {
+        val results = learnDB.query(
+            "videoInfo",
+            null,
+            "videoIsCollect = 1",
+            null,
+            null,
+            null,
+            null)
+        var videoInfoList: MutableList<VideoInfo> = mutableListOf<VideoInfo>()
+
+
+        if (results.moveToFirst()) {
+            do {
+                // 遍历Cursor对象，取出数据并打印
+                val id = results.getInt(results.getColumnIndex("id"))
+                videoInfoList+=VideoInfo(id)
+
+            } while (results.moveToNext())
+        }
+        results.close()
+
+
+        return videoInfoList
+
 
     }
 }

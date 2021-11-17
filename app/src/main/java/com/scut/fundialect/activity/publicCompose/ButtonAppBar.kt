@@ -1,4 +1,4 @@
-package com.scut.fundialect.activity.compose
+package com.scut.fundialect.activity.publicCompose
 
 import android.content.Context
 import android.content.Intent

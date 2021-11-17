@@ -1,4 +1,4 @@
-package com.scut.fundialect.activity.compose
+package com.scut.fundialect.activity.publicCompose
 
 import android.net.Uri
 import androidx.compose.foundation.background
@@ -10,7 +10,6 @@ import androidx.compose.ui.viewinterop.AndroidView
 import com.google.android.exoplayer2.MediaItem
 import com.google.android.exoplayer2.SimpleExoPlayer
 import com.google.android.exoplayer2.ui.PlayerView
-import com.scut.fundialect.R
 import com.scut.fundialect.ui.theme.black
 
 class VideoCompose {

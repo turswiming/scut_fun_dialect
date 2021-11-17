@@ -1,9 +1,11 @@
 package com.scut.fundialect.activity.learn
 
 import android.content.Context
+import androidx.compose.foundation.layout.Column
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
-import com.scut.fundialect.activity.compose.MyButtonAppBar
+import com.scut.fundialect.activity.publicCompose.MyButtonAppBar
+import com.scut.fundialect.database.helper.LearnVideoHelper.getCollectedVideo
 
 /**
  *
@@ -23,5 +25,11 @@ fun MyWordLibraryPage(context: Context) {
         }
     ){
 
+        val  collectedVideos =  getCollectedVideo()
+        Column() {
+            
+        }
     }
 }
+
+
