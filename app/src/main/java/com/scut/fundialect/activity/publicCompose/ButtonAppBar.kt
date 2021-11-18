@@ -16,7 +16,7 @@ import com.scut.fundialect.activity.dubing.DubingActivity
 import com.scut.fundialect.activity.learn.LearnActivity
 import com.scut.fundialect.activity.myself.MyselfActivity
 
-public class ButtonAppBar {
+class ButtonAppBar {
     class ButtomTitles(name:String, image: Int){
         private var _name:String = name
         private var _image:Int = image
@@ -36,15 +36,15 @@ fun MyPreview(){
 
 }
 @Composable
-public fun MyButtonAppBar(
+fun MyButtonAppBar(
     onStateChange: (Int) -> Unit,
     context: Context,
     initPageIndex: Int
 ) {
     BottomAppBar {
-        var buttomStateNow by remember { mutableStateOf(initPageIndex) }
+        var buttomStateNow =initPageIndex
         TabRow(selectedTabIndex = buttomStateNow) {
-            val titles = listOf<ButtonAppBar.ButtomTitles>(
+            val titles = listOf(
                 ButtonAppBar.ButtomTitles("学习", R.drawable.ic_launcher_foreground),
                 ButtonAppBar.ButtomTitles("文化", R.drawable.ic_launcher_foreground),
                 ButtonAppBar.ButtomTitles("配音", R.drawable.ic_launcher_foreground),
@@ -54,13 +54,17 @@ public fun MyButtonAppBar(
                 Tab(
                     text = {
                         /**
-                         * 每个下面下巴导航栏的文字**/
+                         * 每个下面下巴导航栏的文字
+                         *
+                         * **/
                         Text(title.getTheName())
                     },
                     selected = buttomStateNow == index,
                     icon = {
                         /**
-                         * 每个下面下巴导航栏的图标**/
+                         * 每个下面下巴导航栏的图标
+                         *
+                         * **/
                         Image(
 
                             painter = painterResource(id = title.getTheImage()),

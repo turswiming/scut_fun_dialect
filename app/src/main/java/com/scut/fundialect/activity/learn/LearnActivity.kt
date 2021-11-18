@@ -67,9 +67,7 @@ private fun MainPage(context: Context) {
                 /**
                  *
                  *
-                 *
                  * 这里是“精选”页面的全部内容，包括一个视频播放器，不包括下面的bar
-                 *
                  *
                  *
                  *

@@ -205,7 +205,11 @@ class LearnSearchActivity : BaseComposeActivity() {
                             ) {
                                 Text(
                                     text = index.toString(),
-                                    color = switch(orange,gray700,index<=3),
+                                    color = switch(
+                                        orange,
+                                        gray700,
+                                        index<=3
+                                    ),
                                     fontSize = 30.sp
                                 )
                                 Text(
