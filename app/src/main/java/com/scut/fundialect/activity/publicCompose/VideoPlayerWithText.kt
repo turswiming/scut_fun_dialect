@@ -97,13 +97,7 @@ fun VideoPlayerWithText(
          *
          *
          * **/
-        /**
-         *
-         *
-         * 视频播放器，很明显这个东西需要放在最下面，因此不使用任何的排版方式
-         *
-         *
-         * **/
+
         VideScreen(uri)
         /**
          *
@@ -114,15 +108,7 @@ fun VideoPlayerWithText(
          *
          *
          * */
-        /**
-         *
-         *
-         *
-         * 这个盒子里面是一系列的漂浮文字*
-         *
-         *
-         *
-         * */
+
 
         Column(
             modifier = Modifier.fillMaxSize(),
