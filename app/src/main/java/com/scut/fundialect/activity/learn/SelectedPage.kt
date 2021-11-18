@@ -232,9 +232,14 @@ fun MySelectedPage(
                             //下面我复制了四个空盒子用来做占位
                             val list = listOf(1,2,3,4)
                             list.forEach { _ ->
-                                Box(modifier = Modifier.height(75.dp).width(65.dp)) {
+                                Box(
+                                    modifier = Modifier
+                                        .height(75.dp)
+                                        .width(65.dp),
+                                ) {
 
                                 }
+
                             }
 
 
@@ -256,7 +261,6 @@ fun MySelectedPage(
                         Column {
                             videoCommit.forEach {
                                 Comment(it)
-
                             }
 
                         }
@@ -266,12 +270,16 @@ fun MySelectedPage(
                         videoInfo = videoInfo,
                         videoId = videoId,
                         openComment = {
-                            scope.launch { state.show() }
+                            scope.launch {
+                                state.show()
+                            }
 
 
                         },
                         openSharePage = {
-                            shareScope.launch { shareState.show() }
+                            shareScope.launch {
+                                shareState.show()
+                            }
                         }
                     )
 

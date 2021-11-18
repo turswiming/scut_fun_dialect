@@ -1,7 +1,6 @@
 package com.scut.fundialect.activity.learn
 
 import android.content.Context
-import android.widget.Toast
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.GridCells
@@ -20,13 +19,15 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.scut.fundialect.MyApplication.Companion.context
+import com.github.stuxuhai.jpinyin.PinyinFormat
+import com.github.stuxuhai.jpinyin.PinyinHelper
 import com.scut.fundialect.R
 import com.scut.fundialect.activity.learn.ui.theme.Purple200
 import com.scut.fundialect.activity.learn.ui.theme.white
 import com.scut.fundialect.activity.publicCompose.MyButtonAppBar
 import com.scut.fundialect.database.CityDataBaseHelper
 import com.scut.fundialect.database.helper.CityHelper
+import com.scut.fundialect.database.helper.CityHelper.getCityName
 import com.scut.fundialect.database.helper.LearnVideoHelper.getCollectedVideo
 import com.scut.fundialect.help.switch
 import com.scut.fundialect.ui.theme.black
@@ -81,6 +82,11 @@ fun MyWordLibraryPage(context: Context) {
             }
             Box(Modifier.fillMaxSize()) {
                 /**
+                 *
+                 * 这个里面是一整个滚动列表
+                 * */
+                ScrollBoxes()
+                /**
                  * 这个里面是能够弹出的下拉选择框。
                  *
                  * */
@@ -109,9 +115,7 @@ fun MyWordLibraryPage(context: Context) {
                              * */
                             Box(
                                 modifier = Modifier
-                                    .clickable {
-
-                                    }
+                                    .clickable { isShow = false }
                                     .width(64.dp)
                                     .height(32.dp),
 
@@ -132,27 +136,10 @@ fun MyWordLibraryPage(context: Context) {
 
 
                 }
-                /**
-                 *
-                 * 这个里面是一整个滚动列表
-                 * */
-                ScrollBoxes()
+
             }
 
 
-        }
-    }
-}
-@Composable
-fun ScrollBoxes2() {
-    Column(
-        modifier = Modifier
-            .background(Color.Red)
-            .size(100.dp)
-            .verticalScroll(rememberScrollState())
-    ) {
-        repeat(10) {
-            Text("Item $it", modifier = Modifier.padding(2.dp))
         }
     }
 }
@@ -160,28 +147,12 @@ fun ScrollBoxes2() {
 @Composable
 fun ScrollBoxes() {
     Column(
-        modifier = Modifier.background(Purple200)
+        modifier = Modifier
+            .background(Purple200)
             .verticalScroll(rememberScrollState())
             .fillMaxWidth()
     ) {
         val  collectedVideos =  getCollectedVideo()
-        Toast.makeText(context,"获取到的收藏后数量有\t${collectedVideos.size}",Toast.LENGTH_SHORT).show()
-        Box(
-            modifier = Modifier
-                .padding(10.dp, 20.dp, 10.dp, 20.dp)
-                .fillMaxWidth()
-                .height(100.dp)
-        ) {
-            Surface(
-                modifier = Modifier
-                    .background(
-                            shape = CutCornerShape(10.dp),
-                        color = black
-                    )
-                    .fillMaxSize()
-            ) {
-            }
-        }
         collectedVideos.forEach { _videoData ->
             /**
              *
@@ -190,19 +161,126 @@ fun ScrollBoxes() {
              * */
             Box(
                 modifier = Modifier
-                    .padding(10.dp, 10.dp, 20.dp, 20.dp)
+                    .padding(10.dp, 20.dp, 10.dp, 20.dp)
                     .fillMaxWidth()
-                    .height(100.dp)
+                    .height(140.dp)
             ) {
                 Surface(
                     modifier = Modifier
                         .background(
-//                            shape = CutCornerShape(10.dp),
+                            shape = CutCornerShape(10.dp),
                             color = black
                         )
                         .fillMaxSize()
                 ) {
-                    Text(text = _videoData.videoName)
+                    
+                    Column(
+                        modifier = Modifier
+                            .fillMaxSize(),
+                        verticalArrangement = Arrangement.SpaceBetween,
+                    ) {
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            horizontalArrangement = Arrangement.SpaceBetween,
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            /**
+                             * 
+                             * 这里面包括了标题文字及其拼音
+                             * */
+                            Row(
+                                modifier = Modifier
+                                    .width(200.dp)
+                                    .height(60.dp),
+                                verticalAlignment = Alignment.CenterVertically,
+                                horizontalArrangement = Arrangement.Center
+                            ) {
+                                _videoData.videoName.forEach { char ->
+                                    /**
+                                     *
+                                     * 这里面包括了标题文字及其拼音的
+                                     * 
+                                     * 每一个字
+                                     * 
+                                     * */
+                                    val pinyin = PinyinHelper.convertToPinyinString(
+                                        char.toString(),
+                                        ",",
+                                        PinyinFormat.WITH_TONE_MARK
+                                    )
+                                    Column(horizontalAlignment = Alignment.CenterHorizontally){
+                                        Text(
+                                            text = pinyin,
+                                            color = black,
+                                            modifier = Modifier
+                                                .width(50.dp),
+                                            textAlign = TextAlign.Center
+                                        )
+                                        Spacer(modifier = Modifier.height(10.dp))
+                                        Text(text = char.toString())
+                                    }
+
+                                }
+
+
+                            }
+                            /**
+                             * 这里面包括了右边两个按钮
+                             * 
+                             * */
+                            Row(
+                                horizontalArrangement = Arrangement.SpaceBetween,
+                                verticalAlignment = Alignment.CenterVertically
+                            ){
+                                Image(
+                                    painter = painterResource(id = R.drawable.ic_launcher_background),
+                                    contentDescription = "只听声音",
+                                    modifier = Modifier.size(30.dp)
+                                )
+                                Spacer(modifier = Modifier.width(5.dp))
+                                Image(
+                                    painter = painterResource(id = R.drawable.ic_launcher_background),
+                                    contentDescription = "只听声音",
+                                    modifier = Modifier.size(30.dp)
+
+                                )
+
+                            }
+                        }
+                        
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .height(50.dp),
+                            horizontalArrangement = Arrangement.SpaceBetween,
+                            verticalAlignment = Alignment.Top
+                        ) {
+                            Column(horizontalAlignment = Alignment.Start,
+                            verticalArrangement = Arrangement.SpaceBetween) {
+                                /**
+                                 * 左下角的释义和视频介绍
+                                 *
+                                 * */
+                                Text(text = "释义")
+                                Text(text = _videoData.videoIntroduce)
+                            }
+                            /**
+                             * 右下角的城市归属和图片
+                             *
+                             * */
+                            Box {
+                                Image(
+                                    painter = painterResource(id = R.drawable.ic_launcher_background), 
+                                    contentDescription = "城市背景图"
+                                )
+                                Text(text = getCityName(_videoData.videoBelongCityId))
+                            }
+                        }
+                    }
+                    
+                    
+                    
+
                 }
             }
         }

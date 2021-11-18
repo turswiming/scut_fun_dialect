@@ -287,8 +287,6 @@ fun VideoPlayerWithText(
                      *
                      * 评论的按钮。
                      * */
-
-
                     FloatButton(commitNum.toString(), R.drawable.ic_launcher_background, onClick = {
                         openComment(videoId)
                     })
@@ -296,7 +294,6 @@ fun VideoPlayerWithText(
                      *
                      * 分享的按钮。
                      * */
-
                     FloatButton("分享", R.drawable.ic_launcher_background, onClick = {
                         openSharePage(videoId)
                     })
@@ -307,7 +304,7 @@ fun VideoPlayerWithText(
 }
 
 @Composable
-private fun swicherPainter(truePic: Int,falsePic:Int,boolean: Boolean): Painter {
+fun swicherPainter(truePic: Int, falsePic:Int, boolean: Boolean): Painter {
     if (boolean){
         return painterResource(id = truePic)
     }else{
