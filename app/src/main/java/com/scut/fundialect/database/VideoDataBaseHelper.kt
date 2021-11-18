@@ -40,64 +40,64 @@ open class VideoDataBaseHelper(val context: Context, name:String, version:Int):
     val packageName = "com.scut.fundialect"
     val DatePattern = "yyyy-MM-dd HH:mm:ss.SSS"
     fun initVideoDatabase(db: SQLiteDatabase?){
-        val value1 = ContentValues().apply {
-            put("videoUri","android.resource://"+ context.packageName +"/"+ R.raw.video1)
-            put("videoName", "欣赏黑色")
-            put("videoLike", 342)
-            put("videoIsLiked", 0)
-            put("videoCollect", 134)
-            put("videoIsCollect", 1)
-            put("videoIntroduce", "这是关于一个黑色的故事")
-            //SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS")
-            put("videoUpdateTime", Date().time -300000000)
-            put("videoBelongCityId", 1)
+        repeat(5){
+            val value1 = ContentValues().apply {
+                put("videoUri","android.resource://"+ context.packageName +"/"+ R.raw.video1)
+                put("videoName", "欣赏黑色")
+                put("videoLike", 342)
+                put("videoIsLiked", 0)
+                put("videoCollect", 134)
+                put("videoIsCollect", 1)
+                put("videoIntroduce", "这是关于一个黑色的故事")
+                //SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS")
+                put("videoUpdateTime", Date().time -300000000)
+                put("videoBelongCityId", 1)
+            }
+            db?.insert("videoInfo",null,value1)
+            val value2 = ContentValues().apply {
+                put("videoUri","android.resource://"+ context.packageName +"/"+ R.raw.video2)
+                put("videoName", "欣赏蓝色")
+                put("videoLike", 3420)
+                put("videoIsLiked", 1)
+                put("videoCollect", 1304)
+                put("videoIsCollect", 0)
+                put("videoIntroduce", "这是关于一个蓝色的故事")
+                put("videoUpdateTime", Date().time -600000000)
+                put("videoBelongCityId", 1)
+
+            }
+            db?.insert("videoInfo",null,value2)
+            val value3 = ContentValues().apply {
+                put("videoUri","android.resource://"+ context.packageName +"/"+ R.raw.video3)
+
+                put("videoName", "欣赏橙色")
+                put("videoLike", 1342)
+                put("videoIsLiked", 1)
+                put("videoCollect", 134)
+                put("videoIsCollect", 1)
+                put("videoIntroduce", "这是关于一个橙色的故事")
+                put("videoUpdateTime", Date().time -60000000)
+                put("videoBelongCityId", 1)
+
+            }
+            db?.insert("videoInfo",null,value3)
+            val value4 = ContentValues().apply {
+                put("videoUri","android.resource://"+ context.packageName +"/"+ R.raw.video4)
+
+                put("videoName", "欣赏绿色")
+                put("videoLike", 342)
+                put("videoIsLiked", 0)
+                put("videoCollect", 134)
+                put("videoIsCollect", 1)
+                put("videoIntroduce", "这是关于一个绿色的故事")
+                put("videoUpdateTime", Date().time -6000000)
+                put("videoBelongCityId", 1)
+
+            }
+            db?.insert("videoInfo",null,value4)
 
         }
-        db?.insert("videoInfo",null,value1)
-        val value2 = ContentValues().apply {
-            put("videoUri","android.resource://"+ context.packageName +"/"+ R.raw.video2)
-            put("videoFileName", "video2.mp4")
-            put("videoName", "欣赏蓝色")
-            put("videoLike", 3420)
-            put("videoIsLiked", 1)
-            put("videoCollect", 1304)
-            put("videoIsCollect", 0)
-            put("videoIntroduce", "这是关于一个蓝色的故事")
-            put("videoUpdateTime", Date().time -600000000)
-            put("videoBelongCityId", 1)
 
-        }
-        db?.insert("videoInfo",null,value2)
-        val value3 = ContentValues().apply {
-            put("videoUri","android.resource://"+ context.packageName +"/"+ R.raw.video3)
-
-            put("videoFileName", "video1.mp4")
-            put("videoName", "欣赏橙色")
-            put("videoLike", 1342)
-            put("videoIsLiked", 1)
-            put("videoCollect", 134)
-            put("videoIsCollect", 1)
-            put("videoIntroduce", "这是关于一个橙色的故事")
-            put("videoUpdateTime", Date().time -60000000)
-            put("videoBelongCityId", 1)
-
-        }
-        db?.insert("videoInfo",null,value3)
-        val value4 = ContentValues().apply {
-            put("videoUri","android.resource://"+ context.packageName +"/"+ R.raw.video4)
-
-            put("videoFileName", "video1.mp4")
-            put("videoName", "欣赏绿色")
-            put("videoLike", 342)
-            put("videoIsLiked", 0)
-            put("videoCollect", 134)
-            put("videoIsCollect", 2)
-            put("videoIntroduce", "这是关于一个绿色的故事")
-            put("videoUpdateTime", Date().time -6000000)
-            put("videoBelongCityId", 1)
-
-        }
-        db?.insert("videoInfo",null,value4)
 
     }
     fun initCommentInfoDatabase(db: SQLiteDatabase?){
@@ -122,8 +122,6 @@ open class VideoDataBaseHelper(val context: Context, name:String, version:Int):
                 put("commentTime", Date().time -100000*(0..100).random())
                 put("isLiked", (0..1).random())
                 put("numberLiked", (0..1000).random())
-
-
             }
             db?.insert("commentInfo",null,value1)
         }

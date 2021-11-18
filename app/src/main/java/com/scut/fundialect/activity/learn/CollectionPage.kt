@@ -1,10 +1,12 @@
 package com.scut.fundialect.activity.learn
 
 import android.content.Context
+import android.widget.Toast
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.GridCells
 import androidx.compose.foundation.lazy.LazyVerticalGrid
+import androidx.compose.foundation.shape.CutCornerShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Surface
@@ -13,11 +15,14 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import com.scut.fundialect.MyApplication.Companion.context
 import com.scut.fundialect.R
+import com.scut.fundialect.activity.learn.ui.theme.Purple200
 import com.scut.fundialect.activity.learn.ui.theme.white
 import com.scut.fundialect.activity.publicCompose.MyButtonAppBar
 import com.scut.fundialect.database.CityDataBaseHelper
@@ -139,19 +144,67 @@ fun MyWordLibraryPage(context: Context) {
     }
 }
 @Composable
-fun ScrollBoxes() {
+fun ScrollBoxes2() {
     Column(
         modifier = Modifier
-            .verticalScroll(rememberScrollState()).fillMaxSize()
+            .background(Color.Red)
+            .size(100.dp)
+            .verticalScroll(rememberScrollState())
+    ) {
+        repeat(10) {
+            Text("Item $it", modifier = Modifier.padding(2.dp))
+        }
+    }
+}
+
+@Composable
+fun ScrollBoxes() {
+    Column(
+        modifier = Modifier.background(Purple200)
+            .verticalScroll(rememberScrollState())
+            .fillMaxWidth()
     ) {
         val  collectedVideos =  getCollectedVideo()
-
+        Toast.makeText(context,"获取到的收藏后数量有\t${collectedVideos.size}",Toast.LENGTH_SHORT).show()
+        Box(
+            modifier = Modifier
+                .padding(10.dp, 20.dp, 10.dp, 20.dp)
+                .fillMaxWidth()
+                .height(100.dp)
+        ) {
+            Surface(
+                modifier = Modifier
+                    .background(
+                            shape = CutCornerShape(10.dp),
+                        color = black
+                    )
+                    .fillMaxSize()
+            ) {
+            }
+        }
         collectedVideos.forEach { _videoData ->
             /**
              *
              * 这里面是每一个小的视频卡片
              *
              * */
+            Box(
+                modifier = Modifier
+                    .padding(10.dp, 10.dp, 20.dp, 20.dp)
+                    .fillMaxWidth()
+                    .height(100.dp)
+            ) {
+                Surface(
+                    modifier = Modifier
+                        .background(
+//                            shape = CutCornerShape(10.dp),
+                            color = black
+                        )
+                        .fillMaxSize()
+                ) {
+                    Text(text = _videoData.videoName)
+                }
+            }
         }
     }
 }
