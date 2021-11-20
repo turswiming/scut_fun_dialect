@@ -28,7 +28,7 @@
   </component>
   <component name="DBNavigator.Project.DatabaseConsoleManager">
     <connection id="61b6419c-6f0d-4b6b-a772-5019bf6174b0">
-      <console name="Connection 4" type="STANDARD" schema="main" session="Main" />
+      <console name="Connection 4" type="STANDARD" schema="" session="Main" />
     </connection>
   </component>
   <component name="DBNavigator.Project.DatabaseFileManager">
