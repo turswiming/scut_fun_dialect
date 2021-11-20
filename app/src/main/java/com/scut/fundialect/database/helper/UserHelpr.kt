@@ -21,7 +21,7 @@ object UserHelpr {
         val userMail:String
         val userPassport:String
         val userSign:String
-        val userPicFile:String
+        public val userPicFile:String
 
 
         val userSex:Boolean

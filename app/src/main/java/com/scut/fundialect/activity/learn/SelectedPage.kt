@@ -1,10 +1,9 @@
 package com.scut.fundialect.activity.learn
 
+import android.graphics.Bitmap
+import android.graphics.Picture
+import android.net.Uri
 import android.widget.Toast
-import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.GridCells
 import androidx.compose.foundation.lazy.LazyVerticalGrid
@@ -30,6 +29,11 @@ import com.scut.fundialect.database.helper.LearnVideoHelper.switchCommentLike
 import com.scut.fundialect.database.helper.UserHelpr
 import com.scut.fundialect.help.switch
 import kotlinx.coroutines.launch
+import android.provider.MediaStore
+import androidx.compose.foundation.*
+import androidx.compose.ui.graphics.ImageBitmap
+import androidx.compose.ui.layout.ContentScale
+import coil.compose.rememberImagePainter
 
 
 /**
@@ -353,20 +357,29 @@ private fun Comment(it: LearnVideoHelper.CommentInfo) {
         mutableStateOf(it.numberLiked )
     }
     val commenterInfo = UserHelpr.UserInfo(it.commenterId)
+
     Row(
         verticalAlignment = Alignment.Top,
         horizontalArrangement = Arrangement.SpaceAround,
         modifier = Modifier.fillMaxWidth()
     ) {
-        Image(
-            painter = painterResource(id = R.drawable.ic_launcher_background),
-            contentDescription = "头像",
-            modifier = Modifier
-                /**这个是描边*/
-                .border(2.dp, Color.Black, shape = CircleShape)
-                .size(30.dp)
+        /**这个surfface里面是用户的头像*/
 
-        )
+        Surface(
+            shape = CircleShape,
+            /**这个是描边*/
+            border = BorderStroke(3.dp, Color.Black)
+        ){
+            Image(
+                painter = rememberImagePainter(commenterInfo.userPicFile),
+                contentDescription = "头像",
+                contentScale = ContentScale.Crop,
+                modifier = Modifier
+                    .size(30.dp)
+
+            )
+        }
+
         Column(verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.Start,
         modifier = Modifier.width(150.dp)) {

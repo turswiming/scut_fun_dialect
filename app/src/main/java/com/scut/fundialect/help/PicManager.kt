@@ -1,5 +1,6 @@
 package com.scut.fundialect.help
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.ContentResolver
 import android.content.Intent
@@ -15,7 +16,22 @@ import java.net.URI
 import android.content.Context
 import android.os.Build
 import android.provider.MediaStore
+import android.transition.Transition
+import android.util.Log
 import android.widget.Toast
+import androidx.annotation.DrawableRes
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material.Card
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.asImageBitmap
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.unit.dp
 import androidx.core.content.FileProvider
 import androidx.core.net.toUri
 
@@ -151,6 +167,93 @@ object PicManager {
         bitmap.recycle() // 将不再需要的Bitmap对象回收
         return rotatedBitmap
     }
+
 }
-
-
+//}
+///**
+// * 使用Glide库加载网络图片
+// * @author [FunnySaltyFish](https://funnysaltyfish.github.io)
+// * @date 2021-07-14
+// * @param context Context 合理的Context
+// * @param url String 加载的图片URL
+// * @param defaultImageId Int 默认加载的本地图片
+// * @return MutableState<Bitmap?> 加载完成（失败为null）的Bitmap-State
+// */
+//fun loadImage(
+//    context: Context,
+//    url: String,
+//    @SuppressLint("ResourceType") @DrawableRes defaultImageId: Int = R.raw.defaultpic
+//): MutableState<Bitmap?> {
+//    val TAG = "LoadImage"
+//    val bitmapState: MutableState<Bitmap?> = mutableStateOf(null)
+//
+//    //为请求加上 Headers ，提高访问成功率
+//    val glideUrl = GlideUrl(url,LazyHeaders.Builder().addHeader("User-Agent","Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36 Edg/91.0.864.67").build())
+//
+//    //先加载本地图片
+//    Glide.with(context)
+//        .asBitmap()
+//        .load(defaultImageId)
+//        .into(object : CustomTarget<Bitmap>() {
+//            override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap>?) {
+//                //自定义Target，在加载完成后将图片资源传递给bitmapState
+//                bitmapState.value = resource
+//            }
+//
+//            override fun onLoadCleared(placeholder: Drawable?) {}
+//        })
+//
+//    //然后再加载网络图片
+//    try {
+//        Glide.with(context)
+//            .asBitmap()
+//            .load(glideUrl)
+//            .into(object : CustomTarget<Bitmap>() {
+//                override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap>?) {
+//                    //自定义Target，在加载完成后将图片资源传递给bitmapState
+//                    bitmapState.value = resource
+//                }
+//
+//                override fun onLoadCleared(placeholder: Drawable?) {}
+//            })
+//    } catch (glideException: GlideException) {
+//        Log.d(TAG, "error: ${glideException.rootCauses}")
+//    }
+//
+//    return bitmapState
+//}
+//
+//@Composable
+//fun LoadPicture(
+//    url : String
+//){
+//
+//    val imageState = loadImage(
+//        context = LocalContext.current,
+//        url = url,
+//    )
+//
+//    Card(modifier = Modifier
+//        .padding(4.dp)
+//        .clickable { }) {
+//        //如果图片加载成功
+//        imageState.value?.let {
+//            Image(
+//                bitmap = it.asImageBitmap(),
+//                contentDescription = "",
+//                modifier = Modifier
+//                    .padding(4.dp)
+//                    .fillMaxWidth()
+//            )
+//        }
+//    }
+//}
+//
+////......
+////
+////LazyColumn {
+////    val urls = arrayListOf<String>()
+////    for (i in 500..550){urls.add("https://nyc3.digitaloceanspaces.com/food2fork/food2fork-static/featured_images/$i/featured_image.png")}
+////    itemsIndexed(urls){ _ , url -> LoadPicture(url = url)}
+////}
+//
