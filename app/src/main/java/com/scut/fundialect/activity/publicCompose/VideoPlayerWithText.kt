@@ -21,11 +21,11 @@ import com.github.stuxuhai.jpinyin.PinyinFormat
 import com.github.stuxuhai.jpinyin.PinyinHelper
 import com.scut.fundialect.MyApplication
 import com.scut.fundialect.R
-import com.scut.fundialect.activity.learn.ui.theme.Purple700
-import com.scut.fundialect.activity.learn.ui.theme.white
 import com.scut.fundialect.database.helper.LearnVideoHelper
 import com.scut.fundialect.help.switch
-import com.scut.fundialect.ui.theme.black
+import com.scut.fundialect.ui.theme.FontBlack
+import com.scut.fundialect.ui.theme.FontWhite
+import com.scut.fundialect.ui.theme.MainColor
 import kotlinx.coroutines.launch
 
 
@@ -148,7 +148,7 @@ fun VideoPlayerWithText(
                 Column(modifier = Modifier
                     .fillMaxHeight()
                     .width(300.dp)
-                    .background(Purple700),
+                    .background(MainColor),
                     verticalArrangement = Arrangement.Top,
                     horizontalAlignment = Alignment.Start
 
@@ -170,7 +170,7 @@ fun VideoPlayerWithText(
                             Column(horizontalAlignment = Alignment.CenterHorizontally){
                                 Text(
                                     text = pinyin,
-                                    color = white,
+                                    color = FontWhite,
                                     modifier = Modifier
                                         .width(50.dp),
                                     textAlign = TextAlign.Center
@@ -182,7 +182,7 @@ fun VideoPlayerWithText(
                                         contentDescription = "文字背景")
                                     Text(
                                         text = char.toString(),
-                                        color = white,
+                                        color = FontWhite,
                                         fontSize = 30.sp
                                     )
                                 }
@@ -208,8 +208,8 @@ fun VideoPlayerWithText(
                         }
 
                     }
-                    Text(text = "释义",color = white)
-                    Text(text = introduce,color = white)
+                    Text(text = "释义",color = FontWhite)
+                    Text(text = introduce,color = FontWhite)
 
                 }
 
@@ -338,7 +338,7 @@ fun FloatButton(
             )
         }
 
-        Text(text = text,color = white)
+        Text(text = text,color = FontWhite)
     }
 }
 @Composable
@@ -368,6 +368,6 @@ fun ShareButton(
             )
         }
 
-        Text(text = text,color = black)
+        Text(text = text,color = FontBlack)
     }
 }

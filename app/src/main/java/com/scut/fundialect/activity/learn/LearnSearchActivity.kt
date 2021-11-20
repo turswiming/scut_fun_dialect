@@ -17,6 +17,7 @@ import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.TextStyle
@@ -25,17 +26,15 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.scut.fundialect.R
 import com.scut.fundialect.activity.BaseComposeActivity
-import com.scut.fundialect.activity.learn.ui.theme.*
-import com.scut.fundialect.database.helper.CityHelper
 import com.scut.fundialect.help.switch
-import com.scut.fundialect.ui.theme.black
+import com.scut.fundialect.ui.theme.*
 
 class LearnSearchActivity : BaseComposeActivity() {
     @ExperimentalFoundationApi
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            FunDialectTheme {
+            ComposeTutorialTheme {
                 // A surface container using the 'background' color from the theme
                 Surface(color = MaterialTheme.colors.background) {
                     SearchPage(this)
@@ -108,7 +107,7 @@ class LearnSearchActivity : BaseComposeActivity() {
             Box(
                 modifier = Modifier
                     .fillMaxSize()
-                    .background(white)
+                    .background(Color.White)
             ) {
                 Column(
                     modifier = Modifier
@@ -160,7 +159,7 @@ class LearnSearchActivity : BaseComposeActivity() {
                                     .height(32.dp)
                                     .padding(5.dp)
                                     .background(
-                                        color = gray200,
+                                        color = FirstNavColor,
                                         shape = RoundedCornerShape(5.dp),
                                     ),
                                 contentAlignment = Alignment.Center
@@ -171,7 +170,7 @@ class LearnSearchActivity : BaseComposeActivity() {
                                 ) {
                                 Text(
                                     text = AnnotatedString(textList[index]),
-                                    color = white,
+                                    color = FontWhite,
                                     textAlign = TextAlign.Center,
                                     modifier = Modifier.fillMaxWidth(),
 
@@ -205,8 +204,8 @@ class LearnSearchActivity : BaseComposeActivity() {
                                 Text(
                                     text = index.toString(),
                                     color = switch(
-                                        orange,
-                                        gray700,
+                                        CustomOrange,
+                                        FontBlack,
                                         index<=3
                                     ),
                                     fontSize = 30.sp

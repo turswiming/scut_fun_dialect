@@ -5,12 +5,12 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.viewinterop.AndroidView
 import com.google.android.exoplayer2.MediaItem
 import com.google.android.exoplayer2.SimpleExoPlayer
 import com.google.android.exoplayer2.ui.PlayerView
-import com.scut.fundialect.ui.theme.black
 
 class VideoCompose {
 
@@ -35,7 +35,7 @@ fun VideScreen (uri:String){
     PlayerSurface(
         modifier = Modifier
             .fillMaxSize()
-            .background(black)
+            .background(Color.Black)
     ){
         it.player = exoPlayer
     }

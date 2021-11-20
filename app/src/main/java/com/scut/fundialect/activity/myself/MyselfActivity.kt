@@ -9,13 +9,13 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
 import com.scut.fundialect.activity.BaseComposeActivity
-import com.scut.fundialect.activity.myself.ui.theme.FunDialectTheme
+import com.scut.fundialect.ui.theme.ComposeTutorialTheme
 
 class MyselfActivity : BaseComposeActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            FunDialectTheme {
+            ComposeTutorialTheme {
                 // A surface container using the 'background' color from the theme
                 Surface(color = MaterialTheme.colors.background) {
                     Greeting4("Android")
@@ -33,7 +33,7 @@ fun Greeting4(name: String) {
 @Preview(showBackground = true)
 @Composable
 fun DefaultPreview4() {
-    FunDialectTheme {
+    ComposeTutorialTheme {
         Greeting4("Android")
     }
 }

@@ -21,7 +21,6 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.scut.fundialect.MyApplication.Companion.context
 import com.scut.fundialect.R
-import com.scut.fundialect.activity.learn.ui.theme.white
 import com.scut.fundialect.activity.publicCompose.ShareButton
 import com.scut.fundialect.activity.publicCompose.VideoPlayerWithText
 import com.scut.fundialect.database.helper.CityHelper
@@ -30,7 +29,6 @@ import com.scut.fundialect.database.helper.LearnVideoHelper.getVideoComment
 import com.scut.fundialect.database.helper.LearnVideoHelper.switchCommentLike
 import com.scut.fundialect.database.helper.UserHelpr
 import com.scut.fundialect.help.switch
-import com.scut.fundialect.ui.theme.black
 import kotlinx.coroutines.launch
 
 
@@ -292,7 +290,7 @@ fun MySelectedPage(
                     .height(switch(200.dp, 1.dp, cityStateNow == 5))
                     .fillMaxWidth(),
                 shape = RoundedCornerShape (0. dp,0.dp,25.dp,25.dp),
-                color = black
+                color = Color.Black
             ) {
                 LazyVerticalGrid(
                     cells = GridCells.Adaptive(minSize = 64.dp)
@@ -322,7 +320,7 @@ fun MySelectedPage(
                             ) {
                             Text(
                                 text = AnnotatedString(cityList[index].getTheName()),
-                                color = white,
+                                color = Color.White,
                                 textAlign = TextAlign.Center,
                                 modifier = Modifier.fillMaxWidth()
 

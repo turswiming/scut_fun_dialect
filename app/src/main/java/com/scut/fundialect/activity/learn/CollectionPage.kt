@@ -22,15 +22,14 @@ import androidx.compose.ui.unit.dp
 import com.github.stuxuhai.jpinyin.PinyinFormat
 import com.github.stuxuhai.jpinyin.PinyinHelper
 import com.scut.fundialect.R
-import com.scut.fundialect.activity.learn.ui.theme.Purple200
-import com.scut.fundialect.activity.learn.ui.theme.white
+
 import com.scut.fundialect.activity.publicCompose.MyButtonAppBar
 import com.scut.fundialect.database.CityDataBaseHelper
 import com.scut.fundialect.database.helper.CityHelper
 import com.scut.fundialect.database.helper.CityHelper.getCityName
 import com.scut.fundialect.database.helper.LearnVideoHelper.getCollectedVideo
 import com.scut.fundialect.help.switch
-import com.scut.fundialect.ui.theme.black
+import com.scut.fundialect.ui.theme.CustomOrange
 
 /**
  *
@@ -95,7 +94,7 @@ fun MyWordLibraryPage(context: Context) {
                         .height(switch(200.dp, 1.dp, isShow))
                         .fillMaxWidth(),
                     shape = RoundedCornerShape (0. dp,0.dp,25.dp,25.dp),
-                    color = black
+                    color = Color.Black
                 ) {
                     LazyVerticalGrid(
                         cells = GridCells.Adaptive(minSize = 64.dp)
@@ -123,7 +122,7 @@ fun MyWordLibraryPage(context: Context) {
                                 ) {
                                 Text(
                                     text = AnnotatedString(cityList[index].getTheName()),
-                                    color = white,
+                                    color = Color.White,
                                     textAlign = TextAlign.Center,
                                     modifier = Modifier.fillMaxWidth()
 
@@ -148,7 +147,7 @@ fun MyWordLibraryPage(context: Context) {
 fun ScrollBoxes() {
     Column(
         modifier = Modifier
-            .background(Purple200)
+            .background(CustomOrange)
             .verticalScroll(rememberScrollState())
             .fillMaxWidth()
     ) {
@@ -169,7 +168,7 @@ fun ScrollBoxes() {
                     modifier = Modifier
                         .background(
                             shape = CutCornerShape(10.dp),
-                            color = black
+                            color = Color.Black
                         )
                         .fillMaxSize()
                 ) {
@@ -211,7 +210,7 @@ fun ScrollBoxes() {
                                     Column(horizontalAlignment = Alignment.CenterHorizontally){
                                         Text(
                                             text = pinyin,
-                                            color = black,
+                                            color = Color.Black,
                                             modifier = Modifier
                                                 .width(50.dp),
                                             textAlign = TextAlign.Center

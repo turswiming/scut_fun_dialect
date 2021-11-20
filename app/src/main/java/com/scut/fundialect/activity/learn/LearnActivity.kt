@@ -16,7 +16,7 @@ import androidx.compose.ui.unit.dp
 import com.scut.fundialect.MyApplication.Companion.context
 import com.scut.fundialect.R
 import com.scut.fundialect.activity.BaseComposeActivity
-import com.scut.fundialect.activity.learn.ui.theme.FunDialectTheme
+import com.scut.fundialect.ui.theme.ComposeTutorialTheme
 
 
 class LearnActivity : BaseComposeActivity() {
@@ -26,7 +26,7 @@ class LearnActivity : BaseComposeActivity() {
         super.onCreate(savedInstanceState)
         Toast.makeText(context,"准备载入compose", Toast.LENGTH_SHORT).show()
         setContent {
-            FunDialectTheme {
+            ComposeTutorialTheme {
                 // A surface container using the 'background' color from the theme
                 Surface(color = MaterialTheme.colors.background) {
                     MainPage(this)
