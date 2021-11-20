@@ -155,7 +155,6 @@ class LearnSearchActivity : BaseComposeActivity() {
                                 modifier = Modifier
                                     .clickable {
                                         //Toast.makeText(context,"key\t$cityStateLast\nvalue\t$index",Toast.LENGTH_SHORT).show()
-
                                     }
                                     .width(70.dp)
                                     .height(32.dp)
@@ -187,7 +186,7 @@ class LearnSearchActivity : BaseComposeActivity() {
                         }
                     }
                     Text(text = "热门搜索")
-                    val hotSearch = listOf<String>(
+                    val hotSearch = listOf(
                         "各种方言的你好",
                         "四川话的耙耳朵是啥意思",
                         "抵押热巴出席活动时着急彪方言",
@@ -197,15 +196,19 @@ class LearnSearchActivity : BaseComposeActivity() {
                     )
                     Column() {
                         var index = 0
-                        hotSearch.forEach(){it->
+                        hotSearch.forEach(){ it ->
                             index++
                             Row(
-                                horizontalArrangement = Arrangement.Start,
+                                horizontalArrangement = Arrangement.End,
                                 verticalAlignment = Alignment.CenterVertically
                             ) {
                                 Text(
                                     text = index.toString(),
-                                    color = switch(orange,gray700,index<=3),
+                                    color = switch(
+                                        orange,
+                                        gray700,
+                                        index<=3
+                                    ),
                                     fontSize = 30.sp
                                 )
                                 Text(

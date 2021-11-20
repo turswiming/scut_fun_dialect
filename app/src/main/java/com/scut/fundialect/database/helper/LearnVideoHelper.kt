@@ -253,7 +253,7 @@ object LearnVideoHelper {
     }
 
     @SuppressLint("Range")
-    fun getCollectedVideo():List<VideoInfo> {
+    fun getCollectedVideo():MutableList<VideoInfo> {
         val results = learnDB.query(
             "videoInfo",
             null,
@@ -262,14 +262,15 @@ object LearnVideoHelper {
             null,
             null,
             null)
+        Toast.makeText(context,"查表获取了${results.count}个元素",Toast.LENGTH_SHORT).show()
         var videoInfoList: MutableList<VideoInfo> = mutableListOf<VideoInfo>()
 
 
         if (results.moveToFirst()) {
             do {
                 // 遍历Cursor对象，取出数据并打印
-                val id = results.getInt(results.getColumnIndex("id"))
-                videoInfoList+=VideoInfo(id)
+                var id = results.getInt(results.getColumnIndex("id"))
+                videoInfoList.add(VideoInfo(id))
 
             } while (results.moveToNext())
         }
