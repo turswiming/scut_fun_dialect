@@ -1,9 +1,10 @@
 package com.scut.fundialect.activity.learn
 
-import android.graphics.Bitmap
-import android.graphics.Picture
-import android.net.Uri
 import android.widget.Toast
+import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.GridCells
 import androidx.compose.foundation.lazy.LazyVerticalGrid
@@ -14,10 +15,12 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import coil.compose.rememberImagePainter
 import com.scut.fundialect.MyApplication.Companion.context
 import com.scut.fundialect.R
 import com.scut.fundialect.activity.publicCompose.ShareButton
@@ -29,11 +32,6 @@ import com.scut.fundialect.database.helper.LearnVideoHelper.switchCommentLike
 import com.scut.fundialect.database.helper.UserHelpr
 import com.scut.fundialect.help.switch
 import kotlinx.coroutines.launch
-import android.provider.MediaStore
-import androidx.compose.foundation.*
-import androidx.compose.ui.graphics.ImageBitmap
-import androidx.compose.ui.layout.ContentScale
-import coil.compose.rememberImagePainter
 
 
 /**

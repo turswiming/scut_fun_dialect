@@ -36,6 +36,11 @@ open class VideoDataBaseHelper(val context: Context, name:String, version:Int):
             "isLiked integer," +
             "numberLiked integer" +
             ")"
+    private fun toUriStr(image:Int):String{
+        return "android.resource://com.scut.fundialect/$image"
+        //default "${toUriStr(com.scut.fundialect.R.raw.defaultpic)}"
+
+    }
     //定义包名变量
     val packageName = "com.scut.fundialect"
     val DatePattern = "yyyy-MM-dd HH:mm:ss.SSS"
@@ -47,7 +52,8 @@ open class VideoDataBaseHelper(val context: Context, name:String, version:Int):
                 put("videoLike", 342)
                 put("videoIsLiked", 0)
                 put("videoCollect", 134)
-                put("videoIsCollect", 1)
+                put("videoIsCollect", 0)
+                put("videoPicUri","${toUriStr(com.scut.fundialect.R.raw.defaultpic)}")
                 put("videoIntroduce", "这是关于一个黑色的故事")
                 //SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS")
                 put("videoUpdateTime", Date().time -300000000)
@@ -60,6 +66,8 @@ open class VideoDataBaseHelper(val context: Context, name:String, version:Int):
                 put("videoLike", 3420)
                 put("videoIsLiked", 1)
                 put("videoCollect", 1304)
+                put("videoPicUri","${toUriStr(com.scut.fundialect.R.raw.defaultpic)}")
+
                 put("videoIsCollect", 0)
                 put("videoIntroduce", "这是关于一个蓝色的故事")
                 put("videoUpdateTime", Date().time -600000000)
@@ -74,7 +82,9 @@ open class VideoDataBaseHelper(val context: Context, name:String, version:Int):
                 put("videoLike", 1342)
                 put("videoIsLiked", 1)
                 put("videoCollect", 134)
-                put("videoIsCollect", 1)
+                put("videoPicUri","${toUriStr(com.scut.fundialect.R.raw.defaultpic)}")
+
+                put("videoIsCollect", 0)
                 put("videoIntroduce", "这是关于一个橙色的故事")
                 put("videoUpdateTime", Date().time -60000000)
                 put("videoBelongCityId", 1)
@@ -89,6 +99,8 @@ open class VideoDataBaseHelper(val context: Context, name:String, version:Int):
                 put("videoIsLiked", 0)
                 put("videoCollect", 134)
                 put("videoIsCollect", 1)
+                put("videoPicUri","${toUriStr(com.scut.fundialect.R.raw.defaultpic)}")
+
                 put("videoIntroduce", "这是关于一个绿色的故事")
                 put("videoUpdateTime", Date().time -6000000)
                 put("videoBelongCityId", 1)
