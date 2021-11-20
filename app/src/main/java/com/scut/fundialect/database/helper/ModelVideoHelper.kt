@@ -5,17 +5,19 @@ import android.content.ContentValues
 import android.database.sqlite.SQLiteDatabase
 import android.widget.Toast
 import com.scut.fundialect.MyApplication
-import com.scut.fundialect.database.DubedVideoDataBaseHelper
+import com.scut.fundialect.database.ModelVideoDataBaseHelper
 
-object DubedVideoHelper {
+object ModelVideoHelper {
+    private  var modelDB: SQLiteDatabase
 
-    private  var dubedDB: SQLiteDatabase
     init {
-        val dubedVideoDataBaseHelper = DubedVideoDataBaseHelper(MyApplication.context,"city.db",1)
-        dubedDB = dubedVideoDataBaseHelper.writableDatabase
+        val modelVideoDataBaseHelper = ModelVideoDataBaseHelper(
+            MyApplication.context,
+            "Learn.db",
+            1
+        )
+        modelDB =modelVideoDataBaseHelper.writableDatabase
     }
-    const val tableName = "DubedVideo"
-    //这一行的意思是屏蔽报错......绝了
     fun getCommitNumber(videoId: Int):Int {
         return 666
     }
@@ -36,7 +38,7 @@ object DubedVideoHelper {
     }
     @SuppressLint("Range")
     fun getVideoComment(videoId: Int):List<CommentInfo> {
-        val results = dubedDB.query(
+        val results = modelDB.query(
             "commentInfo",
             null,
             "parentId = $videoId",
@@ -73,7 +75,7 @@ object DubedVideoHelper {
         val isLiked:Boolean
 
         init{
-            val results = dubedDB.query(
+            val results = modelDB.query(
                 "commentInfo",
                 null,
                 "id = $CommitId",
@@ -99,7 +101,7 @@ object DubedVideoHelper {
     fun switchCommentLike(commitId: Int) {
 //        Toast.makeText(context,"即将查询",Toast.LENGTH_SHORT).show()
 
-        val results = dubedDB.query(
+        val results = modelDB.query(
             "commentInfo",
             null,
             "id = $commitId",
@@ -123,7 +125,7 @@ object DubedVideoHelper {
         values.put("isLiked", toInt(!toBool(isLiked)))
         values.put("numberLiked",numberLiked)
 //        Toast.makeText(context,"即将进行改表",Toast.LENGTH_SHORT).show()
-        dubedDB.update(
+        modelDB.update(
             "commentInfo",
             values,
             "id = $commitId",
@@ -148,7 +150,7 @@ object DubedVideoHelper {
         val videoIsCollect:Boolean
 
         init{
-            val results = dubedDB.query(
+            val results = modelDB.query(
                 "videoInfo",
                 null,
                 "id = $id",
@@ -202,7 +204,7 @@ object DubedVideoHelper {
     @SuppressLint("Range")
     fun switchLike(videoId: Int) {
         //Toast.makeText(context,"即将进行查询",Toast.LENGTH_SHORT).show()
-        val results = dubedDB.query(
+        val results = modelDB.query(
             "videoInfo",
             null,
             "id = $videoId",
@@ -219,7 +221,7 @@ object DubedVideoHelper {
         //下面这句话那个三层嵌套函数意思是，把数字转成bool再取反，再转成数字。我懒得写lambda了
         values.put("videoIsLiked", toInt(!toBool(videoIsLiked)))
         //Toast.makeText(context,"即将进行改表",Toast.LENGTH_SHORT).show()
-        dubedDB.update(
+        modelDB.update(
             "videoInfo",
             values,
             "id = $videoId",
@@ -229,7 +231,7 @@ object DubedVideoHelper {
     @SuppressLint("Range")
     fun switchCollect(videoId: Int) {
         //Toast.makeText(context,"即将进行查询",Toast.LENGTH_SHORT).show()
-        val results = dubedDB.query(
+        val results = modelDB.query(
             "videoInfo",
             null,
             "id = $videoId",
@@ -246,7 +248,7 @@ object DubedVideoHelper {
         //下面这句话那个三层嵌套函数意思是，把数字转成bool再取反，再转成数字。我懒得写lambda了
         values.put("videoIsCollect", toInt(!toBool(videoIsLiked)))
         //Toast.makeText(context,"即将进行改表",Toast.LENGTH_SHORT).show()
-        dubedDB.update(
+        modelDB.update(
             "videoInfo",
             values,
             "id = $videoId",
@@ -256,7 +258,7 @@ object DubedVideoHelper {
 
     @SuppressLint("Range")
     fun getCollectedVideo():MutableList<VideoInfo> {
-        val results = dubedDB.query(
+        val results = modelDB.query(
             "videoInfo",
             null,
             "videoIsCollect = 1",
