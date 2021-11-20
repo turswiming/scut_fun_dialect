@@ -10,7 +10,7 @@ open class BaseActivity: AppCompatActivity() {
         super.onCreate(savedInstanceState)
         //关掉标题栏
         supportActionBar?.hide()
-
+        //zxt到此一游
     }
 
 
