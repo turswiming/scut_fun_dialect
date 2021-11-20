@@ -130,7 +130,7 @@ class LoginActivity : BaseActivity() {
                 mutableStateOf(false)
             }
             Spacer(
-                modifier = Modifier.height(40.dp)
+                modifier = Modifier.height(80.dp)
             )
             OutlinedTextField(
                 value = username,
