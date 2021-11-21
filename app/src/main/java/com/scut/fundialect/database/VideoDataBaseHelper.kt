@@ -15,17 +15,17 @@ open class VideoDataBaseHelper(val context: Context, name:String, version:Int):
     val commentTableName ="commentInfo"
     val initVideoDatabase = "create table "+videoTableName+" (" +
             "id integer primary key autoincrement," +
-            "videoUri text," +
-            "videoName text," +
-            "videoLike integer," +
-            "videoUploaderId integer," +
-            "videoIsLiked integer," +
-            "videoCollect integer," +
-            "videoIsCollect integer," +
-            "videoIntroduce text," +
-            "videoUpdateTime integer," +
-            "videoPicUri text, " +
-            "videoBelongCityId integer" +
+            "videoUri text default \"android.resource://${context.packageName}/${R.raw.video1}\"," +
+            "videoName text default \"未命名视频\"," +
+            "videoLike integer default ${(2..50).random()}," +
+            "videoUploaderId integer default ${(1..2).random()}," +
+            "videoIsLiked integer default ${(0..1).random()}," +
+            "videoCollect integer default ${(0..10).random()}," +
+            "videoIsCollect integer default ${(0..1).random()}," +
+            "videoIntroduce text default \"上传的人很懒，什么都没写\"," +
+            "videoUpdateTime integer default \"上传的人很懒，什么都没写\"," +
+            "videoPicUri text default \"android.resource://${context.packageName}/${R.raw.defaultpic}\"," +
+            "videoBelongCityId integer  default 1" +
             ")"
     val initCommetDatabase = "create table "+commentTableName+" (" +
             "id integer primary key autoincrement," +
@@ -115,8 +115,8 @@ open class VideoDataBaseHelper(val context: Context, name:String, version:Int):
     fun initCommentInfoDatabase(db: SQLiteDatabase?){
         repeat(10){
             val value1 = ContentValues().apply {
-                put("parentId", (0..3).random())
-                put("commenterId", 1)
+                put("parentId", (1..3).random())
+                put("commenterId", 2)
                 put("comment", "太哲学了，"+(2..50).random()+"简直是我看过最好看的")
                 put("commentTime", Date().time -100000*(0..100).random())
                 put("isLiked", (0..1).random())
@@ -128,7 +128,7 @@ open class VideoDataBaseHelper(val context: Context, name:String, version:Int):
         }
         repeat(30){
             val value1 = ContentValues().apply {
-                put("parentId", (0..3).random())
+                put("parentId", (1..3).random())
                 put("commenterId", 1)
                 put("comment", "啥玩意儿啊，"+(2..5).random()+"垃圾回收站也不过如此")
                 put("commentTime", Date().time -100000*(0..100).random())

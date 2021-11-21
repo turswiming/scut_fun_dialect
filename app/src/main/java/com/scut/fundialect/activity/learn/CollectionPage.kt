@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.GridCells
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyVerticalGrid
 import androidx.compose.foundation.shape.CutCornerShape
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -145,14 +146,14 @@ fun MyWordLibraryPage(context: Context) {
 
 @Composable
 fun ScrollBoxes() {
-    Column(
+    val  collectedVideos =  getCollectedVideo()
+    LazyColumn(
         modifier = Modifier
             .background(CustomOrange)
-            .verticalScroll(rememberScrollState())
-            .fillMaxWidth()
+//            .verticalScroll(rememberScrollState())
+//            .fillMaxWidth()
     ) {
-        val  collectedVideos =  getCollectedVideo()
-        collectedVideos.forEach { _videoData ->
+        items(collectedVideos.size){index ->
             /**
              *
              * 这里面是每一个小的视频卡片
@@ -167,12 +168,12 @@ fun ScrollBoxes() {
                 Surface(
                     modifier = Modifier
                         .background(
-                            shape = CutCornerShape(10.dp),
+                            shape = RoundedCornerShape (25.dp),
                             color = Color.Black
                         )
                         .fillMaxSize()
                 ) {
-                    
+
                     Column(
                         modifier = Modifier
                             .fillMaxSize(),
@@ -184,7 +185,7 @@ fun ScrollBoxes() {
                             verticalAlignment = Alignment.CenterVertically
                         ) {
                             /**
-                             * 
+                             *
                              * 这里面包括了标题文字及其拼音
                              * */
                             Row(
@@ -194,13 +195,13 @@ fun ScrollBoxes() {
                                 verticalAlignment = Alignment.CenterVertically,
                                 horizontalArrangement = Arrangement.Center
                             ) {
-                                _videoData.videoName.forEach { char ->
+                                collectedVideos[index].videoName.forEach { char ->
                                     /**
                                      *
                                      * 这里面包括了标题文字及其拼音的
-                                     * 
+                                     *
                                      * 每一个字
-                                     * 
+                                     *
                                      * */
                                     val pinyin = PinyinHelper.convertToPinyinString(
                                         char.toString(),
@@ -225,7 +226,7 @@ fun ScrollBoxes() {
                             }
                             /**
                              * 这里面包括了右边两个按钮
-                             * 
+                             *
                              * */
                             Row(
                                 horizontalArrangement = Arrangement.SpaceBetween,
@@ -239,14 +240,16 @@ fun ScrollBoxes() {
                                 Spacer(modifier = Modifier.width(5.dp))
                                 Image(
                                     painter = painterResource(id = R.drawable.ic_launcher_background),
-                                    contentDescription = "只听声音",
-                                    modifier = Modifier.size(30.dp)
+                                    contentDescription = "播放音频",
+                                    modifier = Modifier.size(30.dp).clickable {
+                                        TODO()
+                                    }
 
                                 )
 
                             }
                         }
-                        
+
                         Row(
                             modifier = Modifier
                                 .fillMaxWidth()
@@ -255,13 +258,13 @@ fun ScrollBoxes() {
                             verticalAlignment = Alignment.Top
                         ) {
                             Column(horizontalAlignment = Alignment.Start,
-                            verticalArrangement = Arrangement.SpaceBetween) {
+                                verticalArrangement = Arrangement.SpaceBetween) {
                                 /**
                                  * 左下角的释义和视频介绍
                                  *
                                  * */
                                 Text(text = "释义")
-                                Text(text = _videoData.videoIntroduce)
+                                Text(text = collectedVideos[index].videoIntroduce)
                             }
                             /**
                              * 右下角的城市归属和图片
@@ -269,20 +272,21 @@ fun ScrollBoxes() {
                              * */
                             Box {
                                 Image(
-                                    painter = painterResource(id = R.drawable.ic_launcher_background), 
+                                    painter = painterResource(id = R.drawable.ic_launcher_background),
                                     contentDescription = "城市背景图"
                                 )
-                                Text(text = getCityName(_videoData.videoBelongCityId))
+                                Text(text = getCityName(collectedVideos[index].videoBelongCityId))
                             }
                         }
                     }
-                    
-                    
-                    
+
+
+
 
                 }
             }
         }
+
     }
 }
 

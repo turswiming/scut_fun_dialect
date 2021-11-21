@@ -1,5 +1,6 @@
 package com.scut.fundialect.activity.learn
 
+import android.content.ClipData
 import android.widget.Toast
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.ExperimentalFoundationApi
@@ -7,6 +8,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.GridCells
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyVerticalGrid
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -257,13 +259,21 @@ fun MySelectedPage(
                      *
                      * */
                     sheetContent = {
-                        val videoCommit  = getVideoComment(videoId)
-                        Column {
-                            videoCommit.forEach {
-                                Comment(it)
-                            }
 
+                        val videoCommit  = getVideoComment(videoId)
+                        LazyColumn(
+
+                        ){
+                            items(videoCommit.size){index->
+                                /**
+                                 *
+                                 * 这里是 每一个 评论。
+                                 *
+                                 * */
+                                Comment(it = videoCommit[index])
+                            }
                         }
+
                     }
                 ) {
                     VideoPlayerWithText(
@@ -345,7 +355,11 @@ fun MySelectedPage(
 
 
 }
-
+/**
+ *
+ * 这里是每一个评论。
+ *
+ * */
 @Composable
 private fun Comment(it: LearnVideoHelper.CommentInfo) {
     var isLike by remember {

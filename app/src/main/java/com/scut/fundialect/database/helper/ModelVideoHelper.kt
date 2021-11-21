@@ -3,7 +3,6 @@ package com.scut.fundialect.database.helper
 import android.annotation.SuppressLint
 import android.content.ContentValues
 import android.database.sqlite.SQLiteDatabase
-import android.widget.Toast
 import com.scut.fundialect.MyApplication
 import com.scut.fundialect.database.ModelVideoDataBaseHelper
 
@@ -139,6 +138,7 @@ object ModelVideoHelper {
         val videoUri:String
         val videoName:String
         val videoIntroduce:String
+        val videoPicUri:String
 
         val videoLike:Int
         val videoUploaderId:Int
@@ -163,6 +163,8 @@ object ModelVideoHelper {
             videoUri = results.getString(results.getColumnIndex("videoUri"))
             videoName = results.getString(results.getColumnIndex("videoName"))
             videoIntroduce = results.getString(results.getColumnIndex("videoIntroduce"))
+            videoPicUri = results.getString(results.getColumnIndex("videoPicUri"))
+
             videoLike = results.getInt(results.getColumnIndex("videoLike"))
             videoUploaderId = results.getInt(results.getColumnIndex("videoUploaderId"))
             videoCollect = results.getInt(results.getColumnIndex("videoCollect"))
@@ -257,31 +259,10 @@ object ModelVideoHelper {
     }
 
     @SuppressLint("Range")
-    fun getCollectedVideo():MutableList<VideoInfo> {
-        val results = modelDB.query(
-            "videoInfo",
-            null,
-            "videoIsCollect = 1",
-            null,
-            null,
-            null,
-            null)
-        Toast.makeText(MyApplication.context,"查表获取了${results.count}个元素", Toast.LENGTH_SHORT).show()
-        var videoInfoList: MutableList<VideoInfo> = mutableListOf<VideoInfo>()
+    fun getCollectedModelVideo(): List<VideoInfo> {
 
 
-        if (results.moveToFirst()) {
-            do {
-                // 遍历Cursor对象，取出数据并打印
-                var id = results.getInt(results.getColumnIndex("id"))
-                videoInfoList.add(VideoInfo(id))
-
-            } while (results.moveToNext())
-        }
-        results.close()
-
-
-        return videoInfoList
+        return listOf(VideoInfo(1), VideoInfo(2), VideoInfo(3),)
 
 
     }

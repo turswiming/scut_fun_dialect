@@ -54,7 +54,7 @@ class LoginActivity : BaseActivity() {
         }
         test()
         setContent {
-            loginPage(this,SampleData.conversationSample)
+            LogInPage(this,SampleData.conversationSample)
         }
 
    }
@@ -100,11 +100,13 @@ class LoginActivity : BaseActivity() {
 
     @Preview
     @Composable
-    fun preview(){
-        loginPage(this,SampleData.conversationSample)
+    fun Preview(){
+        LogInPage(this,SampleData.conversationSample)
     }
+
+
     @Composable
-    fun loginPage(context:Context,messages:List<SampleData.Message>){
+    fun LogInPage(context:Context, messages:List<SampleData.Message>){
         Column(
             modifier = Modifier
                 .fillMaxWidth()

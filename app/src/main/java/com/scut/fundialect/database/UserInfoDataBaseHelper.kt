@@ -46,6 +46,7 @@ class UserInfoDataBaseHelper(val context: Context,name:String,version:Int):
             put("userMail", "1431839116@qq.com")
             put("userPassport", "12345678")
             put("userSex", 1)
+            put("userPicFile",toUriStr(com.scut.fundialect.R.raw.defaultuserpic2))
             //put("userCityId", 0)
 
         }
@@ -56,6 +57,7 @@ class UserInfoDataBaseHelper(val context: Context,name:String,version:Int):
             put("userMail", "1431839116@qq.com")
             put("userPassport", "12345678")
             put("userSex", 1)
+            put("userPicFile",toUriStr(com.scut.fundialect.R.raw.defaultuserpic))
             //put("userCityId", 0)
 
         }
