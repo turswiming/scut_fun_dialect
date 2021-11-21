@@ -121,9 +121,9 @@ fun MySelectedPage(
         Box(modifier = Modifier.fillMaxWidth()){
 
 
-            val videoInfo= LearnVideoHelper.VideoInfo(1)
+            val videoInfo= LearnVideoHelper.VideoInfo(3)
             val videoId by remember {
-                mutableStateOf(1)
+                mutableStateOf(3)
             }
 
             val state = rememberModalBottomSheetState(

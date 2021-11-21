@@ -4,7 +4,9 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
+import android.os.Looper
 import android.widget.Toast
+import com.scut.fundialect.database.helper.Public
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -28,18 +30,22 @@ class CityDataBaseHelper(val context: Context, name:String, version:Int):
         //以及暴力协程
         //请程序员自备降压药，谢谢。
         */
-        val fileName = "citydata.sql"
-        val input = context.assets.open(fileName)
-        var content = input.readBytes().toString(Charset.defaultCharset())
-        val contex2 = content.split("\n")
+
         //创建协程，让这段代码慢慢跑。
         //这段代码要跑10秒左右，手机可遭不住。
         CoroutineScope(Dispatchers.Default).launch {
+            val fileName = "citydata.sql"
+            val input = context.assets.open(fileName)
+            var content = input.readBytes().toString(Charset.defaultCharset())
+            val contex2 = content.split("\n")
             contex2.forEach{
                 db?.execSQL(it.substring(0,it.length-1))
 
             }
+            Looper.prepare();
             Toast.makeText(context, "完成城市数据库初始化", Toast.LENGTH_SHORT).show()
+            Looper.loop();
+            Public.CityDataInit =1
         }
 
     }

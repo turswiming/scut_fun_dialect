@@ -63,6 +63,7 @@ class UserInfoDataBaseHelper(val context: Context,name:String,version:Int):
         }
         db?.insert("userinfo",null,value2)
 
+        Toast.makeText(context,"完成个人信息的数据载入",Toast.LENGTH_SHORT).show()
 
 
     }

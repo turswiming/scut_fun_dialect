@@ -6,7 +6,13 @@ import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import android.net.Uri
+import android.os.Looper
+import android.widget.Toast
 import com.scut.fundialect.R
+import com.scut.fundialect.database.helper.Public
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import java.util.*
 
 open class VideoDataBaseHelper(val context: Context, name:String, version:Int):
@@ -143,11 +149,19 @@ open class VideoDataBaseHelper(val context: Context, name:String, version:Int):
     //这一行的意思是屏蔽报错......绝了
 
     override fun onCreate(db: SQLiteDatabase?) {
-        db?.execSQL(initVideoDatabase)
-        initVideoDatabase(db)
+        CoroutineScope(Dispatchers.Default).launch {
+            db?.execSQL(initVideoDatabase)
+            initVideoDatabase(db)
 
-        db?.execSQL(initCommetDatabase)
-        initCommentInfoDatabase(db)
+            db?.execSQL(initCommetDatabase)
+            initCommentInfoDatabase(db)
+            Public.finishDatainit()
+            Looper.prepare();
+            Toast.makeText(context,"完成一个视频的数据载入", Toast.LENGTH_SHORT).show()
+            Looper.loop();
+
+        }
+
 
     }
 

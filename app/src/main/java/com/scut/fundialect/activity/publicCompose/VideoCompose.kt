@@ -12,11 +12,6 @@ import com.google.android.exoplayer2.MediaItem
 import com.google.android.exoplayer2.SimpleExoPlayer
 import com.google.android.exoplayer2.ui.PlayerView
 
-class VideoCompose {
-
-
-
-}
 @Composable
 fun VideScreen (uri:String){
     val context = LocalContext.current

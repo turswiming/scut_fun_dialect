@@ -31,6 +31,8 @@ import com.scut.fundialect.MyApplication
 import com.scut.fundialect.R
 import com.scut.fundialect.activity.learn.LearnActivity
 import com.scut.fundialect.database.*
+import com.scut.fundialect.database.helper.LearnVideoHelper
+import com.scut.fundialect.database.helper.Public
 import com.scut.fundialect.help.PicManager
 import com.scut.fundialect.help.VideoHelper
 import com.scut.fundialect.ui.theme.ComposeTutorialTheme
@@ -78,16 +80,17 @@ class LoginActivity : BaseActivity() {
         val dubedDB =dubedVideoDataBaseHelper.writableDatabase
         //Toast.makeText(this, "dubedDB初始化成功", Toast.LENGTH_SHORT).show()
 
-
+        val learnVideoDataBaseHelper = LearnVideoDataBaseHelper(MyApplication.context,"Learn.db",1)
+        val learnDB =learnVideoDataBaseHelper.writableDatabase
         //Toast.makeText(this, "LearnDB初始化成功", Toast.LENGTH_SHORT).show()
 
         val modelVideoDataBaseHelper =ModelVideoDataBaseHelper(this,"Model.db",1)
-        val ModelDB =dubedVideoDataBaseHelper.writableDatabase
+        val ModelDB =modelVideoDataBaseHelper.writableDatabase
         //
 
         val userInfoDataBaseHelper = UserInfoDataBaseHelper(this,"userinfo.db",1)
         val userinfoDB = userInfoDataBaseHelper.writableDatabase
-        Toast.makeText(MyApplication.context,"数据库已经预先载入完成，请您下一步操作", Toast.LENGTH_SHORT).show()
+//        Toast.makeText(MyApplication.context,"数据库已经预先载入完成，请您下一步操作", Toast.LENGTH_SHORT).show()
 
 //        setContent {
 //            PreviewConversation()
@@ -182,7 +185,9 @@ class LoginActivity : BaseActivity() {
     }
 
     private fun checkPassWord(username:String,userpassword:String):Boolean {
-        if(username != "" && userpassword != ""){
+        if(username != "" && userpassword != ""
+//          &&  Public.isComplite()
+        ){
             //设置按钮为高亮
             return true
         }

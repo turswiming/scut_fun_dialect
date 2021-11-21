@@ -57,28 +57,28 @@ fun VideoPlayerWithText(
     var commitNum by remember {
         mutableStateOf(LearnVideoHelper.getCommitNumber(videoId))
     }
-    Box(modifier = Modifier.width(videoId.dp)) {
-        val scope = rememberCoroutineScope()
-        if(videoId!=videoIdBackup){
-            videoIdBackup = videoId
-            scope.launch {
-                uri = videoInfo.videoUri
-                name =videoInfo.videoName
-                introduce=videoInfo.videoIntroduce
-
-                likeNumber=videoInfo.videoLike
-                videoUploaderId=videoInfo.videoUploaderId
-                videoCollect=videoInfo.videoCollect
-                videoUpdateTime=videoInfo.videoUpdateTime
-                videoBelongCityId=videoInfo.videoBelongCityId
-                videoIsLiked=videoInfo.videoIsLiked
-                videoIsCollect=videoInfo.videoIsCollect
-                commitNum = LearnVideoHelper.getCommitNumber(videoId)
-
-            }
-        }
-
-    }
+//    Box(modifier = Modifier.width(videoId.dp)) {
+//        val scope = rememberCoroutineScope()
+//        if(videoId!=videoIdBackup){
+//            videoIdBackup = videoId
+//            scope.launch {
+//                uri = videoInfo.videoUri
+//                name =videoInfo.videoName
+//                introduce=videoInfo.videoIntroduce
+//
+//                likeNumber=videoInfo.videoLike
+//                videoUploaderId=videoInfo.videoUploaderId
+//                videoCollect=videoInfo.videoCollect
+//                videoUpdateTime=videoInfo.videoUpdateTime
+//                videoBelongCityId=videoInfo.videoBelongCityId
+//                videoIsLiked=videoInfo.videoIsLiked
+//                videoIsCollect=videoInfo.videoIsCollect
+//                commitNum = LearnVideoHelper.getCommitNumber(videoId)
+//
+//            }
+//        }
+//
+//    }
     //var videoIdOld = videoId1
     /**
      *
