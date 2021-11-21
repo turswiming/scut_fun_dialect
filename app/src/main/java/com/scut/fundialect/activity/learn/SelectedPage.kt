@@ -318,27 +318,35 @@ fun MySelectedPage(
                      * */
                     val cityList = CityHelper.getChildCity(1)
                     items(cityList.size) { index ->
-                        Box(
-                            modifier = Modifier
-                                .clickable {
-                                    cityStateNow = cityStateLast
-
-                                    onStateChange(cityStateLast, index)
-                                }
-                                .width(64.dp)
-                                .height(32.dp),
-
-
-                            ) {
+//                        Box(
+//                            modifier = Modifier
+//                                .clickable {
+//
+//                                }
+//                                .width(64.dp)
+//                                .height(32.dp),
+//
+//
+//                            ) {
                             Text(
                                 text = AnnotatedString(cityList[index].getTheName()),
                                 color = Color.White,
                                 textAlign = TextAlign.Center,
-                                modifier = Modifier.fillMaxWidth()
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .clickable {
+                                        cityStateNow = cityStateLast
+
+                                        onStateChange(cityStateLast, index)
+
+                                    }
+                                    .width(64.dp)
+                                    .height(32.dp),
+
 
 
                             )
-                        }
+//                        }
 
 
                     }

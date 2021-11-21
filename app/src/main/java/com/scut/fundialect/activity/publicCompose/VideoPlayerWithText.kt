@@ -38,22 +38,29 @@ fun VideoPlayerWithText(
     openSharePage:(videoId: Int)->Unit
 ) {
     Toast.makeText(MyApplication.context,"视频重组", Toast.LENGTH_SHORT).show()
-
+    var videoInfoState by remember {
+        mutableStateOf(videoInfo)
+    }
+    /**
+     *
+     * 虽然这些注释没啥用但是别删，这里是非常珍贵的弯路史料
+     *
+     * */
     //var videoId1  = videoId
-    var videoIdBackup by remember { mutableStateOf(1) }
+//    var videoIdBackup by remember { mutableStateOf(1) }
+//
+//    var uri by remember { mutableStateOf(videoInfo.videoUri) }
+//    var name by remember { mutableStateOf(videoInfo.videoName) }
+//    var introduce by remember { mutableStateOf(videoInfo.videoIntroduce) }
+//
+    var likeNumber by remember { mutableStateOf(videoInfoState.videoLike) }
+//    var videoUploaderId by remember { mutableStateOf(videoInfo.videoUploaderId) }
+//    var videoCollect by remember { mutableStateOf(videoInfo.videoCollect) }
+//    var videoUpdateTime by remember { mutableStateOf(videoInfo.videoUpdateTime) }
+//    var videoBelongCityId by remember { mutableStateOf(videoInfo.videoBelongCityId) }
 
-    var uri by remember { mutableStateOf(videoInfo.videoUri) }
-    var name by remember { mutableStateOf(videoInfo.videoName) }
-    var introduce by remember { mutableStateOf(videoInfo.videoIntroduce) }
-
-    var likeNumber by remember { mutableStateOf(videoInfo.videoLike) }
-    var videoUploaderId by remember { mutableStateOf(videoInfo.videoUploaderId) }
-    var videoCollect by remember { mutableStateOf(videoInfo.videoCollect) }
-    var videoUpdateTime by remember { mutableStateOf(videoInfo.videoUpdateTime) }
-    var videoBelongCityId by remember { mutableStateOf(videoInfo.videoBelongCityId) }
-
-    var videoIsLiked by remember { mutableStateOf(videoInfo.videoIsLiked) }
-    var videoIsCollect by remember { mutableStateOf(videoInfo.videoIsCollect) }
+    var videoIsLiked by remember { mutableStateOf(videoInfoState.videoIsLiked) }
+    var videoIsCollect by remember { mutableStateOf(videoInfoState.videoIsCollect) }
     var commitNum by remember {
         mutableStateOf(LearnVideoHelper.getCommitNumber(videoId))
     }
@@ -98,7 +105,31 @@ fun VideoPlayerWithText(
          *
          * **/
 
-        VideScreen(uri)
+        VideScreen(videoInfoState.videoUri)
+
+
+//
+//        Column(
+//            modifier = Modifier.fillMaxSize(),
+//            horizontalAlignment = Alignment.CenterHorizontally,
+//            verticalArrangement = Arrangement.SpaceBetween
+//
+//        ) {
+//
+//
+//            /**
+//             * 上面的空白
+//             * */
+//
+//            Spacer(
+//                modifier = Modifier
+//                    .fillMaxWidth()
+//                    .height(300.dp),
+//            )
+//            /**
+//             * 下面的内容
+//             * */
+
         /**
          *
          *
@@ -108,35 +139,10 @@ fun VideoPlayerWithText(
          *
          *
          * */
-
-
-        Column(
-            modifier = Modifier.fillMaxSize(),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.SpaceBetween
-
-        ) {
-
-
-            /**
-             * 上面的空白
-             * */
-
-            Spacer(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(300.dp),
-            )
-            /**
-             * 下面的内容
-             * */
-
-
-            Row(
+            Box(
                 modifier = Modifier
                     .fillMaxWidth(),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.SpaceBetween
+                Alignment.BottomStart
 
             ) {
                 /**
@@ -146,10 +152,8 @@ fun VideoPlayerWithText(
                  * */
 
                 Column(modifier = Modifier
-                    .fillMaxHeight()
-                    .width(300.dp)
-                    .background(MainColor),
-                    verticalArrangement = Arrangement.Top,
+                    .width(300.dp),
+                    verticalArrangement = Arrangement.Bottom,
                     horizontalAlignment = Alignment.Start
 
 
@@ -161,7 +165,7 @@ fun VideoPlayerWithText(
                         horizontalArrangement = Arrangement.Center
                     ) {
 
-                        name.forEach { char ->
+                        videoInfoState.videoName.forEach { char ->
                             val pinyin = PinyinHelper.convertToPinyinString(
                                 char.toString(),
                                 ",",
@@ -209,7 +213,12 @@ fun VideoPlayerWithText(
 
                     }
                     Text(text = "释义",color = FontWhite)
-                    Text(text = introduce,color = FontWhite)
+                    Text(
+                        text = videoInfoState.videoIntroduce,
+                        color = FontWhite,
+                        modifier = Modifier
+                            .height(100.dp)
+                    )
 
                 }
 
@@ -226,7 +235,7 @@ fun VideoPlayerWithText(
 
                 )
             }
-        }
+//        }
         /**
          *
          *
@@ -236,70 +245,76 @@ fun VideoPlayerWithText(
          *
          *
          * */
+        Box(
+            contentAlignment = Alignment.BottomEnd
+        ) {
 
-        Column(modifier = Modifier.fillMaxSize()) {
-            Spacer(modifier = Modifier
-                .height(200.dp)
-                .fillMaxWidth()
-            )
-            Row(
-                horizontalArrangement = Arrangement.SpaceBetween
-            ) {
-                Spacer(modifier = Modifier
+
+//        Column(modifier = Modifier.fillMaxSize()) {
+//            Spacer(modifier = Modifier
+//                .height(200.dp)
+//                .fillMaxWidth()
+//            )
+//            Row(
+//                horizontalArrangement = Arrangement.SpaceBetween
+//            ) {
+//                Spacer(modifier = Modifier
+//                    .fillMaxHeight()
+//                    .width(300.dp))
+            Column(
+                modifier = Modifier
                     .fillMaxHeight()
-                    .width(300.dp))
-                Column(
-                    modifier = Modifier
-                        .fillMaxHeight()
-                        .width(200.dp),
-                    verticalArrangement = Arrangement.SpaceBetween,
-                    horizontalAlignment = Alignment.CenterHorizontally,
+                    .width(200.dp),
+                verticalArrangement = Arrangement.SpaceBetween,
+                horizontalAlignment = Alignment.CenterHorizontally,
 
-                    ) {
-                    /**
-                     *
-                     * 配音的按钮。
-                     * */
+                ) {
+                /**
+                 *
+                 * 配音的按钮。
+                 * */
 
-                    FloatButton("配音", R.drawable.ic_launcher_background, onClick = {
-                        TODO("")
-                    })
-                    /**
-                     * 下面的是点赞的按钮。
-                     *
-                     * 两个图片各自是点赞和没有点赞时候显示的内容
-                     * */
+                FloatButton("配音", R.drawable.ic_launcher_background, onClick = {
+                    TODO("")
+                })
+                /**
+                 * 下面的是点赞的按钮。
+                 *
+                 * 两个图片各自是点赞和没有点赞时候显示的内容
+                 * */
 
-                    FloatButton(likeNumber.toString(),
-                        image = switch(
-                            R.drawable.ic_launcher_background,
-                            R.drawable.ic_launcher_foreground,
-                            videoIsLiked
-                        ),
-                        onClick = {
-                            videoIsLiked = !videoIsLiked
-                            LearnVideoHelper.switchLike(videoId)
+                FloatButton(likeNumber.toString(),
+                    image = switch(
+                        R.drawable.ic_launcher_background,
+                        R.drawable.ic_launcher_foreground,
+                        videoIsLiked
+                    ),
+                    onClick = {
+                        videoIsLiked = !videoIsLiked
+                        likeNumber += if (videoIsLiked) 1 else -1
+                        LearnVideoHelper.switchLike(videoId)
 
-                        }
+                    }
 
-                    )
-                    /**
-                     *
-                     * 评论的按钮。
-                     * */
-                    FloatButton(commitNum.toString(), R.drawable.ic_launcher_background, onClick = {
-                        openComment(videoId)
-                    })
-                    /**
-                     *
-                     * 分享的按钮。
-                     * */
-                    FloatButton("分享", R.drawable.ic_launcher_background, onClick = {
-                        openSharePage(videoId)
-                    })
-                }
+                )
+                /**
+                 *
+                 * 评论的按钮。
+                 * */
+                FloatButton(commitNum.toString(), R.drawable.ic_launcher_background, onClick = {
+                    openComment(videoId)
+                })
+                /**
+                 *
+                 * 分享的按钮。
+                 * */
+                FloatButton("分享", R.drawable.ic_launcher_background, onClick = {
+                    openSharePage(videoId)
+                })
             }
         }
+//            }
+//        }
     }
 }
 

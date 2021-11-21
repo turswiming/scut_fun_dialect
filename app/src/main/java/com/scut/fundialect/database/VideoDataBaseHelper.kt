@@ -59,7 +59,7 @@ open class VideoDataBaseHelper(val context: Context, name:String, version:Int):
                 put("videoIsLiked", 0)
                 put("videoCollect", 134)
                 put("videoIsCollect", 0)
-                put("videoPicUri","${toUriStr(com.scut.fundialect.R.raw.defaultpic)}")
+                put("videoPicUri","${toUriStr(R.raw.defaultpic)}")
                 put("videoIntroduce", "这是关于一个黑色的故事")
                 //SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS")
                 put("videoUpdateTime", Date().time -300000000)
@@ -72,7 +72,7 @@ open class VideoDataBaseHelper(val context: Context, name:String, version:Int):
                 put("videoLike", 3420)
                 put("videoIsLiked", 1)
                 put("videoCollect", 1304)
-                put("videoPicUri","${toUriStr(com.scut.fundialect.R.raw.defaultpic)}")
+                put("videoPicUri","${toUriStr(R.raw.defaultpic)}")
 
                 put("videoIsCollect", 0)
                 put("videoIntroduce", "这是关于一个蓝色的故事")
