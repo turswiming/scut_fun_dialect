@@ -6,6 +6,7 @@ import android.content.Intent
 import android.graphics.drawable.shapes.Shape
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.provider.ContactsContract
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
@@ -24,6 +25,9 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
 import com.scut.fundialect.R
 import com.scut.fundialect.activity.BaseComposeActivity
 import com.scut.fundialect.help.switch
@@ -45,6 +49,12 @@ class LearnSearchActivity : BaseComposeActivity() {
     @ExperimentalFoundationApi
     @Composable
     private fun SearchPage(context: Context) {
+//        val navController = rememberNavController()
+//        NavHost(navController = navController, startDestination = "profile") {
+//            composable("profile") { ContactsContract.Profile(/*...*/) }
+//            composable("friendslist") { FriendsList(/*...*/) }
+//            /*...*/
+//        }
         Scaffold(
             topBar = {
                 TopAppBar(modifier = Modifier.fillMaxWidth()) {

@@ -246,7 +246,8 @@ fun VideoPlayerWithText(
          *
          * */
         Box(
-            contentAlignment = Alignment.BottomEnd
+            contentAlignment = Alignment.BottomEnd,
+            modifier = Modifier.fillMaxSize()
         ) {
 
 
@@ -263,8 +264,8 @@ fun VideoPlayerWithText(
 //                    .width(300.dp))
             Column(
                 modifier = Modifier
-                    .fillMaxHeight()
-                    .width(200.dp),
+                    .height(300.dp)
+                    .width(100.dp),
                 verticalArrangement = Arrangement.SpaceBetween,
                 horizontalAlignment = Alignment.CenterHorizontally,
 

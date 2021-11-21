@@ -47,7 +47,6 @@ class LoginActivity : BaseActivity() {
     lateinit var imageUri: Uri
     lateinit var outputImage: File
     override fun onCreate(savedInstanceState: Bundle?) {
-
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         VideoHelper.outputVideo = File(externalCacheDir, "output_image.jpg")
@@ -56,6 +55,7 @@ class LoginActivity : BaseActivity() {
         }
         test()
         setContent {
+
             LogInPage(this,SampleData.conversationSample)
         }
 
