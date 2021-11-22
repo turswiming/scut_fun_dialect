@@ -2,10 +2,7 @@ package com.scut.fundialect.activity.learn
 
 import android.content.ClipData
 import android.widget.Toast
-import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.clickable
+import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.GridCells
 import androidx.compose.foundation.lazy.LazyColumn
@@ -22,6 +19,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import coil.compose.rememberImagePainter
 import com.scut.fundialect.MyApplication.Companion.context
 import com.scut.fundialect.R
@@ -69,15 +67,18 @@ fun MySelectedPage(
              * */
             TabRow(
                 selectedTabIndex = cityStateNow,
+                modifier=Modifier.background(Color.Black).height(40.dp),
 
                 ) {
                 Tab(
                     text = { Text("推荐") },
+                    modifier=Modifier.background(Color.Black).padding(0.dp),
                     selected = cityStateNow == 0,
                     onClick = { cityStateNow = 0 }
                 )
                 showedCityId.forEachIndexed { index, cityId ->
                     Tab(
+                        modifier=Modifier.background(Color.Black).padding(0.dp),
                         text = {
                             Text(CityHelper.getCityName(cityId)+"话")
                         },
@@ -90,6 +91,7 @@ fun MySelectedPage(
 
                 }
                 Tab(
+                    modifier=Modifier.background(Color.Black).padding(0.dp),
                     selected = cityStateNow == 5,
                     onClick = {
                         /**
@@ -108,7 +110,8 @@ fun MySelectedPage(
                     }
                 ){
                     Image(
-                        painter = painterResource(id = R.drawable.ic_launcher_background),
+                        modifier=Modifier.background(Color.Black).padding(0.dp),
+                        painter = painterResource(id = R.drawable.ic_launcher_foreground),
                         contentDescription = "加号")
                 }
             }
@@ -153,7 +156,9 @@ fun MySelectedPage(
                             .fillMaxWidth()
                             .height(40.dp)) {
                             Box(modifier = Modifier.fillMaxSize(),contentAlignment = Alignment.Center){
-                                Text(text = "分享至")
+                                Text(
+                                    text = "分享至",
+                                    fontSize = 20.sp,)
                             }
                             Box(modifier = Modifier.fillMaxSize(),contentAlignment = Alignment.CenterEnd){
                                 Image(
@@ -357,10 +362,6 @@ fun MySelectedPage(
 
             }
         }
-
-
-
-
     }
 
 
@@ -383,21 +384,22 @@ private fun Comment(it: LearnVideoHelper.CommentInfo) {
     Row(
         verticalAlignment = Alignment.Top,
         horizontalArrangement = Arrangement.SpaceAround,
-        modifier = Modifier.fillMaxWidth()
+        modifier = Modifier.fillMaxWidth().padding(5.dp),
     ) {
         /**这个surfface里面是用户的头像*/
 
         Surface(
             shape = CircleShape,
             /**这个是描边*/
-            border = BorderStroke(3.dp, Color.Black)
+            border = BorderStroke(1.dp, Color.Black)
+
         ){
             Image(
                 painter = rememberImagePainter(commenterInfo.userPicFile),
                 contentDescription = "头像",
                 contentScale = ContentScale.Crop,
                 modifier = Modifier
-                    .size(30.dp)
+                    .size(50.dp)
 
             )
         }
@@ -405,9 +407,13 @@ private fun Comment(it: LearnVideoHelper.CommentInfo) {
         Column(verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.Start,
         modifier = Modifier.width(150.dp)) {
-            Text(text = commenterInfo.userNickName)
+            Text(
+                text = commenterInfo.userNickName,
+                fontSize = 14.sp,)
 
-            Text(text = it.comment)
+            Text(
+                text = it.comment,
+                fontSize = 16.sp,)
 
         }
         Column(
@@ -436,7 +442,10 @@ private fun Comment(it: LearnVideoHelper.CommentInfo) {
                 ),
                 contentDescription = "点赞"
             )
-            Text(text = numberLiked.toString())
+            Text(
+                text = numberLiked.toString(),
+                fontSize=12.sp,
+            )
         }
 
     }

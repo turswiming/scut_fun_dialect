@@ -7,16 +7,19 @@ import android.widget.Toast
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.scut.fundialect.MyApplication.Companion.context
 import com.scut.fundialect.R
 import com.scut.fundialect.activity.BaseComposeActivity
 import com.scut.fundialect.ui.theme.ComposeTutorialTheme
+import com.scut.fundialect.ui.theme.FontBlack
 
 
 class LearnActivity : BaseComposeActivity() {
@@ -104,16 +107,20 @@ private fun MyTopAppBar(context: Context,state1: Int, titles: List<String>, onSt
     var state11 = state1
     //界面最上面的选择框框，包括精选和词库
     TopAppBar(
-        backgroundColor = MaterialTheme.colors.primary
+        modifier = Modifier
+            .background(Color.Black),
     ) { /** Top app bar content */
         Row(
             modifier = Modifier
+                .background(Color.Black)
                 .padding(8.dp)
                 .fillMaxWidth()
                 .fillMaxHeight(),
             horizontalArrangement = Arrangement.SpaceBetween,
         ) {
             Image(
+                modifier = Modifier
+                    .background(Color.Black),
                 painter = painterResource(id = R.drawable.ic_launcher_foreground),
                 contentDescription = "logo"
             )
@@ -122,11 +129,13 @@ private fun MyTopAppBar(context: Context,state1: Int, titles: List<String>, onSt
             // Screen content
             TabRow(
                 selectedTabIndex = state11,
-                Modifier.width(200.dp)
+                Modifier.width(200.dp).background(Color.Black)
             ) {
                 titles.forEachIndexed { index, title ->
                     Tab(
                         text = { Text(title) },
+                        modifier = Modifier
+                            .background(Color.Black),
                         selected = state11 == index,
                         onClick = {
                             state11 = index
@@ -143,9 +152,11 @@ private fun MyTopAppBar(context: Context,state1: Int, titles: List<String>, onSt
              *
              * */
             Button(
+
+                modifier = Modifier
+                    .background(Color.Black),
                 onClick = {
                     goToSearchPage(context)
-
                 },
                 contentPadding = PaddingValues(
                     start = 0.dp,
@@ -157,6 +168,9 @@ private fun MyTopAppBar(context: Context,state1: Int, titles: List<String>, onSt
                 //Text(text = "${state11.toString()}")
 
                 Image(
+                    modifier = Modifier
+                        .background(Color.Black)
+                        .width(35.dp),
                     painter = painterResource(id = R.drawable.ic_launcher_foreground),
                     contentDescription = "search icon"
 
