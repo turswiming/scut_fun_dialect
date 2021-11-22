@@ -74,9 +74,10 @@ fun DubingPage(context: Context) {
              * 这里面是一整个上面的bar，包括搜索按钮和选择城市的按钮
              * 
              * */
-            DubingTopAppBar(onSelectPageChange = {
-
-            })
+            DubingTopAppBar(
+                onSelectPageChange = {
+                }
+            )
         },
         bottomBar ={
             MyButtonAppBar(

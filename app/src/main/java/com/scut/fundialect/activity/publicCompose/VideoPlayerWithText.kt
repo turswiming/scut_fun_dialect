@@ -150,7 +150,6 @@ fun VideoPlayerWithText(
                  * 左下角的所有文字和按钮们
                  *
                  * */
-
                 Column(modifier = Modifier
                     .width(300.dp),
                     verticalArrangement = Arrangement.Bottom,
@@ -166,6 +165,9 @@ fun VideoPlayerWithText(
                     ) {
 
                         videoInfoState.videoName.forEach { char ->
+                            /**
+                             * 這裏是每一個文字
+                             * */
                             val pinyin = PinyinHelper.convertToPinyinString(
                                 char.toString(),
                                 ",",
