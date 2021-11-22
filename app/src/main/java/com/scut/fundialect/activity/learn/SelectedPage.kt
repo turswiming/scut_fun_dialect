@@ -276,6 +276,8 @@ fun MySelectedPage(
 
                     }
                 ) {
+                    /**这里是完整的视频播放器，包括了悬浮按钮，介绍文字等
+                     * */
                     VideoPlayerWithText(
                         videoInfo = videoInfo,
                         videoId = videoId,
