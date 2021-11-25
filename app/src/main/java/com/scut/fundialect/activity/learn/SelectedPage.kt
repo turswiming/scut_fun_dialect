@@ -31,6 +31,8 @@ import com.scut.fundialect.database.helper.LearnVideoHelper.getVideoComment
 import com.scut.fundialect.database.helper.LearnVideoHelper.switchCommentLike
 import com.scut.fundialect.database.helper.UserHelpr
 import com.scut.fundialect.help.switch
+import com.scut.fundialect.ui.theme.BackgroundGray
+import com.scut.fundialect.ui.theme.BackgroundLightGrey
 import kotlinx.coroutines.launch
 
 
@@ -307,9 +309,11 @@ fun MySelectedPage(
             Surface(
                 modifier = Modifier
                     .height(switch(200.dp, 1.dp, cityStateNow == 5))
-                    .fillMaxWidth(),
+                    .fillMaxWidth()
+                    .background(Color.Black),
                 shape = RoundedCornerShape (0. dp,0.dp,25.dp,25.dp),
-                color = Color.Black
+                color = BackgroundGray,
+                elevation=10.dp
             ) {
                 LazyVerticalGrid(
                     cells = GridCells.Adaptive(minSize = 64.dp)
