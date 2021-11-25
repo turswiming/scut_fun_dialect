@@ -15,11 +15,14 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.AnnotatedString
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.github.stuxuhai.jpinyin.PinyinFormat
 import com.github.stuxuhai.jpinyin.PinyinHelper
 import com.scut.fundialect.R
@@ -57,6 +60,7 @@ fun MyWordLibraryPage(context: Context) {
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
+                    .width(80.dp)
                     .height(40.dp)
                     .background(BackgroundLightGrey),
                 Alignment.CenterEnd
@@ -100,7 +104,8 @@ fun MyWordLibraryPage(context: Context) {
                         .fillMaxWidth()
                         .background(BackgroundLightGrey),
                     shape = RoundedCornerShape (0. dp,0.dp,25.dp,25.dp),
-                    color = Color.Black
+                    color = BackgroundLightGrey,
+                    elevation=10.dp,
                 ) {
                     LazyVerticalGrid(
                         cells = GridCells.Adaptive(minSize = 64.dp)
@@ -129,7 +134,7 @@ fun MyWordLibraryPage(context: Context) {
                                 ) {
                                 Text(
                                     text = AnnotatedString(cityList[index].getTheName()),
-                                    color = Color.White,
+                                    color = Color.Black,
                                     textAlign = TextAlign.Center,
                                     modifier = Modifier.fillMaxWidth().background(BackgroundLightGrey)
 
@@ -189,7 +194,9 @@ fun ScrollBoxes() {
                     Column(
                         modifier = Modifier
                             .fillMaxSize()
-                            .background(Color.White),
+                            .background(
+                                shape = RoundedCornerShape (50.dp),
+                                color = Color.White),
                         verticalArrangement = Arrangement.SpaceBetween,
                     ) {
                         Row(
@@ -204,7 +211,7 @@ fun ScrollBoxes() {
                             Row(
                                 modifier = Modifier
                                     .width(200.dp)
-                                    .height(60.dp)
+                                    .height(80.dp)
                                     .background(Color.White),
                                 verticalAlignment = Alignment.CenterVertically,
                                 horizontalArrangement = Arrangement.Center
@@ -223,21 +230,24 @@ fun ScrollBoxes() {
                                         PinyinFormat.WITH_TONE_MARK
                                     )
                                     Column(horizontalAlignment = Alignment.CenterHorizontally){
+                                        Spacer(modifier = Modifier.height(2.dp).background(Color.White))
                                         Text(
                                             text = pinyin,
                                             color = Color.Black,
+                                            fontSize=14.sp,
                                             modifier = Modifier
                                                 .width(50.dp)
                                                 .background(Color.White),
                                             textAlign = TextAlign.Center
                                         )
-                                        Spacer(modifier = Modifier.height(10.dp).background(Color.White))
-                                        Text(text = char.toString())
+                                        Spacer(modifier = Modifier.height(2.dp).background(Color.White))
+                                        Text(
+                                            text = char.toString(),
+                                            color = Color.Black,
+                                            fontSize=30.sp,
+                                            fontWeight = FontWeight.Bold)
                                     }
-
                                 }
-
-
                             }
                             /**
                              * 这里面包括了右边两个按钮
@@ -280,8 +290,19 @@ fun ScrollBoxes() {
                                  * 左下角的释义和视频介绍
                                  *
                                  * */
-                                Text(text = "释义")
-                                Text(text = collectedVideos[index].videoIntroduce)
+                                Spacer(modifier = Modifier.width(15.dp).background(Color.White))
+                                Text(
+                                    text = "释义",
+                                    color = Color.Black,
+                                    fontSize=14.sp,
+                                    fontWeight = FontWeight.Bold,
+                                    modifier = Modifier.padding(10.dp, 0.dp, 0.dp, 0.dp)
+                                )
+                                Text(
+                                    text = collectedVideos[index].videoIntroduce,
+                                    color = Color.Black,
+                                    fontSize=14.sp,
+                                    modifier = Modifier.padding(10.dp, 0.dp, 0.dp, 0.dp))
                             }
                             /**
                              * 右下角的城市归属和图片

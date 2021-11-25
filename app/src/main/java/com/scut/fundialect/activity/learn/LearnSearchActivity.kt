@@ -22,6 +22,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -73,7 +74,6 @@ class LearnSearchActivity : BaseComposeActivity() {
                         Image(
                             painter = painterResource(id = R.drawable.ic_launcher_background),
                             contentDescription = "返回按钮",
-
                             Modifier.clickable {
                                 returnActivity()
                             }
@@ -85,7 +85,7 @@ class LearnSearchActivity : BaseComposeActivity() {
                             modifier = Modifier
                                 .width(300.dp)
                                 .height(60.dp),
-                            shape = RoundedCornerShape(15.dp),
+                            shape = RoundedCornerShape(30.dp),
                         ) {
                             BasicTextField(
                                 value = text,
@@ -122,8 +122,7 @@ class LearnSearchActivity : BaseComposeActivity() {
             ) {
                 Column(
                     modifier = Modifier
-                        .fillMaxSize().padding(20.dp)
-                    ,
+                        .fillMaxSize().padding(20.dp),
                     verticalArrangement = Arrangement.Top,
                     horizontalAlignment = Alignment.Start
                 ) {
@@ -135,7 +134,10 @@ class LearnSearchActivity : BaseComposeActivity() {
                      *
                      * */
                     
-                    Text(text = "历史记录")
+                    Text(
+                        text = "历史记录",
+                        fontSize=20.sp,
+                        fontWeight = FontWeight.Bold)
 
                     LazyVerticalGrid(
                         cells = GridCells.Adaptive(minSize = 80.dp)
@@ -181,21 +183,21 @@ class LearnSearchActivity : BaseComposeActivity() {
                                 ) {
                                 Text(
                                     text = AnnotatedString(textList[index]),
-                                    color = FontWhite,
+                                    fontSize=14.sp,
+                                    color = Color.Black,
                                     textAlign = TextAlign.Center,
                                     modifier = Modifier.fillMaxWidth(),
-
-
-
-
-
                                 )
                             }
 
 
                         }
                     }
-                    Text(text = "热门搜索")
+
+                    Text(
+                        text = "热门搜索",
+                        fontSize=20.sp,
+                        fontWeight = FontWeight.Bold)
                     val hotSearch = listOf(
                         "各种方言的你好",
                         "四川话的耙耳朵是啥意思",
@@ -219,10 +221,13 @@ class LearnSearchActivity : BaseComposeActivity() {
                                         FontBlack,
                                         index<=3
                                     ),
-                                    fontSize = 30.sp
+                                    fontSize = 30.sp,
+                                    fontWeight = FontWeight.Bold
                                 )
                                 Text(
-                                    text = it
+                                    text = it,
+                                    fontSize=16.sp,
+
                                 )
                             }
                         }
