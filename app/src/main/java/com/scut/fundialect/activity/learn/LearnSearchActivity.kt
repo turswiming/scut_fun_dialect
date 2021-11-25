@@ -28,6 +28,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.google.common.base.Functions.compose
 import com.scut.fundialect.R
 import com.scut.fundialect.activity.BaseComposeActivity
 import com.scut.fundialect.help.switch

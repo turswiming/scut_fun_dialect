@@ -30,6 +30,7 @@ import com.scut.fundialect.database.helper.CityHelper
 import com.scut.fundialect.database.helper.CityHelper.getCityName
 import com.scut.fundialect.database.helper.LearnVideoHelper.getCollectedVideo
 import com.scut.fundialect.help.switch
+import com.scut.fundialect.ui.theme.BackgroundLightGrey
 import com.scut.fundialect.ui.theme.CustomOrange
 
 /**
@@ -56,12 +57,14 @@ fun MyWordLibraryPage(context: Context) {
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(40.dp),
+                    .height(40.dp)
+                    .background(BackgroundLightGrey),
                 Alignment.CenterEnd
             ){
                 Box(
                     Modifier
                         .size(40.dp)
+                        .background(BackgroundLightGrey)
                         .clickable {
                             isShow = !isShow
                         }) {
@@ -69,6 +72,7 @@ fun MyWordLibraryPage(context: Context) {
                         painter = painterResource(id = R.drawable.ic_launcher_foreground),
                         contentDescription = "右上角是否弹出的按钮",
                         Modifier
+                            .background(BackgroundLightGrey)
                             .rotate(
                                 switch(
                                     0.0,
@@ -80,7 +84,7 @@ fun MyWordLibraryPage(context: Context) {
                 }
 
             }
-            Box(Modifier.fillMaxSize()) {
+            Box(Modifier.fillMaxSize().background(BackgroundLightGrey)) {
                 /**
                  *
                  * 这个里面是一整个滚动列表
@@ -93,7 +97,8 @@ fun MyWordLibraryPage(context: Context) {
                 Surface(
                     modifier = Modifier
                         .height(switch(200.dp, 1.dp, isShow))
-                        .fillMaxWidth(),
+                        .fillMaxWidth()
+                        .background(BackgroundLightGrey),
                     shape = RoundedCornerShape (0. dp,0.dp,25.dp,25.dp),
                     color = Color.Black
                 ) {
@@ -117,7 +122,8 @@ fun MyWordLibraryPage(context: Context) {
                                 modifier = Modifier
                                     .clickable { isShow = false }
                                     .width(64.dp)
-                                    .height(32.dp),
+                                    .height(32.dp)
+                                    .background(BackgroundLightGrey),
 
 
                                 ) {
@@ -125,7 +131,7 @@ fun MyWordLibraryPage(context: Context) {
                                     text = AnnotatedString(cityList[index].getTheName()),
                                     color = Color.White,
                                     textAlign = TextAlign.Center,
-                                    modifier = Modifier.fillMaxWidth()
+                                    modifier = Modifier.fillMaxWidth().background(BackgroundLightGrey)
 
                                 )
                             }
@@ -149,7 +155,8 @@ fun ScrollBoxes() {
     val  collectedVideos =  getCollectedVideo()
     LazyColumn(
         modifier = Modifier
-            .background(CustomOrange)
+            .background(BackgroundLightGrey)
+
 //            .verticalScroll(rememberScrollState())
 //            .fillMaxWidth()
     ) {
@@ -164,23 +171,29 @@ fun ScrollBoxes() {
                     .padding(10.dp, 20.dp, 10.dp, 20.dp)
                     .fillMaxWidth()
                     .height(140.dp)
+                    .background(
+                        shape = RoundedCornerShape (25.dp),
+                        color = Color.White)
+
+
             ) {
                 Surface(
                     modifier = Modifier
                         .background(
                             shape = RoundedCornerShape (25.dp),
-                            color = Color.Black
+                            color = Color.White
                         )
                         .fillMaxSize()
                 ) {
 
                     Column(
                         modifier = Modifier
-                            .fillMaxSize(),
+                            .fillMaxSize()
+                            .background(Color.White),
                         verticalArrangement = Arrangement.SpaceBetween,
                     ) {
                         Row(
-                            modifier = Modifier.fillMaxWidth(),
+                            modifier = Modifier.fillMaxWidth().background(Color.White),
                             horizontalArrangement = Arrangement.SpaceBetween,
                             verticalAlignment = Alignment.CenterVertically
                         ) {
@@ -191,7 +204,8 @@ fun ScrollBoxes() {
                             Row(
                                 modifier = Modifier
                                     .width(200.dp)
-                                    .height(60.dp),
+                                    .height(60.dp)
+                                    .background(Color.White),
                                 verticalAlignment = Alignment.CenterVertically,
                                 horizontalArrangement = Arrangement.Center
                             ) {
@@ -213,10 +227,11 @@ fun ScrollBoxes() {
                                             text = pinyin,
                                             color = Color.Black,
                                             modifier = Modifier
-                                                .width(50.dp),
+                                                .width(50.dp)
+                                                .background(Color.White),
                                             textAlign = TextAlign.Center
                                         )
-                                        Spacer(modifier = Modifier.height(10.dp))
+                                        Spacer(modifier = Modifier.height(10.dp).background(Color.White))
                                         Text(text = char.toString())
                                     }
 
@@ -235,13 +250,14 @@ fun ScrollBoxes() {
                                 Image(
                                     painter = painterResource(id = R.drawable.ic_launcher_background),
                                     contentDescription = "只听声音",
-                                    modifier = Modifier.size(30.dp)
+                                    modifier = Modifier.size(30.dp).background(Color.White)
                                 )
-                                Spacer(modifier = Modifier.width(5.dp))
+                                Spacer(modifier = Modifier.width(5.dp).background(Color.White))
                                 Image(
                                     painter = painterResource(id = R.drawable.ic_launcher_background),
                                     contentDescription = "播放音频",
-                                    modifier = Modifier.size(30.dp).clickable {
+                                    modifier = Modifier.size(30.dp).background(Color.White)
+                                        .clickable {
                                         TODO()
                                     }
 
@@ -253,7 +269,8 @@ fun ScrollBoxes() {
                         Row(
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .height(50.dp),
+                                .height(50.dp)
+                                .background(Color.White),
                             horizontalArrangement = Arrangement.SpaceBetween,
                             verticalAlignment = Alignment.Top
                         ) {

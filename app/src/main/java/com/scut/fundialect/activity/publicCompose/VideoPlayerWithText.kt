@@ -14,6 +14,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -150,18 +151,24 @@ fun VideoPlayerWithText(
                  * 左下角的所有文字和按钮们
                  *
                  * */
+                Column(
+                    modifier = Modifier
+                        .fillMaxHeight()
+                        .width(40.dp),
+                    verticalArrangement = Arrangement.Bottom,
+                    horizontalAlignment = Alignment.Start
+                    //.background(white)
+                ){}
                 Column(modifier = Modifier
                     .width(300.dp),
                     verticalArrangement = Arrangement.Bottom,
                     horizontalAlignment = Alignment.Start
-
-
                 ) {
                     Row(
                         modifier = Modifier
                             .fillMaxWidth(),
                         verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.Center
+                        horizontalArrangement = Arrangement.Start
                     ) {
 
                         videoInfoState.videoName.forEach { char ->
@@ -173,23 +180,25 @@ fun VideoPlayerWithText(
                                 ",",
                                 PinyinFormat.WITH_TONE_MARK
                             )
-                            Column(horizontalAlignment = Alignment.CenterHorizontally){
+                            Column(horizontalAlignment = Alignment.CenterHorizontally,){
                                 Text(
                                     text = pinyin,
+                                    fontSize=14.sp,
                                     color = FontWhite,
                                     modifier = Modifier
                                         .width(50.dp),
                                     textAlign = TextAlign.Center
                                 )
-                                Spacer(modifier = Modifier.height(10.dp))
+                                Spacer(modifier = Modifier.height(5.dp))
                                 Box(modifier = Modifier.size(35.dp)) {
-                                    Image(
-                                        painter = painterResource(id = R.drawable.ic_launcher_background),
-                                        contentDescription = "文字背景")
+//                                    Image(
+//                                        painter = painterResource(id = R.drawable.ic_launcher_background),
+//                                        contentDescription = "文字背景")
                                     Text(
                                         text = char.toString(),
                                         color = FontWhite,
-                                        fontSize = 30.sp
+                                        fontSize = 30.sp,
+                                        fontWeight = FontWeight.Bold,
                                     )
                                 }
 
@@ -198,7 +207,7 @@ fun VideoPlayerWithText(
                         }
                         Surface(
                             shape = CircleShape,
-                            modifier = Modifier.size(60.dp),
+                            modifier = Modifier.size(28.dp),
                             onClick = {
 
                                 videoIsCollect =!videoIsCollect
@@ -214,12 +223,16 @@ fun VideoPlayerWithText(
                         }
 
                     }
-                    Text(text = "释义",color = FontWhite)
+                    Text(text = "释义",color = FontWhite,
+                        fontSize = 14.sp,
+                        fontWeight = FontWeight.Bold,
+                        modifier = Modifier
+                            .padding(10.dp))
                     Text(
                         text = videoInfoState.videoIntroduce,
+                        fontSize=14.sp,
                         color = FontWhite,
-                        modifier = Modifier
-                            .height(100.dp)
+                        modifier = Modifier.padding(10.dp,0.dp,0.dp,0.dp)
                     )
 
                 }
@@ -234,7 +247,6 @@ fun VideoPlayerWithText(
                         .fillMaxHeight()
                         .width(100.dp)
                     //.background(white)
-
                 )
             }
 //        }
@@ -346,7 +358,7 @@ fun FloatButton(
     ) {
         Surface(
             shape = CircleShape,
-            modifier = Modifier.size(60.dp)
+            modifier = Modifier.size(40.dp)
         ){
             Image(
                 painter = painterResource(id = image) ,
