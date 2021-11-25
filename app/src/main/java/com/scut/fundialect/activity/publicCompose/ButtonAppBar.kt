@@ -3,13 +3,19 @@ package com.scut.fundialect.activity.publicCompose
 import android.content.Context
 import android.content.Intent
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.BottomAppBar
 import androidx.compose.material.Tab
 import androidx.compose.material.TabRow
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.scut.fundialect.R
 import com.scut.fundialect.activity.culture.CultureActivity
 import com.scut.fundialect.activity.dubing.DubingActivity
@@ -57,7 +63,8 @@ fun MyButtonAppBar(
                          * 每个下面下巴导航栏的文字
                          *
                          * **/
-                        Text(title.getTheName())
+                        Text(title.getTheName(),
+                        fontSize=13.sp,)
                     },
                     selected = buttomStateNow == index,
                     icon = {
@@ -66,9 +73,11 @@ fun MyButtonAppBar(
                          *
                          * **/
                         Image(
-
                             painter = painterResource(id = title.getTheImage()),
-                            contentDescription = "title.getTheName()"
+                            contentDescription = "title.getTheName()",
+                            modifier = Modifier
+                                .size(30.dp)
+                                .clip(CircleShape)
                         )
                     },
                     onClick = {

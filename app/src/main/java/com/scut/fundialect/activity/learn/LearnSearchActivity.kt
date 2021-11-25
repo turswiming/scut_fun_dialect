@@ -133,7 +133,8 @@ class LearnSearchActivity : BaseComposeActivity() {
                      *
                      *
                      * */
-                    
+
+                    Spacer(modifier = Modifier.height(2.dp).background(Color.White))
                     Text(
                         text = "历史记录",
                         fontSize=20.sp,
@@ -224,6 +225,7 @@ class LearnSearchActivity : BaseComposeActivity() {
                                     fontSize = 30.sp,
                                     fontWeight = FontWeight.Bold
                                 )
+                                Spacer(modifier = Modifier.width(5.dp).background(Color.White))
                                 Text(
                                     text = it,
                                     fontSize=16.sp,
