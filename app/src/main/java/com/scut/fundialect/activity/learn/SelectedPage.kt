@@ -69,18 +69,24 @@ fun MySelectedPage(
              * */
             TabRow(
                 selectedTabIndex = cityStateNow,
-                modifier=Modifier.background(Color.Black).height(40.dp),
+                modifier= Modifier
+                    .background(Color.Black)
+                    .height(40.dp),
 
                 ) {
                 Tab(
                     text = { Text("推荐") },
-                    modifier=Modifier.background(Color.Black).padding(0.dp),
+                    modifier= Modifier
+                        .background(Color.Black)
+                        .padding(0.dp),
                     selected = cityStateNow == 0,
                     onClick = { cityStateNow = 0 }
                 )
                 showedCityId.forEachIndexed { index, cityId ->
                     Tab(
-                        modifier=Modifier.background(Color.Black).padding(0.dp),
+                        modifier= Modifier
+                            .background(Color.Black)
+                            .padding(0.dp),
                         text = {
                             Text(CityHelper.getCityName(cityId)+"话")
                         },
@@ -93,7 +99,9 @@ fun MySelectedPage(
 
                 }
                 Tab(
-                    modifier=Modifier.background(Color.Black).padding(0.dp),
+                    modifier= Modifier
+                        .background(Color.Black)
+                        .padding(0.dp),
                     selected = cityStateNow == 5,
                     onClick = {
                         /**
@@ -112,8 +120,12 @@ fun MySelectedPage(
                     }
                 ){
                     Image(
-                        modifier=Modifier.background(Color.Black).padding(0.dp),
-                        painter = painterResource(id = R.drawable.ic_launcher_foreground),
+                        modifier= Modifier
+                            .background(Color.Black)
+                            .padding(0.dp)
+                            .height(20.dp)
+                            .width(20.dp),
+                        painter = painterResource(id = R.drawable.pluswhite),
                         contentDescription = "加号")
                 }
             }
@@ -164,9 +176,12 @@ fun MySelectedPage(
                             }
                             Box(modifier = Modifier.fillMaxSize(),contentAlignment = Alignment.CenterEnd){
                                 Image(
-                                    painter = painterResource(id = R.drawable.exo_ic_default_album_image),
+                                    painter = painterResource(id = R.drawable.close_black),
                                     contentDescription = "关闭分享",
-                                    modifier = Modifier.clickable {
+                                    modifier = Modifier
+                                        .height(20.dp)
+                                        .width(20.dp)
+                                        .clickable {
                                         shareScope.launch { shareState.hide() }
                                     })
                             }
@@ -176,46 +191,47 @@ fun MySelectedPage(
                             horizontalArrangement = Arrangement.SpaceBetween,
                             verticalAlignment = Alignment.CenterVertically
                         ) {
+                            Spacer(modifier = Modifier.width(5.dp))
                             ShareButton(
                                 "微信好友",
-                                R.drawable.exo_ic_default_album_image,
+                                R.drawable.wx_friend,
                                 onClick = {
                                     Toast.makeText(context,"分享给了微信好友",Toast.LENGTH_SHORT).show()
                                 }
                             )
                             ShareButton(
-                                "微信好友",
-                                R.drawable.exo_ic_default_album_image,
+                                "微信朋友圈",
+                                R.drawable.wx_public,
                                 onClick = {
-                                    Toast.makeText(context,"分享给了微信好友",Toast.LENGTH_SHORT).show()
+                                    Toast.makeText(context,"分享给了微信朋友圈",Toast.LENGTH_SHORT).show()
                                 }
                             )
                             ShareButton(
-                                "微信好友",
-                                R.drawable.exo_ic_default_album_image,
+                                "QQ好友",
+                                R.drawable.qq_friend,
                                 onClick = {
-                                    Toast.makeText(context,"分享给了微信好友",Toast.LENGTH_SHORT).show()
+                                    Toast.makeText(context,"分享给了QQ好友",Toast.LENGTH_SHORT).show()
                                 }
                             )
                             ShareButton(
-                                "微信好友",
-                                R.drawable.exo_ic_default_album_image,
+                                "QQ空间",
+                                R.drawable.qq_public,
                                 onClick = {
-                                    Toast.makeText(context,"分享给了微信好友",Toast.LENGTH_SHORT).show()
+                                    Toast.makeText(context,"分享给了QQ空间",Toast.LENGTH_SHORT).show()
                                 }
                             )
                             ShareButton(
-                                "微信好友",
-                                R.drawable.exo_ic_default_album_image,
+                                "今日头条",
+                                R.drawable.today_news,
                                 onClick = {
-                                    Toast.makeText(context,"分享给了微信好友",Toast.LENGTH_SHORT).show()
+                                    Toast.makeText(context,"分享给了今日头条",Toast.LENGTH_SHORT).show()
                                 }
                             )
                             ShareButton(
-                                "微信好友",
-                                R.drawable.exo_ic_default_album_image,
+                                "微博",
+                                R.drawable.wb_news,
                                 onClick = {
-                                    Toast.makeText(context,"分享给了微信好友",Toast.LENGTH_SHORT).show()
+                                    Toast.makeText(context,"分享给了微博",Toast.LENGTH_SHORT).show()
                                 }
                             )
                         }
@@ -225,17 +241,17 @@ fun MySelectedPage(
                             verticalAlignment = Alignment.CenterVertically
                         ) {
                             ShareButton(
-                                "微信好友",
-                                R.drawable.exo_ic_default_album_image,
+                                "保存本地",
+                                R.drawable.download_local,
                                 onClick = {
-                                    Toast.makeText(context,"分享给了微信好友",Toast.LENGTH_SHORT).show()
+                                    Toast.makeText(context,"已保存本地",Toast.LENGTH_SHORT).show()
                                 }
                             )
                             ShareButton(
-                                "微信好友",
-                                R.drawable.exo_ic_default_album_image,
+                                "复制链接",
+                                R.drawable.copy_address,
                                 onClick = {
-                                    Toast.makeText(context,"分享给了微信好友",Toast.LENGTH_SHORT).show()
+                                    Toast.makeText(context,"已复制链接",Toast.LENGTH_SHORT).show()
                                 }
                             )
                             //下面我复制了四个空盒子用来做占位
@@ -388,7 +404,9 @@ private fun Comment(it: LearnVideoHelper.CommentInfo) {
     Row(
         verticalAlignment = Alignment.Top,
         horizontalArrangement = Arrangement.SpaceAround,
-        modifier = Modifier.fillMaxWidth().padding(5.dp),
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(2.dp,5.dp),
     ) {
         /**这个surfface里面是用户的头像*/
 
@@ -410,14 +428,14 @@ private fun Comment(it: LearnVideoHelper.CommentInfo) {
 
         Column(verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.Start,
-        modifier = Modifier.width(150.dp)) {
+        modifier = Modifier.width(200.dp).height(80.dp)) {
             Text(
                 text = commenterInfo.userNickName,
                 fontSize = 14.sp,)
 
             Text(
                 text = it.comment,
-                fontSize = 16.sp,)
+                fontSize = 12.sp,)
 
         }
         Column(
@@ -439,8 +457,8 @@ private fun Comment(it: LearnVideoHelper.CommentInfo) {
             Image(
                 painter = painterResource(
                     id = switch(
-                        R.drawable.ic_launcher_background,
-                        R.drawable.exo_ic_default_album_image,
+                        R.drawable.good_red,
+                        R.drawable.good_gray,
                         isLike
                     )
                 ),

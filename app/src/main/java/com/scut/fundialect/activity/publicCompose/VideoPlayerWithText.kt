@@ -12,6 +12,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
@@ -215,8 +216,8 @@ fun VideoPlayerWithText(
                             }) {
                             Image(
                                 painter = swicherPainter(
-                                    R.drawable.ic_launcher_foreground,
-                                    R.drawable.ic_launcher_background,
+                                    R.drawable.plus_blackinwhite,
+                                    R.drawable.get_blackinwhite,
                                     videoIsCollect),
                                 contentDescription = ""
                             )
@@ -289,7 +290,9 @@ fun VideoPlayerWithText(
                  * 配音的按钮。
                  * */
 
-                FloatButton("配音", R.drawable.ic_launcher_background, onClick = {
+                FloatButton("配音",
+                    R.drawable.peiyin,
+                    onClick = {
                     TODO("")
                 })
                 /**
@@ -300,8 +303,8 @@ fun VideoPlayerWithText(
 
                 FloatButton(likeNumber.toString(),
                     image = switch(
-                        R.drawable.ic_launcher_background,
-                        R.drawable.ic_launcher_foreground,
+                        R.drawable.unlike,
+                        R.drawable.ic_launcher_foreground,//记得完善！
                         videoIsLiked
                     ),
                     onClick = {
@@ -316,14 +319,14 @@ fun VideoPlayerWithText(
                  *
                  * 评论的按钮。
                  * */
-                FloatButton(commitNum.toString(), R.drawable.ic_launcher_background, onClick = {
+                FloatButton(commitNum.toString(), R.drawable.comment, onClick = {
                     openComment(videoId)
                 })
                 /**
                  *
                  * 分享的按钮。
                  * */
-                FloatButton("分享", R.drawable.ic_launcher_background, onClick = {
+                FloatButton("分享", R.drawable.share, onClick = {
                     openSharePage(videoId)
                 })
             }
@@ -358,12 +361,14 @@ fun FloatButton(
     ) {
         Surface(
             shape = CircleShape,
-            modifier = Modifier.size(40.dp)
+            modifier = Modifier.size(40.dp).background(Color.Black)
         ){
             Image(
                 painter = painterResource(id = image) ,
                 contentDescription = text,
                 modifier = Modifier
+                    .width(20.dp)
+                    .height(20.dp)
                     .fillMaxSize()
             )
         }

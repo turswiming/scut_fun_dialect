@@ -72,7 +72,7 @@ class LearnSearchActivity : BaseComposeActivity() {
 
                     ) {
                         Image(
-                            painter = painterResource(id = R.drawable.ic_launcher_background),
+                            painter = painterResource(id = R.drawable.back),
                             contentDescription = "返回按钮",
                             Modifier.clickable {
                                 returnActivity()
@@ -98,7 +98,7 @@ class LearnSearchActivity : BaseComposeActivity() {
                             )
                         }
                         Image(
-                            painter = painterResource(id = R.drawable.ic_launcher_background),
+                            painter = painterResource(id = R.drawable.search_black),
                             contentDescription = "搜索按钮",
                             Modifier.clickable {
                                 TODO("根据输入框内容执行搜索")

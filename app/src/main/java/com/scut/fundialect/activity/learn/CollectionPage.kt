@@ -73,7 +73,7 @@ fun MyWordLibraryPage(context: Context) {
                             isShow = !isShow
                         }) {
                     Image(
-                        painter = painterResource(id = R.drawable.ic_launcher_foreground),
+                        painter = painterResource(id = R.drawable.down),
                         contentDescription = "右上角是否弹出的按钮",
                         Modifier
                             .background(BackgroundLightGrey)
@@ -258,13 +258,13 @@ fun ScrollBoxes() {
                                 verticalAlignment = Alignment.CenterVertically
                             ){
                                 Image(
-                                    painter = painterResource(id = R.drawable.ic_launcher_background),
+                                    painter = painterResource(id = R.drawable.sound_only),
                                     contentDescription = "只听声音",
                                     modifier = Modifier.size(30.dp).background(Color.White)
                                 )
                                 Spacer(modifier = Modifier.width(5.dp).background(Color.White))
                                 Image(
-                                    painter = painterResource(id = R.drawable.ic_launcher_background),
+                                    painter = painterResource(id = R.drawable.mv_play),
                                     contentDescription = "播放音频",
                                     modifier = Modifier.size(30.dp).background(Color.White)
                                         .clickable {
@@ -310,7 +310,7 @@ fun ScrollBoxes() {
                              * */
                             Box {
                                 Image(
-                                    painter = painterResource(id = R.drawable.ic_launcher_background),
+                                    painter = painterResource(id = R.drawable.city_card),
                                     contentDescription = "城市背景图"
                                 )
                                 Text(text = getCityName(collectedVideos[index].videoBelongCityId))

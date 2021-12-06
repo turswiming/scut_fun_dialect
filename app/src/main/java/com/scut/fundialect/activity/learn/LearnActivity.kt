@@ -2,7 +2,9 @@ package com.scut.fundialect.activity.learn
 
 import android.content.Context
 import android.content.Intent
+import android.media.Image
 import android.os.Bundle
+import android.widget.Button
 import android.widget.Toast
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.ExperimentalFoundationApi
@@ -14,7 +16,9 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight.Companion.Black
 import androidx.compose.ui.unit.dp
+import com.google.common.base.Functions.compose
 import com.scut.fundialect.MyApplication.Companion.context
 import com.scut.fundialect.R
 import com.scut.fundialect.activity.BaseComposeActivity
@@ -31,7 +35,7 @@ class LearnActivity : BaseComposeActivity() {
         setContent {
             ComposeTutorialTheme {
                 // A surface container using the 'background' color from the theme
-                Surface(color = MaterialTheme.colors.background) {
+                Surface(color = Color.Black) {
                     MainPage(this)
                 }
             }
@@ -55,6 +59,7 @@ private fun MainPage(context: Context) {
     }
     val titles = listOf("精选", "词库")
     Scaffold(
+        Modifier.background(Color.Black),
         topBar = {
             /**
              * 最上面的bar，包括精选和词库
@@ -107,8 +112,9 @@ private fun MyTopAppBar(context: Context,state1: Int, titles: List<String>, onSt
     var state11 = state1
     //界面最上面的选择框框，包括精选和词库
     TopAppBar(
-        modifier = Modifier
-            .background(Color.Black),
+        Modifier.background(Color.Black),
+//        modifier = Modifier
+//            .background(Color.Black),
     ) { /** Top app bar content */
         Row(
             modifier = Modifier
@@ -152,7 +158,6 @@ private fun MyTopAppBar(context: Context,state1: Int, titles: List<String>, onSt
              *
              * */
             Button(
-
                 modifier = Modifier
                     .background(Color.Black),
                 onClick = {
@@ -170,8 +175,9 @@ private fun MyTopAppBar(context: Context,state1: Int, titles: List<String>, onSt
                 Image(
                     modifier = Modifier
                         .background(Color.Black)
-                        .width(35.dp),
-                    painter = painterResource(id = R.drawable.ic_launcher_foreground),
+                        .height(20.dp)
+                        .width(20.dp),
+                    painter = painterResource(id = R.drawable.searchwhite),
                     contentDescription = "search icon"
 
                 )
