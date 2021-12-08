@@ -75,12 +75,12 @@ fun VideoPlayer2(
         LocalContentColor provides Color.White,
         LocalVideoPlayerController provides videoPlayerController
     ) {
-        val aspectRatio by videoPlayerController.collect { videoSize.first / videoSize.second }
+//        val aspectRatio by videoPlayerController.collect { videoSize.first / videoSize.second }
 
         Box(
             modifier = Modifier
                 .background(color = backgroundColor)
-                .aspectRatio(aspectRatio)
+//                .aspectRatio(aspectRatio)
                 .then(modifier)
         ) {
             com.halilibo.composevideoplayer.PlayerSurface {

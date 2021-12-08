@@ -132,9 +132,9 @@ fun VideoPlayerWithText(
                 lifecycleOwner.lifecycle.removeObserver(observer)
             }
         }
-        // TODO: 2021/12/8 对视频源进行延迟赋值。
-        videoPlayerController.setSource(VideoPlayerSource.Raw(R.raw.video1))
-        VideoPlayer(
+        //TODO: 2021/12/8 对视频源进行延迟赋值。
+        //videoPlayerController.setSource(VideoPlayerSource.Raw(R.raw.video1))
+        VideoPlayer2(
             videoPlayerController = videoPlayerController,
             backgroundColor = Color.Transparent,
             modifier = Modifier.fillMaxSize(),
