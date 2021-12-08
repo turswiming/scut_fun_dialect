@@ -2,9 +2,7 @@ package com.scut.fundialect.activity.learn
 
 import android.content.Context
 import android.content.Intent
-import android.media.Image
 import android.os.Bundle
-import android.widget.Button
 import android.widget.Toast
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.ExperimentalFoundationApi
@@ -16,14 +14,10 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.font.FontWeight.Companion.Black
 import androidx.compose.ui.unit.dp
-import com.google.common.base.Functions.compose
-import com.scut.fundialect.MyApplication.Companion.context
 import com.scut.fundialect.R
 import com.scut.fundialect.activity.BaseComposeActivity
 import com.scut.fundialect.ui.theme.ComposeTutorialTheme
-import com.scut.fundialect.ui.theme.FontBlack
 
 
 class LearnActivity : BaseComposeActivity() {
@@ -31,12 +25,12 @@ class LearnActivity : BaseComposeActivity() {
     @ExperimentalFoundationApi
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        Toast.makeText(context,"准备载入compose", Toast.LENGTH_SHORT).show()
+        Toast.makeText(this,"准备载入compose", Toast.LENGTH_SHORT).show()
         setContent {
             ComposeTutorialTheme {
                 // A surface container using the 'background' color from the theme
                 Surface(color = Color.Black) {
-                    MainPage(this)
+                    LearnMainPage(this)
                 }
             }
         }
@@ -51,7 +45,7 @@ fun goToSearchPage(context: Context) {
 @ExperimentalMaterialApi
 @ExperimentalFoundationApi
 @Composable
-private fun MainPage(context: Context) {
+public fun LearnMainPage(context: Context) {
 
     var state1  by remember { mutableStateOf(0) }
     var showedPage1 = remember {
@@ -78,8 +72,6 @@ private fun MainPage(context: Context) {
                  * 这里是“精选”页面的全部内容，包括一个视频播放器，
                  *
                  *
-                 *
-                 *
                  * **/
                 MySelectedPage(showedPage1,
                     onStateChange = {
@@ -88,8 +80,10 @@ private fun MainPage(context: Context) {
                         showedPage1[k-1] = value+2
                         //Toast.makeText(context,"key\t$k\nvalue\t$value",Toast.LENGTH_SHORT).show()
                     }
-                    })
-            }else{
+                    }
+                )
+            }
+            else{
                 /**
                  *
                  *

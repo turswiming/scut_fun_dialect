@@ -57,7 +57,13 @@ private fun MyselfPage() {
          * 下面的bar
          *
          * */
-            MyButtonAppBar(onStateChange = {  }, context = context, initPageIndex = 3)
+            MyButtonAppBar(
+                onStateChange = {
+
+                },
+                context = context,
+                initPageIndex = 3
+            )
                     },
         topBar = {
         /**

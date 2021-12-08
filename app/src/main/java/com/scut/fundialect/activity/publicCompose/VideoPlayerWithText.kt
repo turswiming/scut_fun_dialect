@@ -5,6 +5,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Surface
@@ -14,11 +15,15 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.DefaultLifecycleObserver
+import androidx.lifecycle.LifecycleOwner
 import com.github.stuxuhai.jpinyin.PinyinFormat
 import com.github.stuxuhai.jpinyin.PinyinHelper
 import com.scut.fundialect.MyApplication
@@ -40,9 +45,20 @@ fun VideoPlayerWithText(
     openSharePage:(videoId: Int)->Unit
 ) {
     Toast.makeText(MyApplication.context,"视频重组", Toast.LENGTH_SHORT).show()
-    var videoInfoState by remember {
-        mutableStateOf(videoInfo)
-    }
+//    SideEffect {
+        var videoInfoState by remember {
+            mutableStateOf(videoInfo)
+        }
+        var likeNumber by remember { mutableStateOf(videoInfoState.videoLike) }
+//    var videoUploaderId by remember { mutableStateOf(videoInfo.videoUploaderId) }
+//    var videoCollect by remember { mutableStateOf(videoInfo.videoCollect) }
+//    var videoUpdateTime by remember { mutableStateOf(videoInfo.videoUpdateTime) }
+//    var videoBelongCityId by remember { mutableStateOf(videoInfo.videoBelongCityId) }
+
+        var videoIsLiked by remember { mutableStateOf(videoInfoState.videoIsLiked) }
+        var videoIsCollect by remember { mutableStateOf(videoInfoState.videoIsCollect) }
+//    }
+
     /**
      *
      * 虽然这些注释没啥用但是别删，这里是非常珍贵的弯路史料
@@ -55,14 +71,8 @@ fun VideoPlayerWithText(
 //    var name by remember { mutableStateOf(videoInfo.videoName) }
 //    var introduce by remember { mutableStateOf(videoInfo.videoIntroduce) }
 //
-    var likeNumber by remember { mutableStateOf(videoInfoState.videoLike) }
-//    var videoUploaderId by remember { mutableStateOf(videoInfo.videoUploaderId) }
-//    var videoCollect by remember { mutableStateOf(videoInfo.videoCollect) }
-//    var videoUpdateTime by remember { mutableStateOf(videoInfo.videoUpdateTime) }
-//    var videoBelongCityId by remember { mutableStateOf(videoInfo.videoBelongCityId) }
 
-    var videoIsLiked by remember { mutableStateOf(videoInfoState.videoIsLiked) }
-    var videoIsCollect by remember { mutableStateOf(videoInfoState.videoIsCollect) }
+
     var commitNum by remember {
         mutableStateOf(LearnVideoHelper.getCommitNumber(videoId))
     }
@@ -106,31 +116,35 @@ fun VideoPlayerWithText(
          *
          *
          * **/
+        val videoPlayerController = rememberVideoPlayerController()
+        val videoPlayerUiState by videoPlayerController.state.collectAsState()
+        val lifecycleOwner = LocalLifecycleOwner.current
 
-        VideScreen(videoInfoState.videoUri)
+        DisposableEffect(videoPlayerController, lifecycleOwner) {
+            val observer = object : DefaultLifecycleObserver {
+                override fun onPause(owner: LifecycleOwner) {
+                    videoPlayerController.pause()
+                }
+            }
+            lifecycleOwner.lifecycle.addObserver(observer)
+
+            onDispose {
+                lifecycleOwner.lifecycle.removeObserver(observer)
+            }
+        }
+        // TODO: 2021/12/8 对视频源进行延迟赋值。
+        videoPlayerController.setSource(VideoPlayerSource.Raw(R.raw.video1))
+        VideoPlayer(
+            videoPlayerController = videoPlayerController,
+            backgroundColor = Color.Transparent,
+            modifier = Modifier.fillMaxSize(),
+        )
+//        VideScreen(videoInfoState.videoUri)
 
 
-//
-//        Column(
-//            modifier = Modifier.fillMaxSize(),
-//            horizontalAlignment = Alignment.CenterHorizontally,
-//            verticalArrangement = Arrangement.SpaceBetween
-//
-//        ) {
-//
-//
-//            /**
-//             * 上面的空白
-//             * */
-//
-//            Spacer(
-//                modifier = Modifier
-//                    .fillMaxWidth()
-//                    .height(300.dp),
-//            )
-//            /**
-//             * 下面的内容
-//             * */
+
+
+
 
         /**
          *
@@ -141,12 +155,12 @@ fun VideoPlayerWithText(
          *
          *
          * */
-            Box(
-                modifier = Modifier
+        Box(
+            modifier = Modifier
                     .fillMaxWidth(),
-                Alignment.BottomStart
+            Alignment.BottomStart
 
-            ) {
+        ) {
                 /**
                  *
                  * 左下角的所有文字和按钮们
@@ -250,7 +264,6 @@ fun VideoPlayerWithText(
                     //.background(white)
                 )
             }
-//        }
         /**
          *
          *
@@ -266,17 +279,6 @@ fun VideoPlayerWithText(
         ) {
 
 
-//        Column(modifier = Modifier.fillMaxSize()) {
-//            Spacer(modifier = Modifier
-//                .height(200.dp)
-//                .fillMaxWidth()
-//            )
-//            Row(
-//                horizontalArrangement = Arrangement.SpaceBetween
-//            ) {
-//                Spacer(modifier = Modifier
-//                    .fillMaxHeight()
-//                    .width(300.dp))
             Column(
                 modifier = Modifier
                     .height(300.dp)
@@ -331,8 +333,7 @@ fun VideoPlayerWithText(
                 })
             }
         }
-//            }
-//        }
+
     }
 }
 
@@ -361,7 +362,9 @@ fun FloatButton(
     ) {
         Surface(
             shape = CircleShape,
-            modifier = Modifier.size(40.dp).background(Color.Black)
+            modifier = Modifier
+                .size(40.dp)
+                .background(Color.Black)
         ){
             Image(
                 painter = painterResource(id = image) ,
