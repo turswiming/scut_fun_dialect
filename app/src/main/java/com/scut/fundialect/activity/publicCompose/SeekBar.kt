@@ -1,4 +1,4 @@
-package com.halilibo.composevideoplayer
+package com.scut.fundialect.activity.publicCompose
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.Canvas
@@ -21,7 +21,7 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
-import com.halilibo.composevideoplayer.util.getDurationString
+import com.scut.fundialect.activity.publicCompose.util.getDurationString
 
 @SuppressLint("ComposableLambdaParameterPosition", "ComposableLambdaParameterNaming")
 @Composable

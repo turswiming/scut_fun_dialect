@@ -1,4 +1,4 @@
-package com.halilibo.composevideoplayer
+package com.scut.fundialect.activity.publicCompose
 
 import android.os.Parcelable
 import androidx.compose.animation.core.Animatable
@@ -27,8 +27,7 @@ import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
-import com.halilibo.composevideoplayer.util.getDurationString
-import com.scut.fundialect.activity.publicCompose.LocalVideoPlayerController
+import com.scut.fundialect.activity.publicCompose.util.getDurationString
 import kotlinx.android.parcel.Parcelize
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.coroutineScope

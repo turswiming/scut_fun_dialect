@@ -17,9 +17,8 @@ import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory
 import com.google.android.exoplayer2.upstream.RawResourceDataSource
 import com.google.android.exoplayer2.util.Util
 import com.google.android.exoplayer2.video.VideoListener
-import com.halilibo.composevideoplayer.*
-import com.halilibo.composevideoplayer.util.FlowDebouncer
-import com.halilibo.composevideoplayer.util.set
+import com.scut.fundialect.activity.publicCompose.util.FlowDebouncer
+import com.scut.fundialect.activity.publicCompose.util.set
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.*
 import java.util.concurrent.atomic.AtomicBoolean

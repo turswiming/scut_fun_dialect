@@ -1,4 +1,4 @@
-package com.halilibo.composevideoplayer.util
+package com.scut.fundialect.activity.publicCompose.util
 
 import kotlinx.coroutines.flow.MutableStateFlow
 

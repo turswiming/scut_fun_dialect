@@ -16,7 +16,6 @@ import androidx.compose.ui.viewinterop.AndroidView
 import com.google.android.exoplayer2.MediaItem
 import com.google.android.exoplayer2.SimpleExoPlayer
 import com.google.android.exoplayer2.ui.PlayerView
-import com.halilibo.composevideoplayer.*
 
 @Composable
 fun VideScreen (uri:String){

@@ -1,4 +1,4 @@
-package com.halilibo.composevideoplayer
+package com.scut.fundialect.activity.publicCompose
 
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize

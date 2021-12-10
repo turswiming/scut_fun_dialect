@@ -1,4 +1,4 @@
-package com.halilibo.composevideoplayer
+package com.scut.fundialect.activity.publicCompose
 
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.LinearEasing
@@ -24,8 +24,7 @@ import androidx.compose.ui.graphics.Shadow
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
-import com.halilibo.composevideoplayer.util.getDurationString
-import com.scut.fundialect.activity.publicCompose.LocalVideoPlayerController
+import com.scut.fundialect.activity.publicCompose.util.getDurationString
 
 @Composable
 fun MediaControlButtons(

@@ -1,6 +1,5 @@
 package com.scut.fundialect.activity.publicCompose
 
-import com.halilibo.composevideoplayer.VideoPlayerState
 import kotlinx.coroutines.flow.StateFlow
 
 interface VideoPlayerController {

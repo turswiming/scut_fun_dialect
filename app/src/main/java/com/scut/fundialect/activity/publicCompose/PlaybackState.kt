@@ -1,4 +1,4 @@
-package com.halilibo.composevideoplayer
+package com.scut.fundialect.activity.publicCompose
 
 import com.google.android.exoplayer2.Player.*
 

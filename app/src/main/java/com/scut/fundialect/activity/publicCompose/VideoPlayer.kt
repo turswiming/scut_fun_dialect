@@ -2,7 +2,6 @@ package com.scut.fundialect.activity.publicCompose
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material.LocalContentColor
 import androidx.compose.runtime.*
@@ -13,7 +12,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
-import com.halilibo.composevideoplayer.*
 
 internal val LocalVideoPlayerController =
     compositionLocalOf<DefaultVideoPlayerController> { error("VideoPlayerController is not initialized") }
@@ -67,8 +65,10 @@ fun VideoPlayer2(
 
     SideEffect {
         videoPlayerController.videoPlayerBackgroundColor = backgroundColor.value.toInt()
-        videoPlayerController.enableControls(controlsEnabled)
-        videoPlayerController.enableGestures(gesturesEnabled)
+//        videoPlayerController.enableControls(controlsEnabled)
+//        videoPlayerController.enableGestures(gesturesEnabled)
+        videoPlayerController.hideControls()
+
     }
 
     CompositionLocalProvider(
@@ -83,7 +83,7 @@ fun VideoPlayer2(
 //                .aspectRatio(aspectRatio)
                 .then(modifier)
         ) {
-            com.halilibo.composevideoplayer.PlayerSurface {
+            PlayerSurface2 {
                 videoPlayerController.playerViewAvailable(it)
             }
 

@@ -1,4 +1,4 @@
-package com.halilibo.composevideoplayer
+package com.scut.fundialect.activity.publicCompose
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -6,7 +6,7 @@ import androidx.compose.ui.viewinterop.AndroidView
 import com.google.android.exoplayer2.ui.PlayerView
 
 @Composable
-fun PlayerSurface(
+fun PlayerSurface2(
     modifier: Modifier = Modifier,
     onPlayerViewAvailable: (PlayerView) -> Unit = {}
 ) {

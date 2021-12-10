@@ -1,4 +1,4 @@
-package com.halilibo.composevideoplayer
+package com.scut.fundialect.activity.publicCompose
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.offset

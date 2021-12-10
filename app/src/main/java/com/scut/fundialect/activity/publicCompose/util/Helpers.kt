@@ -1,4 +1,4 @@
-package com.halilibo.composevideoplayer.util
+package com.scut.fundialect.activity.publicCompose.util
 
 import java.util.*
 import java.util.concurrent.TimeUnit
