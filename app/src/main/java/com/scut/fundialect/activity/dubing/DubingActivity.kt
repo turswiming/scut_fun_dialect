@@ -33,10 +33,12 @@ import com.scut.fundialect.R
 import com.scut.fundialect.activity.BaseComposeActivity
 import com.scut.fundialect.activity.learn.goToSearchPage
 import com.scut.fundialect.activity.publicCompose.MyButtonAppBar
+import com.scut.fundialect.activity.publicCompose.gotoAnotherActivity
 import com.scut.fundialect.database.helper.CityHelper
 import com.scut.fundialect.database.helper.ModelVideoHelper
 import com.scut.fundialect.database.helper.ModelVideoHelper.getCollectedModelVideo
 import com.scut.fundialect.database.helper.UserHelpr
+import com.scut.fundialect.enum.ColorMode
 import com.scut.fundialect.help.switch
 import com.scut.fundialect.help.toDateStr
 import com.scut.fundialect.ui.theme.*
@@ -84,8 +86,8 @@ fun DubingPageWithEvent(navController: NavHostController,
         },
         bottomBar ={
             MyButtonAppBar(
-                navController = navController,
-                context = context,
+                colorMode = ColorMode.light,
+                gotoAnotherActivity = {gotoAnotherActivity(navController,it)},
                 onStateChange = {
 
                 },

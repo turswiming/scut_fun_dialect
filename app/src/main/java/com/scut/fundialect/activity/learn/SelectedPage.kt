@@ -49,7 +49,7 @@ import kotlinx.coroutines.launch
 @ExperimentalMaterialApi
 @ExperimentalFoundationApi
 @Composable
-fun MySelectedPage(
+fun MySelectedPage(gotoDubPage:()->Unit,
     showedCityId: List<Int>,
     onStateChange: (key: Int, value: Int) -> Unit
 ) {
@@ -71,14 +71,15 @@ fun MySelectedPage(
                 selectedTabIndex = cityStateNow,
                 modifier= Modifier
                     .background(Color.Black)
-                    .height(40.dp),
+                    .height(30.dp),
 
                 ) {
                 Tab(
-                    text = { Text("推荐") },
+                    text = { Text("推荐",fontSize = 14.sp) },
                     modifier= Modifier
                         .background(Color.Black)
-                        .padding(0.dp),
+                        .padding(0.dp)
+                        .width(60.dp),
                     selected = cityStateNow == 0,
                     onClick = { cityStateNow = 0 }
                 )
@@ -86,9 +87,10 @@ fun MySelectedPage(
                     Tab(
                         modifier= Modifier
                             .background(Color.Black)
-                            .padding(0.dp),
+                            .padding(0.dp)
+                            .width(40.dp),
                         text = {
-                            Text(CityHelper.getCityName(cityId)+"话")
+                            Text(text = CityHelper.getCityName(cityId),fontSize = 14.sp,modifier = Modifier.width(80.dp))
                         },
                         selected = cityStateNow == index+1,
                         onClick = { cityStateLast=cityStateNow
@@ -101,7 +103,8 @@ fun MySelectedPage(
                 Tab(
                     modifier= Modifier
                         .background(Color.Black)
-                        .padding(0.dp),
+                        .padding(0.dp)
+                        .width(30.dp),
                     selected = cityStateNow == 5,
                     onClick = {
                         /**
@@ -182,8 +185,8 @@ fun MySelectedPage(
                                         .height(20.dp)
                                         .width(20.dp)
                                         .clickable {
-                                        shareScope.launch { shareState.hide() }
-                                    })
+                                            shareScope.launch { shareState.hide() }
+                                        })
                             }
                         }
                         Row(
@@ -302,6 +305,7 @@ fun MySelectedPage(
                     /**这里是完整的视频播放器，包括了悬浮按钮，介绍文字等
                      * */
                     VideoPlayerWithText(
+                        gotoDubPage = {gotoDubPage()},
                         videoInfo = videoInfo,
                         videoId = videoId,
                         openComment = {
@@ -324,27 +328,29 @@ fun MySelectedPage(
 
             Surface(
                 modifier = Modifier
-                    .height(switch(200.dp, 1.dp, cityStateNow == 5))
+                    .height(switch(215.dp, 1.dp, cityStateNow == 5))
                     .fillMaxWidth()
                     .background(Color.Black),
                 shape = RoundedCornerShape (0. dp,0.dp,25.dp,25.dp),
                 color = BackgroundGray,
                 elevation=10.dp
             ) {
-                LazyVerticalGrid(
-                    cells = GridCells.Adaptive(minSize = 64.dp)
-                ) {
-                    /**
-                     *
-                     *
-                     *
-                     * 这个下面的东西代表着每一个单独的写有城市名字的小按钮*
-                     *
-                     *
-                     *
-                     * */
-                    val cityList = CityHelper.getChildCity(1)
-                    items(cityList.size) { index ->
+                Column {
+                    Spacer(modifier = Modifier.height(15.dp))
+                    LazyVerticalGrid(
+                        cells = GridCells.Adaptive(minSize = 64.dp)
+                    ) {
+                        /**
+                         *
+                         *
+                         *
+                         * 这个下面的东西代表着每一个单独的写有城市名字的小按钮*
+                         *
+                         *
+                         *
+                         * */
+                        val cityList = CityHelper.getChildCity(1)
+                        items(cityList.size) { index ->
 //                        Box(
 //                            modifier = Modifier
 //                                .clickable {
@@ -372,12 +378,14 @@ fun MySelectedPage(
 
 
 
-                            )
+                                )
 //                        }
 
 
+                        }
                     }
                 }
+
 
 
             }
@@ -406,7 +414,7 @@ private fun Comment(it: LearnVideoHelper.CommentInfo) {
         horizontalArrangement = Arrangement.SpaceAround,
         modifier = Modifier
             .fillMaxWidth()
-            .padding(2.dp,5.dp),
+            .padding(2.dp, 5.dp),
     ) {
         /**这个surfface里面是用户的头像*/
 
@@ -428,7 +436,9 @@ private fun Comment(it: LearnVideoHelper.CommentInfo) {
 
         Column(verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.Start,
-        modifier = Modifier.width(200.dp).height(80.dp)) {
+        modifier = Modifier
+            .width(200.dp)
+            .height(80.dp)) {
             Text(
                 text = commenterInfo.userNickName,
                 fontSize = 14.sp,)

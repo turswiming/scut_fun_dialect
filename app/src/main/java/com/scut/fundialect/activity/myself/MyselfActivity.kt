@@ -24,6 +24,8 @@ import com.google.accompanist.pager.rememberPagerState
 import com.scut.fundialect.R
 import com.scut.fundialect.activity.BaseComposeActivity
 import com.scut.fundialect.activity.publicCompose.MyButtonAppBar
+import com.scut.fundialect.activity.publicCompose.gotoAnotherActivity
+import com.scut.fundialect.enum.ColorMode
 import com.scut.fundialect.ui.theme.ComposeTutorialTheme
 import com.scut.fundialect.ui.theme.Transparent
 
@@ -55,11 +57,13 @@ fun MyselfPageWithEvent(navController: NavHostController) {
          *
          * */
             MyButtonAppBar(
-                navController = navController,
+                colorMode = ColorMode.light,
+                gotoAnotherActivity = {
+                    gotoAnotherActivity(navController,it)}
+                ,
                 onStateChange = {
 
                 },
-                context = context,
                 initPageIndex = 3
             )
                     },
@@ -72,15 +76,27 @@ fun MyselfPageWithEvent(navController: NavHostController) {
         MyselfTopBar(onSettingIconClick={},onImageClick={})
     }
     ) {
-        MyselfMainPage()
+        MyselfMainPage(
+            involvedTopic ={},
+            myStep = {}
+        )
     }
 
 }
-
 @ExperimentalPagerApi
 @Composable
 @Preview
-fun MyselfMainPage() {
+fun preview(){
+    MyselfMainPage(involvedTopic ={},
+        myStep = {}
+    )
+}
+@ExperimentalPagerApi
+@Composable
+fun MyselfMainPage(
+    involvedTopic: () -> Unit,
+    myStep: () -> Unit
+) {
     Column(
         Modifier
             .fillMaxSize()
@@ -101,8 +117,8 @@ fun MyselfMainPage() {
             Modifier.height(80.dp).fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
-            MyButton2(onclick = { /*TODO*/ }, text1 = "參與話題",)
-            MyButton2(onclick = { /*TODO*/ }, text1 = "我的足跡",)
+            MyButton2(onclick = { /*TODO*/involvedTopic() }, text1 = "参与话题",)
+            MyButton2(onclick = { /*TODO*/myStep() }, text1 = "我的足迹",)
 
         }
         val pagerState = rememberPagerState(
@@ -237,7 +253,7 @@ private fun MyButton(onclick:()->Unit,text1:String,text2:String) {
 private fun MyButton2(onclick:()->Unit,text1:String) {
     Surface(
         modifier = Modifier
-            .width(80.dp)
+            .width(120.dp)
             .height(50.dp)
             .clickable {
                 onclick()
@@ -248,7 +264,7 @@ private fun MyButton2(onclick:()->Unit,text1:String) {
 
     ) {
         Image(
-            painter = painterResource(id = R.drawable.ic_launcher_background),
+            painter = painterResource(id = R.drawable.myselficon2),
             contentDescription = null,
         Modifier.fillMaxSize()
         )
@@ -259,7 +275,7 @@ private fun MyButton2(onclick:()->Unit,text1:String) {
         ) {
             Text(text = text1)
             Image(
-                painter = painterResource(id = R.drawable.ic_launcher_foreground),
+                painter = painterResource(id = R.drawable.myselficon),
                 contentDescription = null
             )
         }

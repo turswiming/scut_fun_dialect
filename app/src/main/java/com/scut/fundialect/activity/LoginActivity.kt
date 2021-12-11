@@ -29,7 +29,8 @@ import com.google.accompanist.pager.ExperimentalPagerApi
 import com.scut.fundialect.MyApplication
 import com.scut.fundialect.R
 import com.scut.fundialect.activity.dubing.DubingPageWithEvent
-import com.scut.fundialect.activity.learn.LearnMainPageWithEvent
+import com.scut.fundialect.activity.learn.LearnColloectPageWithEvent
+import com.scut.fundialect.activity.learn.LearnVideoPageWithEvent
 import com.scut.fundialect.activity.learn.SearchPageWithEvent
 import com.scut.fundialect.activity.myself.MyselfPageWithEvent
 import com.scut.fundialect.database.*
@@ -74,7 +75,9 @@ class LoginActivity : BaseActivity() {
             composable("SearchPage"){ SearchPageWithEvent(context,navController)
 
             }
-            composable("LearnPage") { LearnMainPageWithEvent(context,navController) }
+            composable("LearnVideoPage") { LearnVideoPageWithEvent(context,navController) }
+            composable("LearnPage") { LearnColloectPageWithEvent(context,navController) }
+
             composable("CulturePage") {  }
             composable("DubbingPage") { DubingPageWithEvent(navController,context) }
             composable("MyselfPage") { MyselfPageWithEvent(navController) }

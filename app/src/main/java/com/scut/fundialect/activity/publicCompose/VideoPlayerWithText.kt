@@ -15,6 +15,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
@@ -38,7 +39,7 @@ import kotlinx.coroutines.launch
 
 @ExperimentalMaterialApi
 @Composable
-fun VideoPlayerWithText(
+fun VideoPlayerWithText(gotoDubPage:()->Unit,
     videoInfo: LearnVideoHelper.VideoInfo,
     videoId:Int,
     openComment:(videoId:Int)->Unit,
@@ -295,8 +296,8 @@ fun VideoPlayerWithText(
                 FloatButton("配音",
                     R.drawable.peiyin,
                     onClick = {
-                    TODO("")
-                })
+gotoDubPage()
+                    })
                 /**
                  * 下面的是点赞的按钮。
                  *
@@ -360,21 +361,15 @@ fun FloatButton(
             },
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Surface(
-            shape = CircleShape,
+        Image(
+            painter = painterResource(id = image),
+            contentScale = ContentScale.Crop,
+            contentDescription = text,
             modifier = Modifier
-                .size(40.dp)
-                .background(Color.Black)
-        ){
-            Image(
-                painter = painterResource(id = image) ,
-                contentDescription = text,
-                modifier = Modifier
-                    .width(20.dp)
-                    .height(20.dp)
-                    .fillMaxSize()
-            )
-        }
+                .width(40.dp)
+                .height(40.dp)
+                .fillMaxSize()
+        )
 
         Text(text = text,color = FontWhite)
     }

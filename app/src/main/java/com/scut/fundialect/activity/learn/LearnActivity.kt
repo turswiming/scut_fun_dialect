@@ -7,16 +7,25 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.scut.fundialect.R
 import com.scut.fundialect.activity.BaseComposeActivity
+import com.scut.fundialect.activity.publicCompose.MyButtonAppBar
+import com.scut.fundialect.activity.publicCompose.gotoAnotherActivity
+import com.scut.fundialect.enum.ColorMode
 import com.scut.fundialect.ui.theme.ComposeTutorialTheme
 
 
@@ -45,7 +54,7 @@ fun goToSearchPage(navController: NavHostController) {
 @ExperimentalMaterialApi
 @ExperimentalFoundationApi
 @Composable
-public fun LearnMainPageWithEvent(context: Context, navController: NavHostController,
+public fun LearnVideoPageWithEvent(context: Context, navController: NavHostController,
 ) {
 
     var state1  by remember { mutableStateOf(0) }
@@ -54,19 +63,28 @@ public fun LearnMainPageWithEvent(context: Context, navController: NavHostContro
     }
     val titles = listOf("精选", "词库")
     Scaffold(
-        Modifier.background(Color.Black),
+        bottomBar ={
+            MyButtonAppBar(
+                colorMode = ColorMode.dark,
+                gotoAnotherActivity = { gotoAnotherActivity(navController,it) },
+                onStateChange = {
+
+                },
+                initPageIndex = 0
+            )
+        },
+        modifier = Modifier.background(Color.Black),
         topBar = {
             /**
              * 最上面的bar，包括精选和词库
              * **/
-            MyTopAppBar(navController,state1, titles,onStateChange = {state1 = it })
+            MyTopAppBar(goToSearchPage = { goToSearchPage(navController)},state1, titles,onStateChange = {navController.navigate("LearnPage") })
 
         }
     ) {
         // Screen content
         Row {
             //Text(text = "${state1.toString()}")
-            if(state1==0){
                 /**
                  *
                  *
@@ -74,7 +92,8 @@ public fun LearnMainPageWithEvent(context: Context, navController: NavHostContro
                  *
                  *
                  * **/
-                MySelectedPage(showedPage1,
+                MySelectedPage(gotoDubPage={ TODO()},
+                    showedPage1,
                     onStateChange = {
                             k, value ->
                     if(k!=0){
@@ -83,8 +102,39 @@ public fun LearnMainPageWithEvent(context: Context, navController: NavHostContro
                     }
                     }
                 )
-            }
-            else{
+
+
+
+        }
+
+    }
+}
+
+
+@ExperimentalFoundationApi
+@ExperimentalMaterialApi
+@Composable
+public fun LearnColloectPageWithEvent(context: Context, navController: NavHostController,
+) {
+
+    var state1  by remember { mutableStateOf(0) }
+    var showedPage1 = remember {
+        mutableStateListOf(2,3,4,5)
+    }
+    val titles = listOf("精选", "词库")
+    Scaffold(
+        topBar = {
+            /**
+             * 最上面的bar，包括精选和词库
+             * **/
+            MyTopAppBar2(goToSearchPage = { goToSearchPage(navController)},1, titles,onStateChange = {navController.navigate("LearnVideoPage")})
+
+        },
+        backgroundColor = Color.Transparent,
+    ) {
+        // Screen content
+        Row {
+            //Text(text = "${state1.toString()}")
                 /**
                  *
                  *
@@ -94,8 +144,8 @@ public fun LearnMainPageWithEvent(context: Context, navController: NavHostContro
                  *
                  *
                  * **/
-                MyWordLibraryPage(context,navController = navController)
-            }
+                MyWordLibraryPageWithEvent(navController = navController)
+
 
         }
 
@@ -103,11 +153,19 @@ public fun LearnMainPageWithEvent(context: Context, navController: NavHostContro
 }
 
 @Composable
-private fun MyTopAppBar(navController:NavHostController,state1: Int, titles: List<String>, onStateChange: (Int) -> Unit) {
+private fun MyTopAppBar(goToSearchPage:()->Unit,state1: Int, titles: List<String>, onStateChange: (Int) -> Unit) {
     var state11 = state1
     //界面最上面的选择框框，包括精选和词库
     TopAppBar(
-        Modifier.background(Color.Black),
+        elevation = 0.dp,
+        modifier = Modifier
+            .background(Color.Black)
+            .height(77.dp).padding(0.dp),
+        contentColor = Color.Transparent,
+        contentPadding =  PaddingValues(
+            start = 0.dp,
+            end = 0.dp)
+//        Modifier.background(Color.Black),
 //        modifier = Modifier
 //            .background(Color.Black),
     ) { /** Top app bar content */
@@ -117,24 +175,28 @@ private fun MyTopAppBar(navController:NavHostController,state1: Int, titles: Lis
                 .padding(8.dp)
                 .fillMaxWidth()
                 .fillMaxHeight(),
-            horizontalArrangement = Arrangement.SpaceBetween,
+            horizontalArrangement = Arrangement.SpaceAround,
+            verticalAlignment = Alignment.CenterVertically
         ) {
             Image(
                 modifier = Modifier
-                    .background(Color.Black),
-                painter = painterResource(id = R.drawable.ic_launcher_foreground),
-                contentDescription = "logo"
-            )
+                    .size(30.dp),
+                painter = painterResource(id = R.drawable.logo),
+                contentDescription = "logo",
+
+                )
 
 
             // Screen content
             TabRow(
                 selectedTabIndex = state11,
-                Modifier.width(200.dp).background(Color.Black)
+                Modifier
+                    .width(200.dp)
+                    .background(Color.Black)
             ) {
                 titles.forEachIndexed { index, title ->
                     Tab(
-                        text = { Text(title) },
+                        text = { Text(title, fontSize = 20.sp) },
                         modifier = Modifier
                             .background(Color.Black),
                         selected = state11 == index,
@@ -152,35 +214,114 @@ private fun MyTopAppBar(navController:NavHostController,state1: Int, titles: Lis
              *
              *
              * */
-            Button(
+            Image(
                 modifier = Modifier
-                    .background(Color.Black),
-                onClick = {
-                    goToSearchPage(navController)
-                },
-                contentPadding = PaddingValues(
-                    start = 0.dp,
-                    top = 0.dp,
-                    end = 0.dp,
-                    bottom = 0.dp
-                )
-            ) {
-                //Text(text = "${state11.toString()}")
+                    .height(20.dp)
+                    .width(20.dp)
+                    .clickable {
+                        goToSearchPage()
+                    },
+                painter = painterResource(id = R.drawable.searchwhite),
+                contentDescription = "search icon"
 
-                Image(
-                    modifier = Modifier
-                        .background(Color.Black)
-                        .height(20.dp)
-                        .width(20.dp),
-                    painter = painterResource(id = R.drawable.searchwhite),
-                    contentDescription = "search icon"
-
-                )
-            }
+            )
         }
 
     }
 }
+
+@Preview
+@Composable
+fun pre(){
+    MyTopAppBar2(goToSearchPage = {},1, listOf("精选","词库"),onStateChange = {})
+}
+@Composable
+private fun MyTopAppBar2(goToSearchPage:()->Unit,state1: Int, titles: List<String>, onStateChange: (Int) -> Unit) {
+    var state11 = state1
+    //界面最上面的选择框框，包括精选和词库
+    TopAppBar(
+        elevation = 0.dp,
+        modifier = Modifier
+            .background(Color.Transparent)
+            .height(77.dp).padding(0.dp),
+        contentColor = Color.Transparent,
+        contentPadding =  PaddingValues(
+            start = 0.dp,
+            end = 0.dp)
+//        modifier = Modifier
+//            .background(Color.Black),
+    ) { /** Top app bar content */
+        Box() {
+            Image(
+                painter = painterResource(id = R.drawable.learnbar),
+                contentDescription = null,
+                modifier = Modifier.fillMaxSize(),
+                contentScale = ContentScale.Crop
+            )
+
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .fillMaxHeight(),
+                horizontalArrangement = Arrangement.SpaceAround,
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                Image(
+                    modifier = Modifier
+                        .size(30.dp),
+                    painter = painterResource(id = R.drawable.logo),
+                    contentDescription = "logo",
+
+                    )
+
+
+                // Screen content
+                TabRow(
+                    backgroundColor = Color.Transparent,
+                    selectedTabIndex = state11,
+                    modifier = Modifier.width(200.dp)
+                ) {
+                    titles.forEachIndexed { index, title ->
+                        Tab(
+                            text = { Text(title,color = Color.White,fontSize = 20.sp) },
+                            selected = state11 == index,
+                            onClick = {
+                                state11 = index
+                                onStateChange(index)
+                            },
+//                            selectedContentColor = Color.White,
+//                            unselectedContentColor = Color.Gray
+                        )
+                    }
+                }
+
+                /**
+                 *
+                 * 搜索按钮
+                 *
+                 *
+                 * */
+                Image(
+                    modifier = Modifier
+                        .height(20.dp)
+                        .width(20.dp)
+                        .clickable {
+                            goToSearchPage()
+                        },
+                    painter = painterResource(id = R.drawable.searchwhite),
+                    contentDescription = "search icon"
+
+                )
+
+            }
+        }
+
+//        }
+
+
+    }
+}
+
 
 
 

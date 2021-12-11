@@ -1,18 +1,16 @@
 package com.scut.fundialect.activity.publicCompose
 
-import android.content.Context
-import android.content.Intent
 import android.widget.Toast
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material.BottomAppBar
-import androidx.compose.material.Tab
-import androidx.compose.material.TabRow
-import androidx.compose.material.Text
+import androidx.compose.material.*
+import androidx.compose.material.AppBarDefaults.ContentPadding
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -20,10 +18,8 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.scut.fundialect.MyApplication.Companion.context
 import com.scut.fundialect.R
-import com.scut.fundialect.activity.culture.CultureActivity
-import com.scut.fundialect.activity.dubing.DubingActivity
-import com.scut.fundialect.activity.learn.LearnActivity
-import com.scut.fundialect.activity.myself.MyselfActivity
+import com.scut.fundialect.enum.ColorMode
+import com.scut.fundialect.help.switch
 
 class ButtonAppBar {
     class ButtomTitles(name:String, image: Int){
@@ -42,23 +38,38 @@ class ButtonAppBar {
 @Preview
 @Composable
 fun MyPreview(){
-
+    MyButtonAppBar(ColorMode.dark,gotoAnotherActivity = {},onStateChange = {},1)
 }
 @Composable
-fun MyButtonAppBar(navController: NavHostController,
+fun MyButtonAppBar(
+    colorMode: ColorMode,
+    gotoAnotherActivity:(Int)->Unit,
     onStateChange: (Int) -> Unit,
-    context: Context,
     initPageIndex: Int
 ) {
-    BottomAppBar {
+    BottomAppBar(
+        backgroundColor = switch(Color.White, Color.Black,colorMode==ColorMode.light),
+        elevation = 0.dp,
+        contentPadding = PaddingValues(
+            start = 0.dp,
+            end = 0.dp
+        )
+    ) {
         var buttomStateNow =initPageIndex
-        TabRow(selectedTabIndex = buttomStateNow) {
-            val titles = listOf(
-                ButtonAppBar.ButtomTitles("学习", R.drawable.ic_launcher_foreground),
-                ButtonAppBar.ButtomTitles("文化", R.drawable.ic_launcher_foreground),
-                ButtonAppBar.ButtomTitles("配音", R.drawable.ic_launcher_foreground),
-                ButtonAppBar.ButtomTitles("我的", R.drawable.ic_launcher_foreground),
-            )
+        TabRow(
+            selectedTabIndex = buttomStateNow,
+            backgroundColor = Color.Transparent
+        ) {
+
+                val titles = listOf(
+                    ButtonAppBar.ButtomTitles("学习", switch(R.drawable.learnlight,R.drawable.learndark,initPageIndex==0)),
+                    ButtonAppBar.ButtomTitles("文化", switch(R.drawable.culturelight,R.drawable.culturedark,initPageIndex==1)),
+                    ButtonAppBar.ButtomTitles("配音", switch(R.drawable.dublight,R.drawable.dubdark,initPageIndex==2)),
+                    ButtonAppBar.ButtomTitles("我的", switch(R.drawable.myselflight,R.drawable.myselfdark,initPageIndex==3)),
+                )
+
+
+
             titles.forEachIndexed { index, title, ->
                 Tab(
                     text = {
@@ -67,7 +78,9 @@ fun MyButtonAppBar(navController: NavHostController,
                          *
                          * **/
                         Text(title.getTheName(),
-                        fontSize=13.sp,)
+                        fontSize=13.sp,
+                            color = switch(Color.Black, Color.White,colorMode==ColorMode.light)
+                        )
                     },
                     selected = buttomStateNow == index,
                     icon = {
@@ -86,7 +99,7 @@ fun MyButtonAppBar(navController: NavHostController,
                     onClick = {
                         buttomStateNow = index
                         onStateChange(index)
-                        gotoAnotherActivity(navController,index)
+                        gotoAnotherActivity(index)
                     }
                 )
             }
