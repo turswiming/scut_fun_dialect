@@ -1,4 +1,4 @@
-package com.scut.fundialect.activity.publicCompose
+package com.scut.fundialect.activity.compose
 
 import android.widget.Toast
 import androidx.compose.foundation.Image
@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.*
-import androidx.compose.material.AppBarDefaults.ContentPadding
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip

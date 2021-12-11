@@ -1,6 +1,5 @@
 package com.scut.fundialect.activity.learn
 
-import android.content.ClipData
 import android.widget.Toast
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
@@ -23,16 +22,18 @@ import androidx.compose.ui.unit.sp
 import coil.compose.rememberImagePainter
 import com.scut.fundialect.MyApplication.Companion.context
 import com.scut.fundialect.R
-import com.scut.fundialect.activity.publicCompose.ShareButton
-import com.scut.fundialect.activity.publicCompose.VideoPlayerWithText
+import com.scut.fundialect.activity.compose.SelectCity
+import com.scut.fundialect.activity.compose.pair
+import com.scut.fundialect.activity.video.ShareButton
+import com.scut.fundialect.activity.video.VideoPlayerWithText
 import com.scut.fundialect.database.helper.CityHelper
 import com.scut.fundialect.database.helper.LearnVideoHelper
 import com.scut.fundialect.database.helper.LearnVideoHelper.getVideoComment
 import com.scut.fundialect.database.helper.LearnVideoHelper.switchCommentLike
 import com.scut.fundialect.database.helper.UserHelpr
+import com.scut.fundialect.enum.ColorMode
 import com.scut.fundialect.help.switch
 import com.scut.fundialect.ui.theme.BackgroundGray
-import com.scut.fundialect.ui.theme.BackgroundLightGrey
 import kotlinx.coroutines.launch
 
 
@@ -58,83 +59,8 @@ fun MySelectedPage(gotoDubPage:()->Unit,
         horizontalAlignment = Alignment.CenterHorizontally
 
     ) {
-        var cityStateNow by remember { mutableStateOf(0) }
-        var cityStateLast  by remember { mutableStateOf(0) }
-        // Screen content
-        Column(modifier = Modifier.fillMaxWidth()) {
-            /**
-             *
-             * 这里是推荐页面中第二排的选择框，包括了“推荐 按钮，添加城市等按钮。
-             *
-             * */
-            TabRow(
-                selectedTabIndex = cityStateNow,
-                modifier= Modifier
-                    .background(Color.Black)
-                    .height(30.dp),
+        var (cityStateNow, cityStateLast) = pair(ColorMode.dark,showedCityId)
 
-                ) {
-                Tab(
-                    text = { Text("推荐",fontSize = 14.sp) },
-                    modifier= Modifier
-                        .background(Color.Black)
-                        .padding(0.dp)
-                        .width(60.dp),
-                    selected = cityStateNow == 0,
-                    onClick = { cityStateNow = 0 }
-                )
-                showedCityId.forEachIndexed { index, cityId ->
-                    Tab(
-                        modifier= Modifier
-                            .background(Color.Black)
-                            .padding(0.dp)
-                            .width(40.dp),
-                        text = {
-                            Text(text = CityHelper.getCityName(cityId),fontSize = 14.sp,modifier = Modifier.width(80.dp))
-                        },
-                        selected = cityStateNow == index+1,
-                        onClick = { cityStateLast=cityStateNow
-                            cityStateNow = index+1
-
-                        }
-                    )
-
-                }
-                Tab(
-                    modifier= Modifier
-                        .background(Color.Black)
-                        .padding(0.dp)
-                        .width(30.dp),
-                    selected = cityStateNow == 5,
-                    onClick = {
-                        /**
-                         * 如果之前选中的不是第五个按钮：
-                         *      -那就选中第五个按钮
-                         * 如果之前选中了第五个按钮
-                         *      -那就选中第五个按钮之前的按钮
-                         * **/
-
-                        if(cityStateNow != 5){
-                            cityStateLast = cityStateNow
-                            cityStateNow = 5
-                        }else{
-                            cityStateNow = cityStateLast
-                        }
-                    }
-                ){
-                    Image(
-                        modifier= Modifier
-                            .background(Color.Black)
-                            .padding(0.dp)
-                            .height(20.dp)
-                            .width(20.dp),
-                        painter = painterResource(id = R.drawable.pluswhite),
-                        contentDescription = "加号")
-                }
-            }
-            //LazyColumn(content = )
-
-        }
 
 
 
@@ -326,74 +252,14 @@ fun MySelectedPage(gotoDubPage:()->Unit,
 
             }
 
-            Surface(
-                modifier = Modifier
-                    .height(switch(215.dp, 1.dp, cityStateNow == 5))
-                    .fillMaxWidth()
-                    .background(Color.Black),
-                shape = RoundedCornerShape (0. dp,0.dp,25.dp,25.dp),
-                color = BackgroundGray,
-                elevation=10.dp
-            ) {
-                Column {
-                    Spacer(modifier = Modifier.height(15.dp))
-                    LazyVerticalGrid(
-                        cells = GridCells.Adaptive(minSize = 64.dp)
-                    ) {
-                        /**
-                         *
-                         *
-                         *
-                         * 这个下面的东西代表着每一个单独的写有城市名字的小按钮*
-                         *
-                         *
-                         *
-                         * */
-                        val cityList = CityHelper.getChildCity(1)
-                        items(cityList.size) { index ->
-//                        Box(
-//                            modifier = Modifier
-//                                .clickable {
-//
-//                                }
-//                                .width(64.dp)
-//                                .height(32.dp),
-//
-//
-//                            ) {
-                            Text(
-                                text = AnnotatedString(cityList[index].getTheName()),
-                                color = Color.White,
-                                textAlign = TextAlign.Center,
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .clickable {
-                                        cityStateNow = cityStateLast
-
-                                        onStateChange(cityStateLast, index)
-
-                                    }
-                                    .width(64.dp)
-                                    .height(32.dp),
-
-
-
-                                )
-//                        }
-
-
-                        }
-                    }
-                }
-
-
-
-            }
+            SelectCity(colorMode = ColorMode.dark,cityStateNow, cityStateLast, onStateChange)
         }
     }
 
 
 }
+
+
 /**
  *
  * 这里是每一个评论。

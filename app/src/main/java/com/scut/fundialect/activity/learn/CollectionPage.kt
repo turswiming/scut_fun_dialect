@@ -28,8 +28,8 @@ import com.github.stuxuhai.jpinyin.PinyinHelper
 import com.scut.fundialect.R
 import com.scut.fundialect.enum.ColorMode
 
-import com.scut.fundialect.activity.publicCompose.MyButtonAppBar
-import com.scut.fundialect.activity.publicCompose.gotoAnotherActivity
+import com.scut.fundialect.activity.video.MyButtonAppBar
+import com.scut.fundialect.activity.video.gotoAnotherActivity
 import com.scut.fundialect.database.CityDataBaseHelper
 import com.scut.fundialect.database.helper.CityHelper
 import com.scut.fundialect.database.helper.LearnVideoHelper

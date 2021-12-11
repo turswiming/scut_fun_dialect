@@ -13,7 +13,6 @@ import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
@@ -23,8 +22,8 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.scut.fundialect.R
 import com.scut.fundialect.activity.BaseComposeActivity
-import com.scut.fundialect.activity.publicCompose.MyButtonAppBar
-import com.scut.fundialect.activity.publicCompose.gotoAnotherActivity
+import com.scut.fundialect.activity.compose.MyButtonAppBar
+import com.scut.fundialect.activity.compose.gotoAnotherActivity
 import com.scut.fundialect.enum.ColorMode
 import com.scut.fundialect.ui.theme.ComposeTutorialTheme
 
@@ -83,29 +82,24 @@ public fun LearnVideoPageWithEvent(context: Context, navController: NavHostContr
         }
     ) {
         // Screen content
-        Row {
-            //Text(text = "${state1.toString()}")
-                /**
-                 *
-                 *
-                 * 这里是“精选”页面的全部内容，包括一个视频播放器，
-                 *
-                 *
-                 * **/
-                MySelectedPage(gotoDubPage={ TODO()},
-                    showedPage1,
-                    onStateChange = {
-                            k, value ->
-                    if(k!=0){
-                        showedPage1[k-1] = value+2
-                        //Toast.makeText(context,"key\t$k\nvalue\t$value",Toast.LENGTH_SHORT).show()
-                    }
-                    }
-                )
-
-
-
-        }
+        /**
+         *
+         *
+         * 这里是“精选”页面的全部内容，包括一个视频播放器，
+         *
+         *
+         * **/
+        MySelectedPage(
+            gotoDubPage={ TODO()},
+            showedPage1,
+            onStateChange = {
+                    k, value ->
+                if(k!=0){
+                    showedPage1[k-1] = value+2
+                    //Toast.makeText(context,"key\t$k\nvalue\t$value",Toast.LENGTH_SHORT).show()
+                }
+            }
+        )
 
     }
 }

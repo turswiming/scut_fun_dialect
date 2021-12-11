@@ -1,4 +1,4 @@
-package com.scut.fundialect.activity.publicCompose
+package com.scut.fundialect.activity.video
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier

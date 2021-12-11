@@ -1,4 +1,4 @@
-package com.scut.fundialect.activity.publicCompose
+package com.scut.fundialect.activity.video
 
 import android.net.Uri
 import androidx.compose.foundation.background

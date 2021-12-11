@@ -1,4 +1,4 @@
-package com.scut.fundialect.activity.publicCompose
+package com.scut.fundialect.activity.video
 
 import com.google.android.exoplayer2.Player.*
 

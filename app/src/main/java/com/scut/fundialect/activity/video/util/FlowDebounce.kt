@@ -1,4 +1,4 @@
-package com.scut.fundialect.activity.publicCompose.util
+package com.scut.fundialect.activity.video.util
 
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.InternalCoroutinesApi

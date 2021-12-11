@@ -28,12 +28,11 @@ import com.github.stuxuhai.jpinyin.PinyinHelper
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.rememberPagerState
-import com.scut.fundialect.MyApplication.Companion.context
 import com.scut.fundialect.R
 import com.scut.fundialect.activity.BaseComposeActivity
 import com.scut.fundialect.activity.learn.goToSearchPage
-import com.scut.fundialect.activity.publicCompose.MyButtonAppBar
-import com.scut.fundialect.activity.publicCompose.gotoAnotherActivity
+import com.scut.fundialect.activity.video.MyButtonAppBar
+import com.scut.fundialect.activity.video.gotoAnotherActivity
 import com.scut.fundialect.database.helper.CityHelper
 import com.scut.fundialect.database.helper.ModelVideoHelper
 import com.scut.fundialect.database.helper.ModelVideoHelper.getCollectedModelVideo
@@ -43,7 +42,6 @@ import com.scut.fundialect.help.switch
 import com.scut.fundialect.help.toDateStr
 import com.scut.fundialect.ui.theme.*
 import kotlinx.coroutines.delay
-import org.intellij.lang.annotations.JdkConstants
 
 class DubingActivity : BaseComposeActivity() {
     @ExperimentalPagerApi

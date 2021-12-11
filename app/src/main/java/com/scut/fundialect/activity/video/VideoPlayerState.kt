@@ -1,4 +1,4 @@
-package com.scut.fundialect.activity.publicCompose
+package com.scut.fundialect.activity.video
 
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
