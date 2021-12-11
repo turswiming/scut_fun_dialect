@@ -114,9 +114,9 @@ import com.scut.fundialect.ui.theme.BackgroundGray
      *
      * */
     TabRow(
+        backgroundColor = backgroundColor,
         selectedTabIndex = cityStateNow,
         modifier = Modifier
-            .background(backgroundColor)
             .height(30.dp),
 
         ) {

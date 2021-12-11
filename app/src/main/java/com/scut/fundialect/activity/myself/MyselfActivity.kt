@@ -23,8 +23,8 @@ import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.rememberPagerState
 import com.scut.fundialect.R
 import com.scut.fundialect.activity.BaseComposeActivity
-import com.scut.fundialect.activity.video.MyButtonAppBar
-import com.scut.fundialect.activity.video.gotoAnotherActivity
+import com.scut.fundialect.activity.compose.MyButtonAppBar
+import com.scut.fundialect.activity.compose.gotoAnotherActivity
 import com.scut.fundialect.enum.ColorMode
 import com.scut.fundialect.ui.theme.ComposeTutorialTheme
 import com.scut.fundialect.ui.theme.Transparent

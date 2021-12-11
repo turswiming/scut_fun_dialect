@@ -26,10 +26,11 @@ import androidx.navigation.NavHostController
 import com.github.stuxuhai.jpinyin.PinyinFormat
 import com.github.stuxuhai.jpinyin.PinyinHelper
 import com.scut.fundialect.R
+import com.scut.fundialect.activity.compose.MyButtonAppBar
+import com.scut.fundialect.activity.compose.gotoAnotherActivity
 import com.scut.fundialect.enum.ColorMode
 
-import com.scut.fundialect.activity.video.MyButtonAppBar
-import com.scut.fundialect.activity.video.gotoAnotherActivity
+
 import com.scut.fundialect.database.CityDataBaseHelper
 import com.scut.fundialect.database.helper.CityHelper
 import com.scut.fundialect.database.helper.LearnVideoHelper

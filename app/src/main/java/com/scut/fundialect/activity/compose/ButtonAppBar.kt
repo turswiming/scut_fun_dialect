@@ -91,8 +91,7 @@ fun MyButtonAppBar(
                             painter = painterResource(id = title.getTheImage()),
                             contentDescription = "title.getTheName()",
                             modifier = Modifier
-                                .size(30.dp)
-                                .clip(CircleShape)
+                                .size(25.dp)
                         )
                     },
                     onClick = {

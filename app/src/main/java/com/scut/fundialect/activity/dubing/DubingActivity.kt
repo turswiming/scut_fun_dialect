@@ -30,9 +30,10 @@ import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.rememberPagerState
 import com.scut.fundialect.R
 import com.scut.fundialect.activity.BaseComposeActivity
+import com.scut.fundialect.activity.compose.MyButtonAppBar
+import com.scut.fundialect.activity.compose.gotoAnotherActivity
+import com.scut.fundialect.activity.compose.pair
 import com.scut.fundialect.activity.learn.goToSearchPage
-import com.scut.fundialect.activity.video.MyButtonAppBar
-import com.scut.fundialect.activity.video.gotoAnotherActivity
 import com.scut.fundialect.database.helper.CityHelper
 import com.scut.fundialect.database.helper.ModelVideoHelper
 import com.scut.fundialect.database.helper.ModelVideoHelper.getCollectedModelVideo
@@ -67,38 +68,161 @@ class DubingActivity : BaseComposeActivity() {
 @Composable
 fun DubingPageWithEvent(navController: NavHostController,
                         context: Context) {
-    var showCitySelectPage by remember { mutableStateOf(false)}
-    var selectCity by remember { mutableStateOf(1)}
-    Scaffold(
-        topBar = {
-            /**
-             * 
-             * 这里面是一整个上面的bar，包括搜索按钮和选择城市的按钮
-             * 
-             * */
-            DubingTopAppBar(
-                navController = navController,
-                onSelectPageChange = {
-                }
-            )
-        },
-        bottomBar ={
-            MyButtonAppBar(
-                colorMode = ColorMode.light,
-                gotoAnotherActivity = {gotoAnotherActivity(navController,it)},
-                onStateChange = {
-
-                },
-                initPageIndex = 2
-            )
+    Box(modifier = Modifier.fillMaxSize()) {
+        Image(painter = painterResource(id = R.drawable.dubbackground), contentDescription = null)
+        var showedCityId = remember {
+            mutableStateListOf(2,3,4,5)
         }
+        var cityStateNow by remember { mutableStateOf(0) }
+        var cityStateLast  by remember { mutableStateOf(0) }
+        Scaffold(
+            backgroundColor = Color.Transparent,
+            topBar = {
+                /**
+                 *
+                 * 这里面是一整个上面的bar，包括搜索按钮和选择城市的按钮
+                 *
+                 * */
+//            DubingTopAppBar(cityStateNow,
+//                cityStateLast,
+//                navController = navController,
+//                onSelectPageChange = {
+//                }
+//            )
 
-    ) {
-        DubMainPage(context)
-        CitySelectPage(showCitySelectPage,onselectCityChange = {
-            selectCity =it
-        })
+
+                TopAppBar(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(100.dp),
+                    backgroundColor = Transparent,
+                    elevation = 0.dp
+                ) {
+                    Column(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .fillMaxHeight()
+                            .background(color = Transparent),
+
+                        ) {
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .height(50.dp),
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.SpaceBetween,
+                        ) {
+                            /**
+                             * 左上角的俩大字
+                             *
+                             * */
+                            Text(text = "配音")
+                            /**
+                             *
+                             * 搜索按钮
+                             *
+                             *
+                             * */
+                            Image(
+                                painter = painterResource(id = R.drawable.ic_launcher_foreground),
+                                contentDescription = "search icon",
+                                modifier = Modifier.clickable {
+                                    goToSearchPage(navController)
+
+                                }
+
+                            )
+                        }
+                        /**
+                         * bar下面选择城市的东西
+                         *
+                         * */
+
+
+                        /**
+                         *
+                         * 这里是推荐页面中第二排的选择框，包括了“推荐 按钮，添加城市等按钮。
+                         *
+                         * */
+                        TabRow(
+                            selectedTabIndex = cityStateNow,
+                            contentColor = CustomOrange,
+                            modifier = Modifier.background(color = Transparent),
+                            backgroundColor = Transparent
+
+
+                        ) {
+                            Tab(
+                                text = { Text("推荐") },
+                                selected = cityStateNow == 0,
+                                onClick = { cityStateNow = 0 }
+                            )
+                            showedCityId.forEachIndexed { index, cityId ->
+                                Tab(
+                                    text = {
+                                        Text(CityHelper.getCityName(cityId)+"话")
+                                    },
+                                    selected = cityStateNow == index+1,
+                                    onClick = { cityStateLast=cityStateNow
+                                        cityStateNow = index+1
+
+                                    }
+                                )
+
+                            }
+                            Tab(
+                                selected = cityStateNow == 5,
+                                onClick = {
+                                    /**
+                                     * 如果之前选中的不是第五个按钮：
+                                     *      -那就选中第五个按钮
+                                     * 如果之前选中了第五个按钮
+                                     *      -那就选中第五个按钮之前的按钮
+                                     * **/
+
+                                    if(cityStateNow != 5){
+                                        cityStateLast = cityStateNow
+                                        cityStateNow = 5
+                                    }else{
+                                        cityStateNow = cityStateLast
+                                    }
+                                }
+                            ){
+                                Image(
+                                    painter = painterResource(id = R.drawable.ic_launcher_background),
+                                    contentDescription = "加号")
+                            }
+                        }
+//            var (cityStateNow, cityStateLast) = pair(ColorMode.dark,showedCityId)
+
+
+                    }
+                }
+            },
+            bottomBar ={
+                MyButtonAppBar(
+                    colorMode = ColorMode.light,
+                    gotoAnotherActivity = {gotoAnotherActivity(navController,it)},
+                    onStateChange = {
+
+                    },
+                    initPageIndex = 2
+                )
+            }
+
+        ) {
+            DubMainPage(context)
+            CitySelectPage(cityStateNow==5,onselectCityChange = {
+                if(cityStateLast!=0){
+                    showedCityId[cityStateLast-1] = it
+                    //Toast.makeText(context,"key\t$k\nvalue\t$value",Toast.LENGTH_SHORT).show()
+                }
+//            showedCityId[cityStateLast] =it
+            })
+        }
     }
+//    var showCitySelectPage by remember { mutableStateOf(false)}
+    
 }
 
 @ExperimentalFoundationApi
@@ -158,8 +282,8 @@ private fun CitySelectPage(showCitySelectPage: Boolean,onselectCityChange:(CityI
 fun DubMainPage(context: Context) {
     Column(
         Modifier
-        .fillMaxSize()
-        .verticalScroll(rememberScrollState())
+            .fillMaxSize()
+            .verticalScroll(rememberScrollState())
     ) {
         Surface(
             shape = RoundedCornerShape(15.dp),
@@ -358,7 +482,8 @@ fun DubMainPage(context: Context) {
             horizontalArrangement = Arrangement.SpaceBetween,
             modifier = Modifier
                 .fillMaxWidth()
-                .height(200.dp).padding(15.dp)
+                .height(200.dp)
+                .padding(15.dp)
         ) {
             val modelVideos = getCollectedModelVideo()
             modelVideos.forEach {
@@ -462,123 +587,124 @@ private fun MyPictureShower(it: ModelVideoHelper.VideoInfo) {
 }
 
 
-/**
- *
- * 这里面是一整个上面的bar，包括搜索按钮和选择城市的按钮
- *
- * */
-@Composable
-fun DubingTopAppBar(onSelectPageChange:()->Unit,navController:NavHostController
-) {
-    TopAppBar(
-        modifier = Modifier
-            .fillMaxWidth()
-            .height(100.dp),
-        backgroundColor = Transparent,
-        elevation = 0.dp
-    ) {
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .fillMaxHeight()
-                .background(color = Transparent),
-
-        ) {
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(50.dp),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.SpaceBetween,
-            ) {
-                /**
-                 * 左上角的俩大字
-                 *
-                 * */
-                Text(text = "配音")
-                /**
-                 *
-                 * 搜索按钮
-                 *
-                 *
-                 * */
-                Image(
-                    painter = painterResource(id = R.drawable.ic_launcher_foreground),
-                    contentDescription = "search icon",
-                    modifier = Modifier.clickable {
-                        goToSearchPage(navController)
-
-                    }
-
-                )
-            }
-            /**
-             * bar下面选择城市的东西
-             *
-             * */
-            var cityStateNow by remember { mutableStateOf(0) }
-            var cityStateLast  by remember { mutableStateOf(0) }
-            var showedCityId = remember {
-                mutableStateListOf(2,3,4,5)
-            }
-            /**
-             *
-             * 这里是推荐页面中第二排的选择框，包括了“推荐 按钮，添加城市等按钮。
-             *
-             * */
-            TabRow(
-                selectedTabIndex = cityStateNow,
-                contentColor = CustomOrange,
-                modifier = Modifier.background(color = Transparent),
-                backgroundColor = Transparent
-
-
-                ) {
-                Tab(
-                    text = { Text("推荐") },
-                    selected = cityStateNow == 0,
-                    onClick = { cityStateNow = 0 }
-                )
-                showedCityId.forEachIndexed { index, cityId ->
-                    Tab(
-                        text = {
-                            Text(CityHelper.getCityName(cityId)+"话")
-                        },
-                        selected = cityStateNow == index+1,
-                        onClick = { cityStateLast=cityStateNow
-                            cityStateNow = index+1
-
-                        }
-                    )
-
-                }
-                Tab(
-                    selected = cityStateNow == 5,
-                    onClick = {
-                        /**
-                         * 如果之前选中的不是第五个按钮：
-                         *      -那就选中第五个按钮
-                         * 如果之前选中了第五个按钮
-                         *      -那就选中第五个按钮之前的按钮
-                         * **/
-
-                        if(cityStateNow != 5){
-                            cityStateLast = cityStateNow
-                            cityStateNow = 5
-                        }else{
-                            cityStateNow = cityStateLast
-                        }
-                    }
-                ){
-                    Image(
-                        painter = painterResource(id = R.drawable.ic_launcher_background),
-                        contentDescription = "加号")
-                }
-            }
-
-        }
-    }
-}
+///**
+// *
+// * 这里面是一整个上面的bar，包括搜索按钮和选择城市的按钮
+// *
+// * */
+//@Composable
+//fun DubingTopAppBar(cityStateNow:Int,cityStateLast:Int,onSelectPageChange:()->Unit,navController:NavHostController
+//) {
+//    TopAppBar(
+//        modifier = Modifier
+//            .fillMaxWidth()
+//            .height(100.dp),
+//        backgroundColor = Transparent,
+//        elevation = 0.dp
+//    ) {
+//        Column(
+//            modifier = Modifier
+//                .fillMaxWidth()
+//                .fillMaxHeight()
+//                .background(color = Transparent),
+//
+//        ) {
+//            Row(
+//                modifier = Modifier
+//                    .fillMaxWidth()
+//                    .height(50.dp),
+//                verticalAlignment = Alignment.CenterVertically,
+//                horizontalArrangement = Arrangement.SpaceBetween,
+//            ) {
+//                /**
+//                 * 左上角的俩大字
+//                 *
+//                 * */
+//                Text(text = "配音")
+//                /**
+//                 *
+//                 * 搜索按钮
+//                 *
+//                 *
+//                 * */
+//                Image(
+//                    painter = painterResource(id = R.drawable.ic_launcher_foreground),
+//                    contentDescription = "search icon",
+//                    modifier = Modifier.clickable {
+//                        goToSearchPage(navController)
+//
+//                    }
+//
+//                )
+//            }
+//            /**
+//             * bar下面选择城市的东西
+//             *
+//             * */
+//
+//            var showedCityId = remember {
+//                mutableStateListOf(2,3,4,5)
+//            }
+//            /**
+//             *
+//             * 这里是推荐页面中第二排的选择框，包括了“推荐 按钮，添加城市等按钮。
+//             *
+//             * */
+//            TabRow(
+//                selectedTabIndex = cityStateNow,
+//                contentColor = CustomOrange,
+//                modifier = Modifier.background(color = Transparent),
+//                backgroundColor = Transparent
+//
+//
+//                ) {
+//                Tab(
+//                    text = { Text("推荐") },
+//                    selected = cityStateNow == 0,
+//                    onClick = { cityStateNow = 0 }
+//                )
+//                showedCityId.forEachIndexed { index, cityId ->
+//                    Tab(
+//                        text = {
+//                            Text(CityHelper.getCityName(cityId)+"话")
+//                        },
+//                        selected = cityStateNow == index+1,
+//                        onClick = { cityStateLast=cityStateNow
+//                            cityStateNow = index+1
+//
+//                        }
+//                    )
+//
+//                }
+//                Tab(
+//                    selected = cityStateNow == 5,
+//                    onClick = {
+//                        /**
+//                         * 如果之前选中的不是第五个按钮：
+//                         *      -那就选中第五个按钮
+//                         * 如果之前选中了第五个按钮
+//                         *      -那就选中第五个按钮之前的按钮
+//                         * **/
+//
+//                        if(cityStateNow != 5){
+//                            cityStateLast = cityStateNow
+//                            cityStateNow = 5
+//                        }else{
+//                            cityStateNow = cityStateLast
+//                        }
+//                    }
+//                ){
+//                    Image(
+//                        painter = painterResource(id = R.drawable.ic_launcher_background),
+//                        contentDescription = "加号")
+//                }
+//            }
+////            var (cityStateNow, cityStateLast) = pair(ColorMode.dark,showedCityId)
+//
+//
+//        }
+//    }
+//}
 
 @OptIn(ExperimentalFoundationApi::class)
 @ExperimentalFoundationApi

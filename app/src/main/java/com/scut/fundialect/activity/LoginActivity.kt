@@ -148,7 +148,7 @@ class LoginActivity : BaseActivity() {
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             Spacer(
-                modifier = Modifier.height(40.dp)
+                modifier = Modifier.height(20.dp)
             )
             Image(
                 painter = painterResource(id = R.drawable.ic_launcher_foreground),
