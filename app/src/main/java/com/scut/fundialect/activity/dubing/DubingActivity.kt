@@ -21,6 +21,7 @@ import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
 import coil.compose.rememberImagePainter
 import com.github.stuxuhai.jpinyin.PinyinFormat
 import com.github.stuxuhai.jpinyin.PinyinHelper
@@ -54,7 +55,7 @@ class DubingActivity : BaseComposeActivity() {
                  * 这个页面的背景图放在这里。
                  * */
                 Surface(color = MaterialTheme.colors.background) {
-                    DubingPage(this,)
+//                    DubingPage(navController)
                 }
             }
         }
@@ -64,7 +65,8 @@ class DubingActivity : BaseComposeActivity() {
 @ExperimentalPagerApi
 @ExperimentalFoundationApi
 @Composable
-fun DubingPage(context: Context) {
+fun DubingPage(navController: NavHostController,
+               context: Context) {
     var showCitySelectPage by remember { mutableStateOf(false)}
     var selectCity by remember { mutableStateOf(1)}
     Scaffold(
@@ -81,6 +83,7 @@ fun DubingPage(context: Context) {
         },
         bottomBar ={
             MyButtonAppBar(
+                navController = navController,
                 context = context,
                 onStateChange = {
 
@@ -584,6 +587,6 @@ fun DubingTopAppBar(onSelectPageChange:()->Unit,
 fun DefaultPreview() {
     ComposeTutorialTheme {
         val context2 = LocalContext.current
-        DubingPage(context2)
+//        DubingPage(context2)
     }
 }

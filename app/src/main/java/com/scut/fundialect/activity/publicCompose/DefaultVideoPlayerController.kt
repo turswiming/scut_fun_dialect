@@ -17,7 +17,7 @@ import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory
 import com.google.android.exoplayer2.upstream.RawResourceDataSource
 import com.google.android.exoplayer2.util.Util
 import com.google.android.exoplayer2.video.VideoListener
-import com.scut.fundialect.activity.publicCompose.util.FlowDebouncer
+import com.scut.fundialect.activity.publicCompose.util.FlowDebounce
 import com.scut.fundialect.activity.publicCompose.util.set
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.*
@@ -133,7 +133,7 @@ internal class DefaultVideoPlayerController(
             playWhenReady = false
         }
 
-    private val previewSeekDebouncer = FlowDebouncer<Long>(200L)
+    private val previewSeekDebouncer = FlowDebounce<Long>(200L)
 
     init {
         exoPlayer.playWhenReady = initialState.isPlaying

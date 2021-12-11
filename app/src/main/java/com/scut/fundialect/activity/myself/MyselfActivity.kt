@@ -1,7 +1,6 @@
 package com.scut.fundialect.activity.myself
 
 import android.os.Bundle
-import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
@@ -11,15 +10,13 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import coil.compose.rememberImagePainter
+import androidx.navigation.NavHostController
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.rememberPagerState
@@ -28,7 +25,6 @@ import com.scut.fundialect.activity.BaseComposeActivity
 import com.scut.fundialect.activity.publicCompose.MyButtonAppBar
 import com.scut.fundialect.ui.theme.ComposeTutorialTheme
 import com.scut.fundialect.ui.theme.Transparent
-import kotlinx.coroutines.delay
 
 class MyselfActivity : BaseComposeActivity() {
     @ExperimentalPagerApi
@@ -38,7 +34,7 @@ class MyselfActivity : BaseComposeActivity() {
             ComposeTutorialTheme {
                 // A surface container using the 'background' color from the theme
                 Surface(color = MaterialTheme.colors.background) {
-                    MyselfPage()
+//                    MyselfPage()
                 }
             }
         }
@@ -48,7 +44,7 @@ class MyselfActivity : BaseComposeActivity() {
 
 @ExperimentalPagerApi
 @Composable
-private fun MyselfPage() {
+fun MyselfPage(navController: NavHostController) {
     val context = LocalContext.current
     Scaffold(
         bottomBar = {
@@ -58,6 +54,7 @@ private fun MyselfPage() {
          *
          * */
             MyButtonAppBar(
+                navController = navController,
                 onStateChange = {
 
                 },

@@ -25,9 +25,12 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.google.accompanist.pager.ExperimentalPagerApi
 import com.scut.fundialect.MyApplication
 import com.scut.fundialect.R
+import com.scut.fundialect.activity.dubing.DubingPage
 import com.scut.fundialect.activity.learn.LearnMainPage
+import com.scut.fundialect.activity.myself.MyselfPage
 import com.scut.fundialect.database.*
 import com.scut.fundialect.help.PicManager
 import com.scut.fundialect.help.VideoHelper
@@ -42,6 +45,7 @@ class LoginActivity : BaseActivity() {
     val fromAlbum = 2
     lateinit var imageUri: Uri
     lateinit var outputImage: File
+    @ExperimentalPagerApi
     @ExperimentalFoundationApi
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -57,6 +61,7 @@ class LoginActivity : BaseActivity() {
         }
 
    }
+    @ExperimentalPagerApi
     @ExperimentalFoundationApi
     @ExperimentalMaterialApi
     @Composable
@@ -65,7 +70,13 @@ class LoginActivity : BaseActivity() {
         NavHost(navController = navController, startDestination = "loginPage") {
 //            composable("AdPage") { AdPage() }
             composable("loginPage") { LogInPage(context,navController,SampleData.conversationSample) }
-            composable("LearnPage") { LearnMainPage(context) }
+            composable("LearnPage") { LearnMainPage(context,navController) }
+            composable("CulturePage") {  }
+            composable("DubbingPage") { DubingPage(navController,context) }
+            composable("MyselfPage") { MyselfPage(navController) }
+
+
+
 
             /*...*/
         }
@@ -122,12 +133,6 @@ class LoginActivity : BaseActivity() {
         navController: NavHostController,
         messages: List<SampleData.Message>
     ){
-//        val navController = rememberNavController()
-//        NavHost(navController = navController, startDestination = "profile") {
-//            composable("profile") { ContactsContract.Profile(/*...*/) }
-//            composable("friendslist") { FriendsList(/*...*/) }
-//            /*...*/
-//        }
         Column(
             modifier = Modifier
                 .fillMaxWidth()

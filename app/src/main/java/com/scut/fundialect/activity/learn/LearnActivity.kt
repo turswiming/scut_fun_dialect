@@ -15,6 +15,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
 import com.scut.fundialect.R
 import com.scut.fundialect.activity.BaseComposeActivity
 import com.scut.fundialect.ui.theme.ComposeTutorialTheme
@@ -30,7 +31,7 @@ class LearnActivity : BaseComposeActivity() {
             ComposeTutorialTheme {
                 // A surface container using the 'background' color from the theme
                 Surface(color = Color.Black) {
-                    LearnMainPage(this)
+//                    LearnMainPage(this)
                 }
             }
         }
@@ -45,7 +46,8 @@ fun goToSearchPage(context: Context) {
 @ExperimentalMaterialApi
 @ExperimentalFoundationApi
 @Composable
-public fun LearnMainPage(context: Context) {
+public fun LearnMainPage(context: Context, navController: NavHostController,
+) {
 
     var state1  by remember { mutableStateOf(0) }
     var showedPage1 = remember {
@@ -93,7 +95,7 @@ public fun LearnMainPage(context: Context) {
                  *
                  *
                  * **/
-                MyWordLibraryPage(context)
+                MyWordLibraryPage(context,navController = navController)
             }
 
         }

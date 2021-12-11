@@ -2,6 +2,7 @@ package com.scut.fundialect.activity.publicCompose
 
 import android.content.Context
 import android.content.Intent
+import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
@@ -16,6 +17,8 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
+import com.scut.fundialect.MyApplication.Companion.context
 import com.scut.fundialect.R
 import com.scut.fundialect.activity.culture.CultureActivity
 import com.scut.fundialect.activity.dubing.DubingActivity
@@ -42,7 +45,7 @@ fun MyPreview(){
 
 }
 @Composable
-fun MyButtonAppBar(
+fun MyButtonAppBar(navController: NavHostController,
     onStateChange: (Int) -> Unit,
     context: Context,
     initPageIndex: Int
@@ -83,20 +86,20 @@ fun MyButtonAppBar(
                     onClick = {
                         buttomStateNow = index
                         onStateChange(index)
-                        gotoAnotherActivity(context,index)
+                        gotoAnotherActivity(navController,index)
                     }
                 )
             }
         }
     }
 }
-fun gotoAnotherActivity(context: Context,index:Int) {
-    val intent:Intent = when(index){
-        0-> Intent(context, LearnActivity::class.java)
-        1-> Intent(context, CultureActivity::class.java)
-        2-> Intent(context, DubingActivity::class.java)
-        else-> Intent(context, MyselfActivity::class.java)
+fun gotoAnotherActivity(navController: NavHostController, index:Int) {
+    when(index){
+        0-> navController.navigate("LearnPage")
+        1-> navController.navigate("CulturePage")
+        2-> navController.navigate("DubbingPage")
+        3-> navController.navigate("MyselfPage")
+        else-> Toast.makeText(context,"outOfRange",Toast.LENGTH_SHORT).show()
 
     }
-    context.startActivity(intent)
 }
