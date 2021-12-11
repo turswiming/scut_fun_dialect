@@ -102,7 +102,7 @@ object GetRandomSentence {
         if(inited==false){
             init()
         }
-        return array[(0..(array.size-1)).random()]
+        return array[(array.indices).random()]
     }
 
     private fun init() {
