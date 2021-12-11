@@ -7,6 +7,7 @@ import android.graphics.drawable.shapes.Shape
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.ContactsContract
+import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
@@ -26,6 +27,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -43,206 +46,205 @@ class LearnSearchActivity : BaseComposeActivity() {
             ComposeTutorialTheme {
                 // A surface container using the 'background' color from the theme
                 Surface(color = MaterialTheme.colors.background) {
-                    SearchPage(this)
+//                    SearchPage(this)
                 }
             }
         }
     }
-    @ExperimentalFoundationApi
-    @Composable
-    private fun SearchPage(context: Context) {
+
+}
+@ExperimentalFoundationApi
+@Composable
+fun SearchPage(context: Context,navController: NavHostController) {
 //        val navController = rememberNavController()
 //        NavHost(navController = navController, startDestination = "profile") {
 //            composable("profile") { ContactsContract.Profile(/*...*/) }
 //            composable("friendslist") { FriendsList(/*...*/) }
 //            /*...*/
 //        }
-        Scaffold(
-            topBar = {
-                TopAppBar(modifier = Modifier.fillMaxWidth()) {
-                    /**
-                     * 返回上一个页面
-                     * */
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(5.dp),
-                        verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.SpaceBetween,
+    Scaffold(
+        topBar = {
+            TopAppBar(modifier = Modifier.fillMaxWidth()) {
+                /**
+                 * 返回上一个页面
+                 * */
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(5.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.SpaceBetween,
 
                     ) {
-                        Image(
-                            painter = painterResource(id = R.drawable.back),
-                            contentDescription = "返回按钮",
-                            Modifier.clickable {
-                                returnActivity()
-                            }
-
-                        )
-                        var text by remember { mutableStateOf("") }
-
-                        Surface(
-                            modifier = Modifier
-                                .width(300.dp)
-                                .height(60.dp),
-                            shape = RoundedCornerShape(30.dp),
-                        ) {
-                            BasicTextField(
-                                value = text,
-                                singleLine = true,
-                                onValueChange = {it->
-                                    text=it
-                                },
-                                textStyle = TextStyle(fontSize = 30.sp),
-                            modifier = Modifier.fillMaxSize().padding(5.dp)
-                            )
+                    Image(
+                        painter = painterResource(id = R.drawable.back),
+                        contentDescription = "返回按钮",
+                        Modifier.clickable {
+                            returnActivity(navController)
                         }
-                        Image(
-                            painter = painterResource(id = R.drawable.search_black),
-                            contentDescription = "搜索按钮",
-                            Modifier.clickable {
-                                TODO("根据输入框内容执行搜索")
-                            }
 
+                    )
+                    var text by remember { mutableStateOf("") }
+
+                    Surface(
+                        modifier = Modifier
+                            .width(300.dp)
+                            .height(60.dp),
+                        shape = RoundedCornerShape(30.dp),
+                    ) {
+                        BasicTextField(
+                            value = text,
+                            singleLine = true,
+                            onValueChange = {it->
+                                text=it
+                            },
+                            textStyle = TextStyle(fontSize = 30.sp),
+                            modifier = Modifier.fillMaxSize().padding(5.dp)
                         )
-
                     }
+                    Image(
+                        painter = painterResource(id = R.drawable.search_black),
+                        contentDescription = "搜索按钮",
+                        Modifier.clickable {
+                            TODO("根据输入框内容执行搜索")
+                        }
+
+                    )
 
                 }
+
             }
-        ){
-/**
- * 搜索页面的内容
- * 
- * */       
-            Box(
+        }
+    ){
+        /**
+         * 搜索页面的内容
+         *
+         * */
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(Color.White)
+        ) {
+            Column(
                 modifier = Modifier
-                    .fillMaxSize()
-                    .background(Color.White)
+                    .fillMaxSize().padding(20.dp),
+                verticalArrangement = Arrangement.Top,
+                horizontalAlignment = Alignment.Start
             ) {
-                Column(
-                    modifier = Modifier
-                        .fillMaxSize().padding(20.dp),
-                    verticalArrangement = Arrangement.Top,
-                    horizontalAlignment = Alignment.Start
+                /**
+                 *
+                 *
+                 * 搜索页的文字们
+                 *
+                 *
+                 * */
+
+                Spacer(modifier = Modifier.height(2.dp).background(Color.White))
+                Text(
+                    text = "历史记录",
+                    fontSize=20.sp,
+                    fontWeight = FontWeight.Bold)
+
+                LazyVerticalGrid(
+                    cells = GridCells.Adaptive(minSize = 80.dp)
                 ) {
-                    /**
-                     *
-                     *
-                     * 搜索页的文字们
-                     *
-                     *
-                     * */
 
-                    Spacer(modifier = Modifier.height(2.dp).background(Color.White))
-                    Text(
-                        text = "历史记录",
-                        fontSize=20.sp,
-                        fontWeight = FontWeight.Bold)
-
-                    LazyVerticalGrid(
-                        cells = GridCells.Adaptive(minSize = 80.dp)
-                    ) {
-
-                        val textList = listOf<String>(
-                            "橘色",
-                            "曹建你生",
-                            "东方不败",
-                            "西方真经",
-                            "南方火锅",
-                            "东北烧烤",
-                            "蓝色",
-                            "绿",
-                        )
-                        items(textList.size) { index ->
-                            /**
-                             *
-                             *
-                             *
-                             * 这个下面的东西代表着每一个单独的写有历史搜索内容的小按钮*
-                             *
-                             *
-                             *
-                             * */
-                            Box(
-                                modifier = Modifier
-                                    .clickable {
-                                        //Toast.makeText(context,"key\t$cityStateLast\nvalue\t$index",Toast.LENGTH_SHORT).show()
-                                    }
-                                    .width(70.dp)
-                                    .height(32.dp)
-                                    .padding(5.dp)
-                                    .background(
-                                        color = FirstNavColor,
-                                        shape = RoundedCornerShape(5.dp),
-                                    ),
-                                contentAlignment = Alignment.Center
-
-
-
-
-                                ) {
-                                Text(
-                                    text = AnnotatedString(textList[index]),
-                                    fontSize=14.sp,
-                                    color = Color.Black,
-                                    textAlign = TextAlign.Center,
-                                    modifier = Modifier.fillMaxWidth(),
-                                )
-                            }
-
-
-                        }
-                    }
-
-                    Text(
-                        text = "热门搜索",
-                        fontSize=20.sp,
-                        fontWeight = FontWeight.Bold)
-                    val hotSearch = listOf(
-                        "各种方言的你好",
-                        "四川话的耙耳朵是啥意思",
-                        "抵押热巴出席活动时着急彪方言",
-                        "各种方言的你好",
-                        "四川话的耙耳朵是啥意思",
-                        "抵押热巴出席活动时着急彪方言"
+                    val textList = listOf<String>(
+                        "橘色",
+                        "曹建你生",
+                        "东方不败",
+                        "西方真经",
+                        "南方火锅",
+                        "东北烧烤",
+                        "蓝色",
+                        "绿",
                     )
-                    Column() {
-                        var index = 0
-                        hotSearch.forEach(){ it ->
-                            index++
-                            Row(
-                                horizontalArrangement = Arrangement.End,
-                                verticalAlignment = Alignment.CenterVertically
-                            ) {
-                                Text(
-                                    text = index.toString(),
-                                    color = switch(
-                                        CustomOrange,
-                                        FontBlack,
-                                        index<=3
-                                    ),
-                                    fontSize = 30.sp,
-                                    fontWeight = FontWeight.Bold
-                                )
-                                Spacer(modifier = Modifier.width(5.dp).background(Color.White))
-                                Text(
-                                    text = it,
-                                    fontSize=16.sp,
+                    items(textList.size) { index ->
+                        /**
+                         *
+                         *
+                         *
+                         * 这个下面的东西代表着每一个单独的写有历史搜索内容的小按钮*
+                         *
+                         *
+                         *
+                         * */
+                        Box(
+                            modifier = Modifier
+                                .clickable {
+                                    //Toast.makeText(context,"key\t$cityStateLast\nvalue\t$index",Toast.LENGTH_SHORT).show()
+                                }
+                                .width(70.dp)
+                                .height(32.dp)
+                                .padding(5.dp)
+                                .background(
+                                    color = FirstNavColor,
+                                    shape = RoundedCornerShape(5.dp),
+                                ),
+                            contentAlignment = Alignment.Center
+
+
+
+
+                        ) {
+                            Text(
+                                text = AnnotatedString(textList[index]),
+                                fontSize=14.sp,
+                                color = Color.Black,
+                                textAlign = TextAlign.Center,
+                                modifier = Modifier.fillMaxWidth(),
+                            )
+                        }
+
+
+                    }
+                }
+
+                Text(
+                    text = "热门搜索",
+                    fontSize=20.sp,
+                    fontWeight = FontWeight.Bold)
+                val hotSearch = listOf(
+                    "各种方言的你好",
+                    "四川话的耙耳朵是啥意思",
+                    "抵押热巴出席活动时着急彪方言",
+                    "各种方言的你好",
+                    "四川话的耙耳朵是啥意思",
+                    "抵押热巴出席活动时着急彪方言"
+                )
+                Column() {
+                    var index = 0
+                    hotSearch.forEach(){ it ->
+                        index++
+                        Row(
+                            horizontalArrangement = Arrangement.End,
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Text(
+                                text = index.toString(),
+                                color = switch(
+                                    CustomOrange,
+                                    FontBlack,
+                                    index<=3
+                                ),
+                                fontSize = 30.sp,
+                                fontWeight = FontWeight.Bold
+                            )
+                            Spacer(modifier = Modifier.width(5.dp).background(Color.White))
+                            Text(
+                                text = it,
+                                fontSize=16.sp,
 
                                 )
-                            }
                         }
                     }
                 }
             }
         }
     }
+}
 
-    
-    private fun returnActivity() {
-        val intent = Intent()
-        setResult(RESULT_OK, intent)
-        finish()
-    }
+
+private fun returnActivity(navController: NavHostController) {
+    navController.popBackStack()
 }

@@ -30,6 +30,7 @@ import com.scut.fundialect.MyApplication
 import com.scut.fundialect.R
 import com.scut.fundialect.activity.dubing.DubingPage
 import com.scut.fundialect.activity.learn.LearnMainPage
+import com.scut.fundialect.activity.learn.SearchPage
 import com.scut.fundialect.activity.myself.MyselfPage
 import com.scut.fundialect.database.*
 import com.scut.fundialect.help.PicManager
@@ -70,6 +71,9 @@ class LoginActivity : BaseActivity() {
         NavHost(navController = navController, startDestination = "loginPage") {
 //            composable("AdPage") { AdPage() }
             composable("loginPage") { LogInPage(context,navController,SampleData.conversationSample) }
+            composable("SearchPage"){ SearchPage(context,navController)
+
+            }
             composable("LearnPage") { LearnMainPage(context,navController) }
             composable("CulturePage") {  }
             composable("DubbingPage") { DubingPage(navController,context) }

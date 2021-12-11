@@ -15,6 +15,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import com.scut.fundialect.R
 import com.scut.fundialect.activity.BaseComposeActivity
@@ -38,9 +39,9 @@ class LearnActivity : BaseComposeActivity() {
     }
 
 }
-fun goToSearchPage(context: Context) {
-    val intent = Intent(context, LearnSearchActivity::class.java)
-    context.startActivity(intent)
+fun goToSearchPage(navController: NavHostController) {
+    navController.navigate("SearchPage")
+
 }
 
 @ExperimentalMaterialApi
@@ -60,7 +61,7 @@ public fun LearnMainPage(context: Context, navController: NavHostController,
             /**
              * 最上面的bar，包括精选和词库
              * **/
-            MyTopAppBar(context,state1, titles,onStateChange = {state1 = it })
+            MyTopAppBar(navController,state1, titles,onStateChange = {state1 = it })
 
         }
     ) {
@@ -104,7 +105,7 @@ public fun LearnMainPage(context: Context, navController: NavHostController,
 }
 
 @Composable
-private fun MyTopAppBar(context: Context,state1: Int, titles: List<String>, onStateChange: (Int) -> Unit) {
+private fun MyTopAppBar(navController:NavHostController,state1: Int, titles: List<String>, onStateChange: (Int) -> Unit) {
     var state11 = state1
     //界面最上面的选择框框，包括精选和词库
     TopAppBar(
@@ -157,7 +158,7 @@ private fun MyTopAppBar(context: Context,state1: Int, titles: List<String>, onSt
                 modifier = Modifier
                     .background(Color.Black),
                 onClick = {
-                    goToSearchPage(context)
+                    goToSearchPage(navController)
                 },
                 contentPadding = PaddingValues(
                     start = 0.dp,

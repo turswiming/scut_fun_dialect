@@ -77,6 +77,7 @@ fun DubingPage(navController: NavHostController,
              * 
              * */
             DubingTopAppBar(
+                navController = navController,
                 onSelectPageChange = {
                 }
             )
@@ -467,7 +468,7 @@ private fun MyPictureShower(it: ModelVideoHelper.VideoInfo) {
  *
  * */
 @Composable
-fun DubingTopAppBar(onSelectPageChange:()->Unit,
+fun DubingTopAppBar(onSelectPageChange:()->Unit,navController:NavHostController
 ) {
     TopAppBar(
         modifier = Modifier
@@ -505,7 +506,7 @@ fun DubingTopAppBar(onSelectPageChange:()->Unit,
                     painter = painterResource(id = R.drawable.ic_launcher_foreground),
                     contentDescription = "search icon",
                     modifier = Modifier.clickable {
-                        goToSearchPage(context)
+                        goToSearchPage(navController)
 
                     }
 
