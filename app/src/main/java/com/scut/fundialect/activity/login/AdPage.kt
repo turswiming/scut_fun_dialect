@@ -17,6 +17,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
 import coil.compose.rememberImagePainter
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
@@ -27,15 +28,17 @@ import com.scut.fundialect.database.helper.ModelVideoHelper
 import com.scut.fundialect.help.switch
 import com.scut.fundialect.ui.theme.CustomBlue
 import com.scut.fundialect.ui.theme.CustomOrange
+import com.scut.fundialect.ui.theme.FontGray
 import com.scut.fundialect.ui.theme.SecondNavColor
 import kotlinx.coroutines.delay
 
 @ExperimentalPagerApi
 @Composable
-@Preview
-fun AdWithEvent(){
+//@Preview
+fun AdWithEvent(navController:NavHostController){
     AdPage(
         onSkipAd = {
+            navController.navigate("loginPage")
     }
     )
 }
@@ -49,7 +52,7 @@ fun AdPage(
         //总页数
         pageCount = AdPages.size,
         //预加载的个数
-        initialOffscreenLimit = 1,
+        initialOffscreenLimit = 2,
         //是否无限循环
         infiniteLoop = true,
         //初始页面
@@ -60,7 +63,7 @@ fun AdPage(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier.fillMaxSize()
     ) {
-        Spacer(modifier = Modifier.height(60.dp))
+        Spacer(modifier = Modifier.height(30.dp))
 
         HorizontalPager(
             state = pagerState,
@@ -71,7 +74,7 @@ fun AdPage(
             //自动滚动
             LaunchedEffect(pagerState.currentPage) {
                 if (pagerState.pageCount > 0) {
-                    delay(2000)
+                    delay(4000)
                     pagerState.animateScrollToPage(pagerState.currentPage + 1)
                 }
             }
@@ -92,7 +95,7 @@ fun AdPage(
         Text(text = AdPages[pagerState.currentPage].name,fontSize = 30.sp)
         Spacer(modifier = Modifier.height(20.dp))
         Text(text = AdPages[pagerState.currentPage].introduce,fontSize = 16.sp,textAlign = TextAlign.Center,color = Color.Gray)
-        Spacer(modifier = Modifier.height(60.dp))
+        Spacer(modifier = Modifier.height(40.dp))
         Row(
             modifier = Modifier
                 .fillMaxWidth()
@@ -163,9 +166,11 @@ fun AdPage(
 
         }
     }
-    Box(contentAlignment = Alignment.TopEnd,modifier = Modifier.fillMaxSize()) {
+    Box(contentAlignment = Alignment.TopEnd,modifier = Modifier.fillMaxSize().padding(20.dp),) {
         Text(
             text = "跳过",
+            fontSize = 20.sp,
+            color = FontGray,
             modifier = Modifier
                 .clickable {
                     onSkipAd()
@@ -190,7 +195,7 @@ object AdData {
                     "论，与他人云讨论", R.drawable.b
         ),
         OneAdPage(
-            "学习模块",
+            "配音模块",
             "在这个模块中，你可以参与热门配\n" +
                     "音活动，发布个人配音\n" +
                     "作品，与他人互动", R.drawable.j

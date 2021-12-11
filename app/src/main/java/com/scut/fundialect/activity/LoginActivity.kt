@@ -16,7 +16,9 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.compositeOver
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -38,6 +40,7 @@ import com.scut.fundialect.activity.myself.MyselfPageWithEvent
 import com.scut.fundialect.database.*
 import com.scut.fundialect.help.PicManager
 import com.scut.fundialect.help.VideoHelper
+import com.scut.fundialect.ui.theme.CustomBlue
 import kotlinx.android.synthetic.main.activity_main.*
 import java.io.File
 
@@ -73,7 +76,7 @@ class LoginActivity : BaseActivity() {
         val navController = rememberNavController()
         NavHost(navController = navController, startDestination = "AdPage") {
 //            composable("AdPage") { AdPage() }
-            composable("AdPage") { AdWithEvent() }
+            composable("AdPage") { AdWithEvent(navController) }
 
             composable("loginPage") { LogInPageWithEvent(context,navController,SampleData.conversationSample) }
             composable("SearchPage"){ SearchPageWithEvent(context,navController)
@@ -144,6 +147,14 @@ class LoginActivity : BaseActivity() {
         navController: NavHostController,
         messages: List<SampleData.Message>
     ){
+        Image(
+            painter = painterResource(id = R.drawable.loginpageback),
+            contentDescription = null,
+            modifier = Modifier.fillMaxSize(),
+            alignment = Alignment.TopCenter,
+            contentScale = ContentScale.Crop
+        )
+
         Column(
             modifier = Modifier
                 .fillMaxWidth()
@@ -152,16 +163,9 @@ class LoginActivity : BaseActivity() {
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             Spacer(
-                modifier = Modifier.height(20.dp)
+                modifier = Modifier.height(60.dp)
             )
-            Image(
-                painter = painterResource(id = R.drawable.ic_launcher_foreground),
-                contentDescription = "Contact profile picture",
-                modifier = Modifier
-                    .size(80.dp)
-                    .clip(CircleShape)
-                    .border(3.dp, MaterialTheme.colors.secondary, CircleShape)
-            )
+            Text(text = "登录",fontSize = 36.sp)
             var username by remember { mutableStateOf("") }
             var userpassword by remember { mutableStateOf("") }
 
@@ -186,14 +190,16 @@ class LoginActivity : BaseActivity() {
             )
             buttonEnable = checkPassWord(username,userpassword)
             Button(
-                modifier = Modifier.width(120.dp).height(50.dp),
+                modifier = Modifier
+                    .width(120.dp)
+                    .height(50.dp),
                 onClick = {
                     gotoLearnActivity(context,navController)
                 },
                 enabled = buttonEnable,
                 // Custom colors for different states
                 colors = ButtonDefaults.buttonColors(
-                    backgroundColor = MaterialTheme.colors.secondary,
+                    backgroundColor = CustomBlue,
                     disabledBackgroundColor = MaterialTheme.colors.onBackground
                         .copy(alpha = 0.2f)
                         .compositeOver(MaterialTheme.colors.background)
@@ -207,8 +213,32 @@ class LoginActivity : BaseActivity() {
                 )
             ) {
                 Text(text = "登录",
-                fontSize = 20.sp)
+                fontSize = 20.sp,color = Color.White)
             }
+            Row(
+                modifier = Modifier.size(200.dp, 100.dp),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Image(
+                    painter = painterResource(id = R.drawable.wx_friend),
+                    modifier = Modifier.size(40.dp),
+                    contentDescription = null
+                )
+                Image(
+                    painter = painterResource(id = R.drawable.qq_friend),
+                    modifier = Modifier.size(40.dp),
+                    contentDescription = null
+                )
+                Image(
+                    painter = painterResource(id = R.drawable.wb_news),
+                    modifier = Modifier.size(40.dp),
+                    contentDescription = null
+                )
+            }
+        }
+        Box(contentAlignment = Alignment.BottomCenter,modifier = Modifier.fillMaxSize()) {
+            Text(text = "注册|帮助")
         }
     }
 
