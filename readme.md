@@ -1,6 +1,6 @@
-##stand with Karl Heinrich Marx
-##stand with communist
-##stand with Vladimir Ilyich Ulyanov
+- stand with Karl Heinrich Marx
+- stand with communist
+- stand with Vladimir Ilyich Ulyanov
 
 # 在编写代码和提交需求之前请看此文档
 此文档讲记录关于编写代码和提交需求时的规范。  
