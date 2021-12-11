@@ -32,6 +32,8 @@ import com.scut.fundialect.activity.dubing.DubingPageWithEvent
 import com.scut.fundialect.activity.learn.LearnColloectPageWithEvent
 import com.scut.fundialect.activity.learn.LearnVideoPageWithEvent
 import com.scut.fundialect.activity.learn.SearchPageWithEvent
+import com.scut.fundialect.activity.login.AdPage
+import com.scut.fundialect.activity.login.AdWithEvent
 import com.scut.fundialect.activity.myself.MyselfPageWithEvent
 import com.scut.fundialect.database.*
 import com.scut.fundialect.help.PicManager
@@ -69,8 +71,10 @@ class LoginActivity : BaseActivity() {
     @Composable
     private fun Navigation(context: Context){
         val navController = rememberNavController()
-        NavHost(navController = navController, startDestination = "loginPage") {
+        NavHost(navController = navController, startDestination = "AdPage") {
 //            composable("AdPage") { AdPage() }
+            composable("AdPage") { AdWithEvent() }
+
             composable("loginPage") { LogInPageWithEvent(context,navController,SampleData.conversationSample) }
             composable("SearchPage"){ SearchPageWithEvent(context,navController)
 
@@ -214,13 +218,14 @@ class LoginActivity : BaseActivity() {
     }
 
     private fun checkPassWord(username:String, userPassWord:String):Boolean {
+
         if(username != "" && userPassWord != ""
 //          &&  Public.isComplite()
         ){
             //设置按钮为高亮
             return true
         }
-        return false
+        return true
     }
 
 

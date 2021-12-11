@@ -13,14 +13,19 @@ import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.AnnotatedString
+import androidx.compose.ui.text.font.FontStyle
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
+//import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import coil.compose.rememberImagePainter
 import com.github.stuxuhai.jpinyin.PinyinFormat
@@ -34,10 +39,8 @@ import com.scut.fundialect.activity.compose.MyButtonAppBar
 import com.scut.fundialect.activity.compose.gotoAnotherActivity
 import com.scut.fundialect.activity.compose.pair
 import com.scut.fundialect.activity.learn.goToSearchPage
-import com.scut.fundialect.database.helper.CityHelper
-import com.scut.fundialect.database.helper.ModelVideoHelper
+import com.scut.fundialect.database.helper.*
 import com.scut.fundialect.database.helper.ModelVideoHelper.getCollectedModelVideo
-import com.scut.fundialect.database.helper.UserHelpr
 import com.scut.fundialect.enum.ColorMode
 import com.scut.fundialect.help.switch
 import com.scut.fundialect.help.toDateStr
@@ -69,7 +72,9 @@ class DubingActivity : BaseComposeActivity() {
 fun DubingPageWithEvent(navController: NavHostController,
                         context: Context) {
     Box(modifier = Modifier.fillMaxSize()) {
-        Image(painter = painterResource(id = R.drawable.dubbackground), contentDescription = null)
+        Image(alignment = Alignment.TopCenter,
+            contentScale = ContentScale.Crop,
+            painter = painterResource(id = R.drawable.dubbackground), contentDescription = null)
         var showedCityId = remember {
             mutableStateListOf(2,3,4,5)
         }
@@ -116,7 +121,7 @@ fun DubingPageWithEvent(navController: NavHostController,
                              * 左上角的俩大字
                              *
                              * */
-                            Text(text = "配音")
+                            Text(text = "配音",fontSize = 24.sp,color = Color.White)
                             /**
                              *
                              * 搜索按钮
@@ -124,12 +129,14 @@ fun DubingPageWithEvent(navController: NavHostController,
                              *
                              * */
                             Image(
-                                painter = painterResource(id = R.drawable.ic_launcher_foreground),
+                                painter = painterResource(id = R.drawable.searchwhite),
                                 contentDescription = "search icon",
-                                modifier = Modifier.clickable {
-                                    goToSearchPage(navController)
+                                modifier = Modifier
+                                    .size(20.dp)
+                                    .clickable {
+                                        goToSearchPage(navController)
 
-                                }
+                                    }
 
                             )
                         }
@@ -153,14 +160,14 @@ fun DubingPageWithEvent(navController: NavHostController,
 
                         ) {
                             Tab(
-                                text = { Text("推荐") },
+                                text = { Text("推荐",color = Color.Black) },
                                 selected = cityStateNow == 0,
                                 onClick = { cityStateNow = 0 }
                             )
                             showedCityId.forEachIndexed { index, cityId ->
                                 Tab(
                                     text = {
-                                        Text(CityHelper.getCityName(cityId)+"话")
+                                        Text(CityHelper.getCityName(cityId),color = Color.Black)
                                     },
                                     selected = cityStateNow == index+1,
                                     onClick = { cityStateLast=cityStateNow
@@ -188,9 +195,15 @@ fun DubingPageWithEvent(navController: NavHostController,
                                     }
                                 }
                             ){
-                                Image(
-                                    painter = painterResource(id = R.drawable.ic_launcher_background),
-                                    contentDescription = "加号")
+                                Column {
+                                    Spacer(modifier = Modifier.height(17.dp))
+                                    Image(
+                                        painter = painterResource(id = R.drawable.plusblack),
+                                        contentDescription = "加号",
+                                        modifier = Modifier.size(15.dp)
+                                    )
+                                }
+
                             }
                         }
 //            var (cityStateNow, cityStateLast) = pair(ColorMode.dark,showedCityId)
@@ -211,14 +224,17 @@ fun DubingPageWithEvent(navController: NavHostController,
             }
 
         ) {
-            DubMainPage(context)
-            CitySelectPage(cityStateNow==5,onselectCityChange = {
-                if(cityStateLast!=0){
-                    showedCityId[cityStateLast-1] = it
-                    //Toast.makeText(context,"key\t$k\nvalue\t$value",Toast.LENGTH_SHORT).show()
-                }
+            DubMainPage()
+            if(cityStateNow==5){
+                CitySelectPage(onselectCityChange = {
+                    if(cityStateLast!=0){
+                        showedCityId[cityStateLast-1] = it+2
+                        //Toast.makeText(context,"key\t$k\nvalue\t$value",Toast.LENGTH_SHORT).show()
+                    }
 //            showedCityId[cityStateLast] =it
-            })
+                })
+            }
+
         }
     }
 //    var showCitySelectPage by remember { mutableStateOf(false)}
@@ -227,14 +243,15 @@ fun DubingPageWithEvent(navController: NavHostController,
 
 @ExperimentalFoundationApi
 @Composable
-private fun CitySelectPage(showCitySelectPage: Boolean,onselectCityChange:(CityId: Int)->Unit) {
+private fun CitySelectPage(onselectCityChange:(CityId: Int)->Unit) {
     Surface(
         modifier = Modifier
-            .height(switch(200.dp, 1.dp, showCitySelectPage))
+            .height(215.dp)
             .fillMaxWidth(),
         shape = RoundedCornerShape(0.dp, 0.dp, 25.dp, 25.dp),
-        color = Color.Black
+        color = Color.White
     ) {
+        Spacer(modifier = Modifier.height(15.dp))
         LazyVerticalGrid(
             cells = GridCells.Adaptive(minSize = 64.dp)
         ) {
@@ -261,7 +278,7 @@ private fun CitySelectPage(showCitySelectPage: Boolean,onselectCityChange:(CityI
                     ) {
                     Text(
                         text = AnnotatedString(cityList[index].getTheName()),
-                        color = Color.White,
+                        color = Color.Black,
                         textAlign = TextAlign.Center,
                         modifier = Modifier.fillMaxWidth()
 
@@ -279,7 +296,8 @@ private fun CitySelectPage(showCitySelectPage: Boolean,onselectCityChange:(CityI
 
 @ExperimentalPagerApi
 @Composable
-fun DubMainPage(context: Context) {
+@Preview
+fun DubMainPage() {
     Column(
         Modifier
             .fillMaxSize()
@@ -413,14 +431,19 @@ fun DubMainPage(context: Context) {
                     Modifier
                         .fillMaxWidth()
                         .height(80.dp),
-                    verticalAlignment = Alignment.Top,
+                    verticalAlignment = Alignment.Bottom,
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
                     Column(
                         horizontalAlignment = Alignment.Start
                     ) {
-                        Text(text = modelVideos[pagerState.currentPage].videoName)
-                        Row() {
+                        Text(
+                            text = modelVideos[pagerState.currentPage].videoName,
+                            fontSize = 14.sp
+                        )
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
                             Surface(
                                 shape = CircleShape,
                             ) {
@@ -429,32 +452,36 @@ fun DubMainPage(context: Context) {
                                         UserHelpr.UserInfo(
                                             modelVideos[pagerState.currentPage].videoUploaderId
                                         ).userPicFile
-                                    ), contentDescription = "上传者头像"
+                                    ),
+                                    contentDescription = "上传者头像",
+                                    modifier = Modifier.size(15.dp)
                                 )
                             }
                             Text(text = UserHelpr.UserInfo(modelVideos[pagerState.currentPage].videoUploaderId).userNickName)
+                            Spacer(modifier = Modifier.width(15.dp))
+
                             Text(
                                 text = modelVideos[pagerState.currentPage].videoUpdateTime.toLong()
                                     .toDateStr("yyyy-MM-dd")
                             )
+                            Spacer(modifier = Modifier.width(15.dp))
+
                             Image(
-                                painter = painterResource(id = R.drawable.ic_launcher_background),
-                                contentDescription = "爱心"
+                                painter = painterResource(id = R.drawable.topic2),
+                                contentDescription = "爱心",
+                                modifier = Modifier.size(15.dp)
+
                             )
-                            Text(text = modelVideos[pagerState.currentPage].videoLike.toString())
+                            Text(
+                                text = modelVideos[pagerState.currentPage].videoLike.toString()
+                            )
                         }
                     }
-                    Surface(
-                        shape = CircleShape,
-                        modifier = Modifier.size(80.dp)
-                    ) {
-                        Image(
-                            painter = painterResource(id = R.drawable.ic_launcher_foreground),
-                            contentDescription = "前往配音",
-                            modifier = Modifier.fillMaxSize()
-                        )
-
-                    }
+                    Image(
+                        painter = painterResource(id = R.drawable.dub1),
+                        contentDescription = "前往配音",
+                        modifier = Modifier.size(50.dp)
+                    )
                 }
 
             }
@@ -469,8 +496,11 @@ fun DubMainPage(context: Context) {
             }) {
                 Text(text = "查看更多")
                 Image(
-                    painter = painterResource(id = R.drawable.ic_launcher_foreground),
-                    contentDescription = null
+                    painter = painterResource(id = R.drawable.back),
+                    contentDescription = null,
+                    Modifier
+                        .rotate(180F)
+                        .size(20.dp),
                 )
             }
 
@@ -487,9 +517,14 @@ fun DubMainPage(context: Context) {
         ) {
             val modelVideos = getCollectedModelVideo()
             modelVideos.forEach {
+                var isCollect  by remember {
+                    mutableStateOf(it.videoIsCollect)
+                }
                 Surface(
                     shape = RoundedCornerShape(15.dp),
-                    modifier = Modifier.width(120.dp)
+                    modifier = Modifier
+                        .width(120.dp)
+                        .clickable { TODO() }
                 ) {
                     Image(
                         painter = rememberImagePainter(it.videoPicUri),
@@ -497,15 +532,27 @@ fun DubMainPage(context: Context) {
                         contentScale = ContentScale.Crop,
                         contentDescription = null
                     )
-                    Box(contentAlignment = Alignment.TopEnd,modifier = Modifier.fillMaxSize()) {
+                    Box(
+                        contentAlignment = Alignment.TopEnd,
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .padding(5.dp)
+                    ) {
                         Image(
                             painter = painterResource(
                                 id = switch(
-                                    R.drawable.ic_launcher_foreground,
-                                    R.drawable.exo_controls_play,
-                                    it.videoIsCollect
+                                    R.drawable.dub2,
+                                    R.drawable.dub3,
+                                    isCollect
                                 )
                             ),
+                            modifier = Modifier
+                                .size(30.dp)
+                                .clickable {
+                                    isCollect = !isCollect
+                                    ModelVideoHelper.switchCollect(it.videoId)
+                                },
+
                             contentDescription = "收藏按钮"
                         )
                     }
@@ -534,8 +581,11 @@ fun DubMainPage(context: Context) {
             }) {
                 Text(text = "查看更多")
                 Image(
-                    painter = painterResource(id = R.drawable.ic_launcher_foreground),
-                    contentDescription = null
+                    painter = painterResource(id = R.drawable.back),
+                    contentDescription = null,
+                    Modifier
+                        .rotate(180F)
+                        .size(20.dp),
                 )
             }
         }
@@ -558,12 +608,16 @@ fun DubMainPage(context: Context) {
 
 @Composable
 private fun MyPictureShower(it: ModelVideoHelper.VideoInfo) {
+    val isCollect by remember {
+        mutableStateOf(it.videoIsCollect)
+    }
     Surface(
         shape = RoundedCornerShape(15.dp),
         modifier = Modifier
             .height(180.dp)
             .fillMaxWidth()
             .padding(15.dp, 10.dp)
+            .clickable { TODO() }
     ) {
         Image(
             painter = rememberImagePainter(it.videoPicUri),
@@ -571,15 +625,27 @@ private fun MyPictureShower(it: ModelVideoHelper.VideoInfo) {
             contentScale = ContentScale.Crop,
             contentDescription = null
         )
-        Box(contentAlignment = Alignment.TopEnd, modifier = Modifier.fillMaxSize()) {
+        Box(
+            contentAlignment = Alignment.TopEnd,
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(5.dp),
+
+        ) {
             Image(
                 painter = painterResource(
                     id = switch(
-                        R.drawable.ic_launcher_foreground,
-                        R.drawable.exo_controls_play,
-                        it.videoIsCollect
+                        R.drawable.dub2,
+                        R.drawable.dub3,
+                        isCollect
                     )
                 ),
+                modifier = Modifier
+                    .size(30.dp)
+                    .clickable {
+                        isCollect!=isCollect
+                        ModelVideoHelper.switchCollect(it.videoId)
+                    },
                 contentDescription = "收藏按钮"
             )
         }
@@ -706,14 +772,14 @@ private fun MyPictureShower(it: ModelVideoHelper.VideoInfo) {
 //    }
 //}
 
-@OptIn(ExperimentalFoundationApi::class)
-@ExperimentalFoundationApi
-@ExperimentalPagerApi
-@Preview(showBackground = true)
-@Composable
-fun DefaultPreview() {
-    ComposeTutorialTheme {
-        val context2 = LocalContext.current
-//        DubingPage(context2)
-    }
-}
+//@OptIn(ExperimentalFoundationApi::class)
+//@ExperimentalFoundationApi
+//@ExperimentalPagerApi
+//@Preview(showBackground = true)
+//@Composable
+//fun DefaultPreview() {
+//    ComposeTutorialTheme {
+//        val context2 = LocalContext.current
+////        DubingPage(context2)
+//    }
+//}

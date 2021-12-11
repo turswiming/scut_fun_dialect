@@ -135,6 +135,7 @@ object ModelVideoHelper {
 
     @SuppressLint("Range", "Recycle")
     class VideoInfo(id:Int) {
+        val videoId = id
         val videoUri:String
         val videoName:String
         val videoIntroduce:String
