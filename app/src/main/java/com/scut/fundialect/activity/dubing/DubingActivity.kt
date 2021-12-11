@@ -65,8 +65,8 @@ class DubingActivity : BaseComposeActivity() {
 @ExperimentalPagerApi
 @ExperimentalFoundationApi
 @Composable
-fun DubingPage(navController: NavHostController,
-               context: Context) {
+fun DubingPageWithEvent(navController: NavHostController,
+                        context: Context) {
     var showCitySelectPage by remember { mutableStateOf(false)}
     var selectCity by remember { mutableStateOf(1)}
     Scaffold(

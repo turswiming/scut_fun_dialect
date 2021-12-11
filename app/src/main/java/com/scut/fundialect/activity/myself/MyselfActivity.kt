@@ -15,6 +15,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.google.accompanist.pager.ExperimentalPagerApi
@@ -44,7 +45,7 @@ class MyselfActivity : BaseComposeActivity() {
 
 @ExperimentalPagerApi
 @Composable
-fun MyselfPage(navController: NavHostController) {
+fun MyselfPageWithEvent(navController: NavHostController) {
     val context = LocalContext.current
     Scaffold(
         bottomBar = {
@@ -78,6 +79,7 @@ fun MyselfPage(navController: NavHostController) {
 
 @ExperimentalPagerApi
 @Composable
+@Preview
 fun MyselfMainPage() {
     Column(
         Modifier

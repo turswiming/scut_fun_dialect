@@ -1,7 +1,6 @@
 package com.scut.fundialect.activity.learn
 
 import android.content.Context
-import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.compose.setContent
@@ -15,7 +14,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import com.scut.fundialect.R
 import com.scut.fundialect.activity.BaseComposeActivity
@@ -47,7 +45,7 @@ fun goToSearchPage(navController: NavHostController) {
 @ExperimentalMaterialApi
 @ExperimentalFoundationApi
 @Composable
-public fun LearnMainPage(context: Context, navController: NavHostController,
+public fun LearnMainPageWithEvent(context: Context, navController: NavHostController,
 ) {
 
     var state1  by remember { mutableStateOf(0) }

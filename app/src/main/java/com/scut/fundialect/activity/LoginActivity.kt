@@ -28,10 +28,10 @@ import androidx.navigation.compose.rememberNavController
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.scut.fundialect.MyApplication
 import com.scut.fundialect.R
-import com.scut.fundialect.activity.dubing.DubingPage
-import com.scut.fundialect.activity.learn.LearnMainPage
-import com.scut.fundialect.activity.learn.SearchPage
-import com.scut.fundialect.activity.myself.MyselfPage
+import com.scut.fundialect.activity.dubing.DubingPageWithEvent
+import com.scut.fundialect.activity.learn.LearnMainPageWithEvent
+import com.scut.fundialect.activity.learn.SearchPageWithEvent
+import com.scut.fundialect.activity.myself.MyselfPageWithEvent
 import com.scut.fundialect.database.*
 import com.scut.fundialect.help.PicManager
 import com.scut.fundialect.help.VideoHelper
@@ -70,14 +70,14 @@ class LoginActivity : BaseActivity() {
         val navController = rememberNavController()
         NavHost(navController = navController, startDestination = "loginPage") {
 //            composable("AdPage") { AdPage() }
-            composable("loginPage") { LogInPage(context,navController,SampleData.conversationSample) }
-            composable("SearchPage"){ SearchPage(context,navController)
+            composable("loginPage") { LogInPageWithEvent(context,navController,SampleData.conversationSample) }
+            composable("SearchPage"){ SearchPageWithEvent(context,navController)
 
             }
-            composable("LearnPage") { LearnMainPage(context,navController) }
+            composable("LearnPage") { LearnMainPageWithEvent(context,navController) }
             composable("CulturePage") {  }
-            composable("DubbingPage") { DubingPage(navController,context) }
-            composable("MyselfPage") { MyselfPage(navController) }
+            composable("DubbingPage") { DubingPageWithEvent(navController,context) }
+            composable("MyselfPage") { MyselfPageWithEvent(navController) }
 
 
 
@@ -132,7 +132,7 @@ class LoginActivity : BaseActivity() {
 
 
     @Composable
-    fun LogInPage(
+    fun LogInPageWithEvent(
         context: Context,
         navController: NavHostController,
         messages: List<SampleData.Message>

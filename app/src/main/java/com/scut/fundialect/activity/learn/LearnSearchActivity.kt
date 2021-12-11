@@ -1,15 +1,12 @@
 package com.scut.fundialect.activity.learn
 
-import android.app.Activity
 import android.content.Context
-import android.content.Intent
-import android.graphics.drawable.shapes.Shape
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.provider.ContactsContract
-import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.*
+import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.GridCells
 import androidx.compose.foundation.lazy.LazyVerticalGrid
@@ -27,16 +24,14 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.navigation.NavController
 import androidx.navigation.NavHostController
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
-import androidx.navigation.compose.rememberNavController
-import com.google.common.base.Functions.compose
 import com.scut.fundialect.R
 import com.scut.fundialect.activity.BaseComposeActivity
 import com.scut.fundialect.help.switch
-import com.scut.fundialect.ui.theme.*
+import com.scut.fundialect.ui.theme.ComposeTutorialTheme
+import com.scut.fundialect.ui.theme.CustomOrange
+import com.scut.fundialect.ui.theme.FirstNavColor
+import com.scut.fundialect.ui.theme.FontBlack
 
 class LearnSearchActivity : BaseComposeActivity() {
     @ExperimentalFoundationApi
@@ -55,13 +50,7 @@ class LearnSearchActivity : BaseComposeActivity() {
 }
 @ExperimentalFoundationApi
 @Composable
-fun SearchPage(context: Context,navController: NavHostController) {
-//        val navController = rememberNavController()
-//        NavHost(navController = navController, startDestination = "profile") {
-//            composable("profile") { ContactsContract.Profile(/*...*/) }
-//            composable("friendslist") { FriendsList(/*...*/) }
-//            /*...*/
-//        }
+fun SearchPageWithEvent(context: Context, navController: NavHostController) {
     Scaffold(
         topBar = {
             TopAppBar(modifier = Modifier.fillMaxWidth()) {
