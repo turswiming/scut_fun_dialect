@@ -89,7 +89,9 @@ fun MyWordLibraryPage(getCollectedVideo:()-> MutableList<LearnVideoHelper.VideoI
                     .fillMaxWidth()
                     .width(80.dp)
                     .height(40.dp)
-                    .background(BackgroundLightGrey).padding(0.dp,0.dp,5.dp,0.dp),
+                    .background(BackgroundLightGrey)
+                    .padding(0.dp,0.dp,5.dp,0.dp)
+                    .clickable { isShow=!isShow },
                 Alignment.CenterEnd
             ){
                 Text(text = "语种          ",textAlign = TextAlign.End)
@@ -151,7 +153,8 @@ fun MyWordLibraryPage(getCollectedVideo:()-> MutableList<LearnVideoHelper.VideoI
                                     .clickable { isShow = false }
                                     .width(64.dp)
                                     .height(32.dp)
-                                    .background(BackgroundLightGrey),
+                                    .background(BackgroundLightGrey)
+                                    .clickable { isShow=!isShow },
 
 
                                 ) {

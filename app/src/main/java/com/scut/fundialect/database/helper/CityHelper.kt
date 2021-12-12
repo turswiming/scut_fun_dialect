@@ -55,7 +55,6 @@ object CityHelper {
             return cityName
         } catch (e:Exception){
             Toast.makeText(context, e.localizedMessage, Toast.LENGTH_SHORT).show()
-
             return e.localizedMessage
         }
 

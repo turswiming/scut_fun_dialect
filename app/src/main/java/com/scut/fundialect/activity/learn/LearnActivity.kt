@@ -46,7 +46,7 @@ class LearnActivity : BaseComposeActivity() {
 
 }
 fun goToSearchPage(navController: NavHostController) {
-    navController.navigate("SearchPage")
+    navController.navigate("SearchPage/0")
 
 }
 

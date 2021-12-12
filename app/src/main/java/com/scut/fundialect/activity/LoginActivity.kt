@@ -9,6 +9,7 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.*
@@ -30,9 +31,11 @@ import androidx.navigation.compose.rememberNavController
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.scut.fundialect.MyApplication
 import com.scut.fundialect.R
-import com.scut.fundialect.activity.dubing.DubingPageWithEvent
+import com.scut.fundialect.activity.dubing.*
+import com.scut.fundialect.activity.dubing.dubbingPageMainAll
 import com.scut.fundialect.activity.learn.LearnColloectPageWithEvent
 import com.scut.fundialect.activity.learn.LearnVideoPageWithEvent
+import com.scut.fundialect.activity.learn.goToSearchPage
 import com.scut.fundialect.activity.login.AdPage
 import com.scut.fundialect.activity.login.AdWithEvent
 import com.scut.fundialect.activity.myself.MyselfPageWithEvent
@@ -75,19 +78,37 @@ class LoginActivity : BaseActivity() {
     @Composable
     private fun Navigation(context: Context){
         val navController = rememberNavController()
-        NavHost(navController = navController, startDestination = "AdPage") {
+        NavHost(navController = navController, startDestination = "InDubbingPage") {
 //            composable("AdPage") { AdPage() }
             composable("AdPage") { AdWithEvent(navController) }
 
             composable("loginPage") { LogInPageWithEvent(context,navController,SampleData.conversationSample) }
-            composable("SearchPage"){ SearchPageWithEvent(context,navController) }
-            composable("SearchOutcomePage/{searchStr}"){backStackEntry-> SearchOutcome(navController, backStackEntry.arguments?.getString("searchStr")) }
+            composable("SearchPage/{location}"){
+                    backStackEntry->
+                backStackEntry.arguments?.getInt("searchStr")?.let {
+                SearchPageWithEvent(context,navController,
+                    it
+                )
+            } }
+            composable("SearchOutcomePage/{searchStr}/{location}"){
+                    backStackEntry->
+                backStackEntry.arguments?.getInt("location")?.let {
+                    SearchOutcome(navController, backStackEntry.arguments?.getString("searchStr"),
+                        it
+                    )
+                }
+            }
 
             composable("LearnVideoPage") { LearnVideoPageWithEvent(context,navController) }
             composable("LearnPage") { LearnColloectPageWithEvent(context,navController) }
 
             composable("CulturePage") {  }
-            composable("DubbingPage") { DubingPageWithEvent(navController,context) }
+
+            composable("DubbingPage") { dubbingPageMainAll(navController, context) }
+            composable("OtherWorks") { OtherWorks(navController, context) }
+            composable("HotSuggested") { HotSuggested(navController, context) }
+            composable("InDubbingPage") { InDubbingWithEvent(navController) }
+
             composable("MyselfPage") { MyselfPageWithEvent(navController) }
 
 
@@ -96,6 +117,8 @@ class LoginActivity : BaseActivity() {
             /*...*/
         }
     }
+
+
 
     //这个函数会在下层Activity返回的时候执行。
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

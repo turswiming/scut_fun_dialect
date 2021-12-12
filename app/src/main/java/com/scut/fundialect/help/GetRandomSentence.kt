@@ -1,7 +1,7 @@
 package com.scut.fundialect.help
 
 object GetRandomSentence {
-    val SentenseStrLong = "农民在乡里造反，搅动了绅士们的酣梦。乡里消息传到城里来，城里的绅士立刻大哗。我初到长沙时，" +
+    var SentenseStrLong = "农民在乡里造反，搅动了绅士们的酣梦。乡里消息传到城里来，城里的绅士立刻大哗。我初到长沙时，" +
             "会到各方面的人，听到许多的街谈巷议。从中层以上社会至国民党右派，无不一言以蔽之曰：“糟得很。”即使是很革命的人吧，" +
             "受了那班“糟得很”派的满城风雨的议论的压迫，他闭眼一想乡村的情况，也就气馁起来，没有法子否认这“糟”字。很进步的" +
             "人也只是说：“这是革命过程中应有的事，虽则是糟。”总而言之，无论什么人都无法完全否认这“糟”字。实在呢，如前所说" +
@@ -98,16 +98,16 @@ object GetRandomSentence {
     val targetdialog ="kotlin天下第一"
     lateinit var array :List<String>
     var inited =false
-    fun getrandomName():String{
-        if(inited==false){
+    fun randomSentence():String{
+        if(!inited){
             init()
         }
         return array[(array.indices).random()]
     }
 
     private fun init() {
-        SentenseStrLong.replace("。","。\n")
-        array = SentenseStrLong.split("。\n")
+        var replace = SentenseStrLong.replace("。", "。\n")
+        array = replace.split("\n")
         for(item in array){
             item.replace(" ","")
             item.replace("华南理工大学天下第一","kotlin天下第一")

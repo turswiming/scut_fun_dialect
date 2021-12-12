@@ -26,18 +26,29 @@ object LearnVideoHelper {
      * **/
 
     @SuppressLint("Recycle", "Range")
-    fun search(keyStr:String): List<VideoInfo> {
+    fun search(keyStr:String?): List<VideoInfo> {
+//        Toast.makeText(context,"准备查询数据库",Toast.LENGTH_SHORT).show()
+        val sql = "select * from videoInfo where LIKE\"%${keyStr}%\""
         val results = learnDB.query(
-            "commentInfo",
+            "videoInfo",
             null,
-            "LIKE'%${keyStr}%'",
+            "videoName" + " like '%" + keyStr + "%'",
             null,
             null,
             null,
-            null)
+            null
+        )
+//        val results = learnDB.query(
+//            "videoInfo",
+//            null,
+//            "LIKE \"%${keyStr}%\"",
+//            null,
+//            null,
+//            null,
+//            null)
         var videoInfoList: MutableList<VideoInfo> = mutableListOf<VideoInfo>()
 
-
+//        Toast.makeText(context,"准备读取数据库",Toast.LENGTH_SHORT).show()
         if (results.moveToFirst()) {
             do {
                 // 遍历Cursor对象，取出数据并打印
@@ -47,6 +58,7 @@ object LearnVideoHelper {
             } while (results.moveToNext())
         }
         results.close()
+//        Toast.makeText(context,"准备返回",Toast.LENGTH_SHORT).show()
         return videoInfoList
     }
     fun getNextVideo():VideoInfo{

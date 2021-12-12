@@ -134,6 +134,8 @@ fun VideoPlayerWithText(gotoDubPage:()->Unit,
             videoPlayerController = videoPlayerController,
             backgroundColor = Color.Transparent,
             modifier = Modifier.fillMaxSize(),
+            gesturesEnabled = false,
+            controlsEnabled = false,
         )
 //        VideScreen(videoInfoState.videoUri)
 

@@ -48,15 +48,18 @@ class LearnSearchActivity : BaseComposeActivity() {
 }
 @ExperimentalFoundationApi
 @Composable
-fun SearchPageWithEvent(context: Context, navController: NavHostController) {
+fun SearchPageWithEvent(context: Context, navController: NavHostController,location:Int) {
     Scaffold(
         topBar = {
-            SearchTopAppBar(
+            SearchTopAppBar("",
                 onReturn = {
                     navController.popBackStack()
                 },
                 onSearch = {
-                //                        TODO("根据输入框内容执行搜索")
+                    if(it!=""){
+                        navController.navigate("SearchOutcomePage/${it}/${location}")
+
+                    }
                 }
             )
         }

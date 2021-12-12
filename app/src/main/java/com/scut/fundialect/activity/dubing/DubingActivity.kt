@@ -11,6 +11,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.*
+import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
@@ -65,12 +66,55 @@ class DubingActivity : BaseComposeActivity() {
         }
     }
 }
+@ExperimentalFoundationApi
+@ExperimentalPagerApi
+@Composable
+fun dubbingPageMainAll(
+    navController: NavHostController,
+    context: Context
+) {
+    DubingPageWithEvent(
+        navController,
+        context,
+        dubPageContent = {
+            DubMainPage(navController)
+        },
+        barContent = {
+            /**
+             * 左上角的俩大字
+             *
+             * */
+            Text(text = "配音", fontSize = 24.sp, color = Color.White)
+            /**
+             *
+             * 搜索按钮
+             *
+             *
+             * */
+            Image(
+                painter = painterResource(id = R.drawable.searchwhite),
+                contentDescription = "search icon",
+                modifier = Modifier
+                    .size(20.dp)
+                    .clickable {
+                        navController.navigate("SearchPage/${2}")
 
+                    }
+
+            )
+        }
+    )
+}
 @ExperimentalPagerApi
 @ExperimentalFoundationApi
 @Composable
-fun DubingPageWithEvent(navController: NavHostController,
-                        context: Context) {
+fun DubingPageWithEvent(
+    navController: NavHostController,
+    context: Context,
+    dubPageContent:@Composable () -> Unit,
+    barContent:@Composable () -> Unit
+
+) {
     Box(modifier = Modifier.fillMaxSize()) {
         Image(alignment = Alignment.TopCenter,
             contentScale = ContentScale.Crop,
@@ -117,28 +161,8 @@ fun DubingPageWithEvent(navController: NavHostController,
                             verticalAlignment = Alignment.CenterVertically,
                             horizontalArrangement = Arrangement.SpaceBetween,
                         ) {
-                            /**
-                             * 左上角的俩大字
-                             *
-                             * */
-                            Text(text = "配音",fontSize = 24.sp,color = Color.White)
-                            /**
-                             *
-                             * 搜索按钮
-                             *
-                             *
-                             * */
-                            Image(
-                                painter = painterResource(id = R.drawable.searchwhite),
-                                contentDescription = "search icon",
-                                modifier = Modifier
-                                    .size(20.dp)
-                                    .clickable {
-                                        goToSearchPage(navController)
+                            barContent()
 
-                                    }
-
-                            )
                         }
                         /**
                          * bar下面选择城市的东西
@@ -224,22 +248,22 @@ fun DubingPageWithEvent(navController: NavHostController,
             }
 
         ) {
-            DubMainPage()
-            if(cityStateNow==5){
+            dubPageContent()
+            if (cityStateNow == 5) {
                 CitySelectPage(onselectCityChange = {
-                    if(cityStateLast!=0){
-                        showedCityId[cityStateLast-1] = it+2
+                    if (cityStateLast != 0) {
+                        showedCityId[cityStateLast - 1] = it + 2
                         //Toast.makeText(context,"key\t$k\nvalue\t$value",Toast.LENGTH_SHORT).show()
                     }
 //            showedCityId[cityStateLast] =it
                 })
             }
-
         }
     }
 //    var showCitySelectPage by remember { mutableStateOf(false)}
     
 }
+
 
 @ExperimentalFoundationApi
 @Composable
@@ -296,8 +320,7 @@ private fun CitySelectPage(onselectCityChange:(CityId: Int)->Unit) {
 
 @ExperimentalPagerApi
 @Composable
-@Preview
-fun DubMainPage() {
+fun DubMainPage(navController:NavHostController) {
     Column(
         Modifier
             .fillMaxSize()
@@ -492,7 +515,7 @@ fun DubMainPage() {
         Row(horizontalArrangement = Arrangement.SpaceBetween,modifier = Modifier.fillMaxWidth()) {
             Text(text = "热门推荐")
             Row(Modifier.clickable {
-//                TODO()
+                navController.navigate("HotSuggested")
             }) {
                 Text(text = "查看更多")
                 Image(
@@ -505,79 +528,21 @@ fun DubMainPage() {
             }
 
         }
+        val modelVideos = getCollectedModelVideo()
+
         /**
          * 热门推荐 内容
          * */
-        Row(
-            horizontalArrangement = Arrangement.SpaceBetween,
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(200.dp)
-                .padding(15.dp)
-        ) {
-            val modelVideos = getCollectedModelVideo()
-            modelVideos.forEach {
-                var isCollect  by remember {
-                    mutableStateOf(it.videoIsCollect)
-                }
-                Surface(
-                    shape = RoundedCornerShape(15.dp),
-                    modifier = Modifier
-                        .width(120.dp)
-                        .clickable { TODO() }
-                ) {
-                    Image(
-                        painter = rememberImagePainter(it.videoPicUri),
-                        modifier = Modifier.fillMaxSize(),
-                        contentScale = ContentScale.Crop,
-                        contentDescription = null
-                    )
-                    Box(
-                        contentAlignment = Alignment.TopEnd,
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .padding(5.dp)
-                    ) {
-                        Image(
-                            painter = painterResource(
-                                id = switch(
-                                    R.drawable.dub2,
-                                    R.drawable.dub3,
-                                    isCollect
-                                )
-                            ),
-                            modifier = Modifier
-                                .size(30.dp)
-                                .clickable {
-                                    isCollect = !isCollect
-                                    ModelVideoHelper.switchCollect(it.videoId)
-                                },
-
-                            contentDescription = "收藏按钮"
-                        )
-                    }
-                    Box(contentAlignment = Alignment.BottomStart,modifier = Modifier.fillMaxSize()) {
-                        Column() {
-                            Text(text = it.videoName,color = FontWhite)
-                            val pinyin = PinyinHelper.convertToPinyinString(
-                                it.videoName,
-                                "",
-                                PinyinFormat.WITHOUT_TONE
-                            )
-                            Text(text = pinyin,color = FontWhite)
-                        }
-                    }
-                }
-
-            }
-        }
+        HorizontalPicShower(modelVideos)
             /**
              * 查看更多 文字和按钮
              * */
-        Row(horizontalArrangement = Arrangement.SpaceBetween,modifier = Modifier.fillMaxWidth()) {
+        Row(
+            horizontalArrangement = Arrangement.SpaceBetween,
+            modifier = Modifier.fillMaxWidth()) {
             Text(text = "他人作品")
             Row(Modifier.clickable {
-                TODO()
+                navController.navigate("OtherWorks")
             }) {
                 Text(text = "查看更多")
                 Image(
@@ -592,23 +557,94 @@ fun DubMainPage() {
         /**
          * 查看更多 内容
          * */
-        Column(
-            horizontalAlignment = Alignment.CenterHorizontally,
-            modifier = Modifier
-                .fillMaxWidth()
-        ) {
-            val modelVideos = getCollectedModelVideo()
-            modelVideos.forEach {
-                MyPictureShower(it)
+        val modelVideos2 = getCollectedModelVideo()
+        VerticalPicShower(modelVideos2)
+    }
+}
 
+@Composable
+fun VerticalPicShower(modelVideos2: List<ModelVideoInfo>) {
+    Column(
+        horizontalAlignment = Alignment.CenterHorizontally,
+        modifier = Modifier
+            .fillMaxWidth()
+    ) {
+        modelVideos2.forEach {
+            MyPictureShower(it)
+
+        }
+    }
+}
+
+@Composable
+fun HorizontalPicShower(modelVideos: List<ModelVideoInfo>) {
+    Row(
+        horizontalArrangement = Arrangement.SpaceBetween,
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(200.dp)
+            .padding(15.dp)
+    ) {
+        modelVideos.forEach {
+            var isCollect by remember {
+                mutableStateOf(it.videoIsCollect)
             }
+            Surface(
+                shape = RoundedCornerShape(15.dp),
+                modifier = Modifier
+                    .width(120.dp)
+                    .clickable { TODO() }
+            ) {
+                Image(
+                    painter = rememberImagePainter(it.videoPicUri),
+                    modifier = Modifier.fillMaxSize(),
+                    contentScale = ContentScale.Crop,
+                    contentDescription = null
+                )
+                Box(
+                    contentAlignment = Alignment.TopEnd,
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(5.dp)
+                ) {
+                    Image(
+                        painter = painterResource(
+                            id = switch(
+                                R.drawable.dub2,
+                                R.drawable.dub3,
+                                isCollect
+                            )
+                        ),
+                        modifier = Modifier
+                            .size(30.dp)
+                            .clickable {
+                                isCollect = !isCollect
+                                ModelVideoHelper.switchCollect(it.videoId)
+                            },
+
+                        contentDescription = "收藏按钮"
+                    )
+                }
+                Box(contentAlignment = Alignment.BottomStart, modifier = Modifier.fillMaxSize()) {
+                    Column() {
+                        Text(text = it.videoName, color = FontWhite)
+                        val pinyin = PinyinHelper.convertToPinyinString(
+                            it.videoName,
+                            "",
+                            PinyinFormat.WITHOUT_TONE
+                        )
+                        Text(text = pinyin, color = FontWhite)
+                    }
+                }
+            }
+
         }
     }
 }
 
 @Composable
 fun MyPictureShower(it: ModelVideoInfo) {
-    val isCollect by remember {
+    var isCollect by remember {
         mutableStateOf(it.videoIsCollect)
     }
     Surface(
