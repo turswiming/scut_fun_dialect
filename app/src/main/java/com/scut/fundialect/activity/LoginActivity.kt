@@ -78,7 +78,7 @@ class LoginActivity : BaseActivity() {
     @Composable
     private fun Navigation(context: Context){
         val navController = rememberNavController()
-        NavHost(navController = navController, startDestination = "InDubbingPage") {
+        NavHost(navController = navController, startDestination = "DubbingPage") {
 //            composable("AdPage") { AdPage() }
             composable("AdPage") { AdWithEvent(navController) }
 
@@ -107,7 +107,23 @@ class LoginActivity : BaseActivity() {
             composable("DubbingPage") { dubbingPageMainAll(navController, context) }
             composable("OtherWorks") { OtherWorks(navController, context) }
             composable("HotSuggested") { HotSuggested(navController, context) }
-            composable("InDubbingPage") { InDubbingWithEvent(navController) }
+            composable("InDubbingPage/{videoId}"){
+                    backStackEntry->
+                backStackEntry.arguments?.getInt("videoId")?.let {
+                    InDubbingWithEvent(navController,
+                        it
+                    )
+                }
+            }
+            composable("FinishDubbing/{videoId}"){
+                    backStackEntry->
+                backStackEntry.arguments?.getInt("videoId")?.let {
+                    FinishDubbingWithEvent(navController,
+                        it
+                    )
+                }
+            }
+            composable("ShareDubPage") { ShareDubPage(navController) }
 
             composable("MyselfPage") { MyselfPageWithEvent(navController) }
 

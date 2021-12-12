@@ -34,6 +34,7 @@ import com.scut.fundialect.database.helper.UserHelpr
 import com.scut.fundialect.enum.ColorMode
 import com.scut.fundialect.help.switch
 import com.scut.fundialect.ui.theme.BackgroundGray
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
 
@@ -94,112 +95,7 @@ fun MySelectedPage(gotoDubPage:()->Unit,
                  *
                  * */
                 sheetContent = {
-                    Column(Modifier.fillMaxWidth()) {
-                        Box(modifier = Modifier
-                            .fillMaxWidth()
-                            .height(40.dp)) {
-                            Box(modifier = Modifier.fillMaxSize(),contentAlignment = Alignment.Center){
-                                Text(
-                                    text = "分享至",
-                                    fontSize = 20.sp,)
-                            }
-                            Box(modifier = Modifier.fillMaxSize(),contentAlignment = Alignment.CenterEnd){
-                                Image(
-                                    painter = painterResource(id = R.drawable.close_black),
-                                    contentDescription = "关闭分享",
-                                    modifier = Modifier
-                                        .height(20.dp)
-                                        .width(20.dp)
-                                        .clickable {
-                                            shareScope.launch { shareState.hide() }
-                                        })
-                            }
-                        }
-                        Row(
-                            Modifier.height(80.dp),
-                            horizontalArrangement = Arrangement.SpaceBetween,
-                            verticalAlignment = Alignment.CenterVertically
-                        ) {
-                            Spacer(modifier = Modifier.width(5.dp))
-                            ShareButton(
-                                "微信好友",
-                                R.drawable.wx_friend,
-                                onClick = {
-                                    Toast.makeText(context,"分享给了微信好友",Toast.LENGTH_SHORT).show()
-                                }
-                            )
-                            ShareButton(
-                                "微信朋友圈",
-                                R.drawable.wx_public,
-                                onClick = {
-                                    Toast.makeText(context,"分享给了微信朋友圈",Toast.LENGTH_SHORT).show()
-                                }
-                            )
-                            ShareButton(
-                                "QQ好友",
-                                R.drawable.qq_friend,
-                                onClick = {
-                                    Toast.makeText(context,"分享给了QQ好友",Toast.LENGTH_SHORT).show()
-                                }
-                            )
-                            ShareButton(
-                                "QQ空间",
-                                R.drawable.qq_public,
-                                onClick = {
-                                    Toast.makeText(context,"分享给了QQ空间",Toast.LENGTH_SHORT).show()
-                                }
-                            )
-                            ShareButton(
-                                "今日头条",
-                                R.drawable.today_news,
-                                onClick = {
-                                    Toast.makeText(context,"分享给了今日头条",Toast.LENGTH_SHORT).show()
-                                }
-                            )
-                            ShareButton(
-                                "微博",
-                                R.drawable.wb_news,
-                                onClick = {
-                                    Toast.makeText(context,"分享给了微博",Toast.LENGTH_SHORT).show()
-                                }
-                            )
-                        }
-                        Row(
-                            Modifier.height(80.dp),
-                            horizontalArrangement = Arrangement.SpaceBetween,
-                            verticalAlignment = Alignment.CenterVertically
-                        ) {
-                            ShareButton(
-                                "保存本地",
-                                R.drawable.download_local,
-                                onClick = {
-                                    Toast.makeText(context,"已保存本地",Toast.LENGTH_SHORT).show()
-                                }
-                            )
-                            ShareButton(
-                                "复制链接",
-                                R.drawable.copy_address,
-                                onClick = {
-                                    Toast.makeText(context,"已复制链接",Toast.LENGTH_SHORT).show()
-                                }
-                            )
-                            //下面我复制了四个空盒子用来做占位
-                            val list = listOf(1,2,3,4)
-                            list.forEach { _ ->
-                                Box(
-                                    modifier = Modifier
-                                        .height(75.dp)
-                                        .width(65.dp),
-                                ) {
-
-                                }
-
-                            }
-
-
-                        }
-
-                    }
+                    ShareSheet(shareScope, shareState)
                 }
             ) {
                 ModalBottomSheetLayout(
@@ -257,6 +153,123 @@ fun MySelectedPage(gotoDubPage:()->Unit,
     }
 
 
+}
+
+@ExperimentalMaterialApi
+@Composable
+private fun ShareSheet(
+    shareScope: CoroutineScope,
+    shareState: ModalBottomSheetState
+) {
+    Column(Modifier.fillMaxWidth()) {
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(40.dp)
+        ) {
+            Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                Text(
+                    text = "分享至",
+                    fontSize = 20.sp,
+                )
+            }
+            Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.CenterEnd) {
+                Image(
+                    painter = painterResource(id = R.drawable.close_black),
+                    contentDescription = "关闭分享",
+                    modifier = Modifier
+                        .height(20.dp)
+                        .width(20.dp)
+                        .clickable {
+                            shareScope.launch { shareState.hide() }
+                        })
+            }
+        }
+        Row(
+            Modifier.height(80.dp),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Spacer(modifier = Modifier.width(5.dp))
+            ShareButton(
+                "微信好友",
+                R.drawable.wx_friend,
+                onClick = {
+                    Toast.makeText(context, "分享给了微信好友", Toast.LENGTH_SHORT).show()
+                }
+            )
+            ShareButton(
+                "微信朋友圈",
+                R.drawable.wx_public,
+                onClick = {
+                    Toast.makeText(context, "分享给了微信朋友圈", Toast.LENGTH_SHORT).show()
+                }
+            )
+            ShareButton(
+                "QQ好友",
+                R.drawable.qq_friend,
+                onClick = {
+                    Toast.makeText(context, "分享给了QQ好友", Toast.LENGTH_SHORT).show()
+                }
+            )
+            ShareButton(
+                "QQ空间",
+                R.drawable.qq_public,
+                onClick = {
+                    Toast.makeText(context, "分享给了QQ空间", Toast.LENGTH_SHORT).show()
+                }
+            )
+            ShareButton(
+                "今日头条",
+                R.drawable.today_news,
+                onClick = {
+                    Toast.makeText(context, "分享给了今日头条", Toast.LENGTH_SHORT).show()
+                }
+            )
+            ShareButton(
+                "微博",
+                R.drawable.wb_news,
+                onClick = {
+                    Toast.makeText(context, "分享给了微博", Toast.LENGTH_SHORT).show()
+                }
+            )
+        }
+        Row(
+            Modifier.height(80.dp),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            ShareButton(
+                "保存本地",
+                R.drawable.download_local,
+                onClick = {
+                    Toast.makeText(context, "已保存本地", Toast.LENGTH_SHORT).show()
+                }
+            )
+            ShareButton(
+                "复制链接",
+                R.drawable.copy_address,
+                onClick = {
+                    Toast.makeText(context, "已复制链接", Toast.LENGTH_SHORT).show()
+                }
+            )
+            //下面我复制了四个空盒子用来做占位
+            val list = listOf(1, 2, 3, 4)
+            list.forEach { _ ->
+                Box(
+                    modifier = Modifier
+                        .height(75.dp)
+                        .width(65.dp),
+                ) {
+
+                }
+
+            }
+
+
+        }
+
+    }
 }
 
 

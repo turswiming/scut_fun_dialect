@@ -73,7 +73,7 @@ fun OtherWorks(
 //            HorizontalPicShower(modelVideos)
                 Text(text = "更多精彩", fontSize = 20.sp)
                 val modelVideos2 = ModelVideoHelper.getCollectedModelVideo()
-                VerticalPicShower(modelVideos2)
+                VerticalPicShower(modelVideos2,navController)
             }
         }
     )

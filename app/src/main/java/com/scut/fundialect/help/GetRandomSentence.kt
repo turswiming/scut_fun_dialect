@@ -106,7 +106,7 @@ object GetRandomSentence {
     }
 
     private fun init() {
-        var replace = SentenseStrLong.replace("。", "。\n")
+        val replace = SentenseStrLong.replace("。", "。\n")
         array = replace.split("\n")
         for(item in array){
             item.replace(" ","")

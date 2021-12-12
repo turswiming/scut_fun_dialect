@@ -103,7 +103,10 @@ fun Long.getDateMinute(): Int {
     calendar.timeInMillis = this
     return calendar.get(Calendar.MINUTE)
 }
-
+//fun main(args: Array<String>) {
+//    val str :String = String.format("%.2f",(4.17*0.99))
+//    println(str)
+//}
 /**
  * 获取时间戳中的秒钟
  * @return [Int] 秒钟

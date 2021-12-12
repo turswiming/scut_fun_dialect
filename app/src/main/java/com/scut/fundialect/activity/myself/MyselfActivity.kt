@@ -61,10 +61,10 @@ fun MyselfPageWithEvent(navController: NavHostController) {
     Scaffold(
         bottomBar = {
             /**
-         *
-         * 下面的bar
-         *
-         * */
+             * *
+             * * 下面的bar*
+             * *
+             * */
             MyButtonAppBar(
                 colorMode = ColorMode.light,
                 gotoAnotherActivity = {
@@ -91,7 +91,7 @@ fun MyselfPageWithEvent(navController: NavHostController) {
         )
     }
     ) {
-        MyselfMainPage(
+        MyselfMainPage(navController,
             involvedTopic ={},
             myStep = {},
             getVideoData = {
@@ -105,17 +105,17 @@ fun MyselfPageWithEvent(navController: NavHostController) {
 @Composable
 @Preview
 fun preview(){
-    MyselfMainPage(
-        involvedTopic ={},
-        myStep = {},
-        getVideoData = {getCollectedModelVideo()}
-    )
+//    MyselfMainPage(
+//        involvedTopic ={},
+//        myStep = {},
+//        getVideoData = {getCollectedModelVideo()}
+//    )
 }
 @ExperimentalPagerApi
 @Composable
 @Preview
 fun preview2(){
-    MyselfTopBar(onSettingIconClick={},onImageClick={},toUriStr(com.scut.fundialect.R.raw.defaultpic),"广州市","樱桃小丸子的丸~")
+//    MyselfTopBar(onSettingIconClick={},onImageClick={},toUriStr(com.scut.fundialect.R.raw.defaultpic),"广州市","樱桃小丸子的丸~")
 
 }
 fun toUriStr(image:Int):String{
@@ -126,6 +126,7 @@ fun toUriStr(image:Int):String{
 @ExperimentalPagerApi
 @Composable
 fun MyselfMainPage(
+    navController: NavHostController,
     involvedTopic: () -> Unit,
     myStep: () -> Unit,
     getVideoData:()-> List<ModelVideoInfo>,
@@ -155,8 +156,8 @@ fun MyselfMainPage(
                 .fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
-            MyButton2(onclick = { /*TODO*/involvedTopic() }, text1 = "参与话题",)
-            MyButton2(onclick = { /*TODO*/myStep() }, text1 = "我的足迹",)
+            MyButton2(onclick = { involvedTopic() }, text1 = "参与话题",)
+            MyButton2(onclick = { myStep() }, text1 = "我的足迹",)
 
         }
         Spacer(modifier = Modifier.height(15.dp))
@@ -218,7 +219,7 @@ fun MyselfMainPage(
                 var videos = getVideoData()
                 Toast.makeText(context,"${videos.size}",Toast.LENGTH_SHORT).show()
                 videos.forEach {
-                    MyPictureShower(it)
+                    MyPictureShower(it,navHostController = navController)
 
                 }
 

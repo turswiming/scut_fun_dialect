@@ -558,19 +558,19 @@ fun DubMainPage(navController:NavHostController) {
          * 查看更多 内容
          * */
         val modelVideos2 = getCollectedModelVideo()
-        VerticalPicShower(modelVideos2)
+        VerticalPicShower(modelVideos2,navController)
     }
 }
 
 @Composable
-fun VerticalPicShower(modelVideos2: List<ModelVideoInfo>) {
+fun VerticalPicShower(modelVideos2: List<ModelVideoInfo>,navController: NavHostController) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier
             .fillMaxWidth()
     ) {
         modelVideos2.forEach {
-            MyPictureShower(it)
+            MyPictureShower(it,navHostController = navController)
 
         }
     }
@@ -643,7 +643,7 @@ fun HorizontalPicShower(modelVideos: List<ModelVideoInfo>) {
 }
 
 @Composable
-fun MyPictureShower(it: ModelVideoInfo) {
+fun MyPictureShower(it: ModelVideoInfo,navHostController: NavHostController) {
     var isCollect by remember {
         mutableStateOf(it.videoIsCollect)
     }
@@ -653,7 +653,9 @@ fun MyPictureShower(it: ModelVideoInfo) {
             .height(180.dp)
             .fillMaxWidth()
             .padding(15.dp, 10.dp)
-            .clickable { TODO() }
+            .clickable {
+                navHostController.navigate("InDubbingPage/${it.videoId}")
+            }
     ) {
         Image(
             painter = rememberImagePainter(it.videoPicUri),
