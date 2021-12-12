@@ -42,7 +42,7 @@ open class VideoDataBaseHelper(val context: Context, name:String, version:Int):
             "isLiked integer," +
             "numberLiked integer" +
             ")"
-    private fun toUriStr(image:Int):String{
+    fun toUriStr(image:Int):String{
         return "android.resource://com.scut.fundialect/$image"
         //default "${toUriStr(com.scut.fundialect.R.raw.defaultpic)}"
 

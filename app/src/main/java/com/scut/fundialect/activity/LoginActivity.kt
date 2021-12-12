@@ -33,10 +33,11 @@ import com.scut.fundialect.R
 import com.scut.fundialect.activity.dubing.DubingPageWithEvent
 import com.scut.fundialect.activity.learn.LearnColloectPageWithEvent
 import com.scut.fundialect.activity.learn.LearnVideoPageWithEvent
-import com.scut.fundialect.activity.learn.SearchPageWithEvent
 import com.scut.fundialect.activity.login.AdPage
 import com.scut.fundialect.activity.login.AdWithEvent
 import com.scut.fundialect.activity.myself.MyselfPageWithEvent
+import com.scut.fundialect.activity.search.SearchOutcome
+import com.scut.fundialect.activity.search.SearchPageWithEvent
 import com.scut.fundialect.database.*
 import com.scut.fundialect.help.PicManager
 import com.scut.fundialect.help.VideoHelper
@@ -79,9 +80,9 @@ class LoginActivity : BaseActivity() {
             composable("AdPage") { AdWithEvent(navController) }
 
             composable("loginPage") { LogInPageWithEvent(context,navController,SampleData.conversationSample) }
-            composable("SearchPage"){ SearchPageWithEvent(context,navController)
+            composable("SearchPage"){ SearchPageWithEvent(context,navController) }
+            composable("SearchOutcomePage/{searchStr}"){backStackEntry-> SearchOutcome(navController, backStackEntry.arguments?.getString("searchStr")) }
 
-            }
             composable("LearnVideoPage") { LearnVideoPageWithEvent(context,navController) }
             composable("LearnPage") { LearnColloectPageWithEvent(context,navController) }
 

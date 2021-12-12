@@ -4,10 +4,12 @@ import android.annotation.SuppressLint
 import android.content.ContentValues
 import android.database.sqlite.SQLiteDatabase
 import com.scut.fundialect.MyApplication
+import com.scut.fundialect.MyApplication.Companion.context
+import com.scut.fundialect.R
 import com.scut.fundialect.database.ModelVideoDataBaseHelper
 
 object ModelVideoHelper {
-    private  var modelDB: SQLiteDatabase
+    var modelDB: SQLiteDatabase
 
     init {
         val modelVideoDataBaseHelper = ModelVideoDataBaseHelper(
@@ -26,13 +28,13 @@ object ModelVideoHelper {
      * 视频内容不会重样
      * 所有查询语句都封装好了，你一点都看不着。
      * **/
-    fun getNextVideo():VideoInfo{
+    fun getNextVideo(): ModelVideoInfo {
         try {
-            return VideoInfo(++lastShowedVideo)
+            return ModelVideoInfo(++lastShowedVideo)
 
         } catch (e: Exception) {
-            lastShowedVideo=1
-            return VideoInfo(1)
+            lastShowedVideo =1
+            return ModelVideoInfo(1)
         }
     }
     @SuppressLint("Range")
@@ -52,7 +54,7 @@ object ModelVideoHelper {
             do {
                 // 遍历Cursor对象，取出数据并打印
                 val id = results.getInt(results.getColumnIndex("id"))
-                commentInfoList+=CommentInfo(id)
+                commentInfoList+= CommentInfo(id)
 
             } while (results.moveToNext())
         }
@@ -133,65 +135,7 @@ object ModelVideoHelper {
 
     }
 
-    @SuppressLint("Range", "Recycle")
-    class VideoInfo(id:Int) {
-        val videoId = id
-        val videoUri:String
-        val videoName:String
-        val videoIntroduce:String
-        val videoPicUri:String
 
-        val videoLike:Int
-        val videoUploaderId:Int
-        val videoCollect:Int
-        val videoUpdateTime:Int
-        val videoBelongCityId:Int
-
-        val videoIsLiked:Boolean
-        val videoIsCollect:Boolean
-
-        init{
-            val results = modelDB.query(
-                "videoInfo",
-                null,
-                "id = $id",
-                null,
-                null,
-                null,
-                null,
-                null)
-            results.moveToFirst()
-            videoUri = results.getString(results.getColumnIndex("videoUri"))
-            videoName = results.getString(results.getColumnIndex("videoName"))
-            videoIntroduce = results.getString(results.getColumnIndex("videoIntroduce"))
-            videoPicUri = results.getString(results.getColumnIndex("videoPicUri"))
-
-            videoLike = results.getInt(results.getColumnIndex("videoLike"))
-            videoUploaderId = results.getInt(results.getColumnIndex("videoUploaderId"))
-            videoCollect = results.getInt(results.getColumnIndex("videoCollect"))
-            videoUpdateTime = results.getInt(results.getColumnIndex("videoUpdateTime"))
-            videoBelongCityId = results.getInt(results.getColumnIndex("videoBelongCityId"))
-            videoIsLiked = toBool(results.getInt(results.getColumnIndex("videoIsLiked")))
-            videoIsCollect = toBool(results.getInt(results.getColumnIndex("videoIsCollect")))
-            results.close()
-
-        }
-
-
-
-        private fun toBool(int: Int):Boolean{
-            if (int==0){
-                return false
-            }
-            return true
-        }
-        fun toInt(bool:Boolean):Int{
-            if(bool){
-                return 1
-            }
-            return 0
-        }
-    }
     private fun toBool(int: Int):Boolean{
         if (int==0){
             return false
@@ -260,11 +204,76 @@ object ModelVideoHelper {
     }
 
     @SuppressLint("Range")
-    fun getCollectedModelVideo(): List<VideoInfo> {
+    fun getCollectedModelVideo(): List<ModelVideoInfo> {
 
 
-        return listOf(VideoInfo(1), VideoInfo(2), VideoInfo(3),)
+        return listOf(ModelVideoInfo(1), ModelVideoInfo(2), ModelVideoInfo(3),)
 
 
+    }
+}
+@SuppressLint("Range", "Recycle")
+class ModelVideoInfo(id:Int) {
+
+    val videoId = id
+    var videoUri:String = "android.resource://${context.packageName}/${R.raw.video1}"
+    var videoName:String = "未命名视频"
+    var videoIntroduce:String = "未命名视频"
+    var videoPicUri:String = "android.resource://${context.packageName}/${R.raw.defaultpic}"
+
+    var videoLike:Int = 0
+    var videoUploaderId:Int = 0
+    var videoCollect:Int = 0
+    var videoUpdateTime:Int = 0
+    var videoBelongCityId:Int = 0
+
+    var videoIsLiked:Boolean = false
+    var videoIsCollect:Boolean = false
+
+    init{
+        try{
+            val results = ModelVideoHelper.modelDB.query(
+                "videoInfo",
+                null,
+                "id = $id",
+                null,
+                null,
+                null,
+                null,
+                null)
+            results.moveToFirst()
+            videoUri = results.getString(results.getColumnIndex("videoUri"))
+            videoName = results.getString(results.getColumnIndex("videoName"))
+            videoIntroduce = results.getString(results.getColumnIndex("videoIntroduce"))
+            videoPicUri = results.getString(results.getColumnIndex("videoPicUri"))
+
+            videoLike = results.getInt(results.getColumnIndex("videoLike"))
+            videoUploaderId = results.getInt(results.getColumnIndex("videoUploaderId"))
+            videoCollect = results.getInt(results.getColumnIndex("videoCollect"))
+            videoUpdateTime = results.getInt(results.getColumnIndex("videoUpdateTime"))
+            videoBelongCityId = results.getInt(results.getColumnIndex("videoBelongCityId"))
+            videoIsLiked = toBool(results.getInt(results.getColumnIndex("videoIsLiked")))
+            videoIsCollect = toBool(results.getInt(results.getColumnIndex("videoIsCollect")))
+            results.close()
+        }catch (e:Exception){
+
+        }
+
+
+    }
+
+
+
+    private fun toBool(int: Int):Boolean{
+        if (int==0){
+            return false
+        }
+        return true
+    }
+    fun toInt(bool:Boolean):Int{
+        if(bool){
+            return 1
+        }
+        return 0
     }
 }

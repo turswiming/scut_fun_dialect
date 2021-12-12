@@ -116,7 +116,7 @@ object PicManager {
     private fun defaultUri() =
         Uri.parse("android.resource://" + "com.scut.fundialect" + "/" + R.raw.defaultpic)
 
-    private fun getBitmapFromUri(uri: Uri, contentResolver: ContentResolver) {
+    fun getBitmapFromUri(uri: Uri, contentResolver: ContentResolver) {
         return contentResolver.openFileDescriptor(uri, "r").use {
             BitmapFactory.decodeFileDescriptor(it?.fileDescriptor)
         }

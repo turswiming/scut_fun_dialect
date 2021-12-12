@@ -607,7 +607,7 @@ fun DubMainPage() {
 }
 
 @Composable
-private fun MyPictureShower(it: ModelVideoHelper.VideoInfo) {
+fun MyPictureShower(it: ModelVideoInfo) {
     val isCollect by remember {
         mutableStateOf(it.videoIsCollect)
     }

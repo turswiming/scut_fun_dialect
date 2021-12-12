@@ -14,7 +14,7 @@ object UserHelpr {
         val userInfoDataBaseHelper = UserInfoDataBaseHelper(MyApplication.context,"userinfo.db",1)
         userDB =userInfoDataBaseHelper.writableDatabase
     }
-
+    var userNow = 1;
     @SuppressLint("Range")
     class UserInfo(userId: Int){
         val userNickName:String

@@ -1,4 +1,4 @@
-package com.scut.fundialect.activity.learn
+package com.scut.fundialect.activity.search
 
 import android.content.Context
 import android.os.Bundle
@@ -27,11 +27,9 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.scut.fundialect.R
 import com.scut.fundialect.activity.BaseComposeActivity
+import com.scut.fundialect.activity.compose.SearchTopAppBar
 import com.scut.fundialect.help.switch
-import com.scut.fundialect.ui.theme.ComposeTutorialTheme
-import com.scut.fundialect.ui.theme.CustomOrange
-import com.scut.fundialect.ui.theme.FirstNavColor
-import com.scut.fundialect.ui.theme.FontBlack
+import com.scut.fundialect.ui.theme.*
 
 class LearnSearchActivity : BaseComposeActivity() {
     @ExperimentalFoundationApi
@@ -53,56 +51,14 @@ class LearnSearchActivity : BaseComposeActivity() {
 fun SearchPageWithEvent(context: Context, navController: NavHostController) {
     Scaffold(
         topBar = {
-            TopAppBar(modifier = Modifier.fillMaxWidth()) {
-                /**
-                 * 返回上一个页面
-                 * */
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(5.dp),
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.SpaceBetween,
-
-                    ) {
-                    Image(
-                        painter = painterResource(id = R.drawable.back),
-                        contentDescription = "返回按钮",
-                        Modifier.clickable {
-                            returnActivity(navController)
-                        }
-
-                    )
-                    var text by remember { mutableStateOf("") }
-
-                    Surface(
-                        modifier = Modifier
-                            .width(300.dp)
-                            .height(60.dp),
-                        shape = RoundedCornerShape(30.dp),
-                    ) {
-                        BasicTextField(
-                            value = text,
-                            singleLine = true,
-                            onValueChange = {it->
-                                text=it
-                            },
-                            textStyle = TextStyle(fontSize = 30.sp),
-                            modifier = Modifier.fillMaxSize().padding(5.dp)
-                        )
-                    }
-                    Image(
-                        painter = painterResource(id = R.drawable.search_black),
-                        contentDescription = "搜索按钮",
-                        Modifier.clickable {
-                            TODO("根据输入框内容执行搜索")
-                        }
-
-                    )
-
+            SearchTopAppBar(
+                onReturn = {
+                    navController.popBackStack()
+                },
+                onSearch = {
+                //                        TODO("根据输入框内容执行搜索")
                 }
-
-            }
+            )
         }
     ){
         /**
@@ -116,7 +72,8 @@ fun SearchPageWithEvent(context: Context, navController: NavHostController) {
         ) {
             Column(
                 modifier = Modifier
-                    .fillMaxSize().padding(20.dp),
+                    .fillMaxSize()
+                    .padding(20.dp),
                 verticalArrangement = Arrangement.Top,
                 horizontalAlignment = Alignment.Start
             ) {
@@ -128,11 +85,15 @@ fun SearchPageWithEvent(context: Context, navController: NavHostController) {
                  *
                  * */
 
-                Spacer(modifier = Modifier.height(2.dp).background(Color.White))
+                Spacer(modifier = Modifier
+                    .height(2.dp)
+//                    .background(Color.White)
+                )
                 Text(
                     text = "历史记录",
                     fontSize=20.sp,
                     fontWeight = FontWeight.Bold)
+                Spacer(modifier = Modifier.height(10.dp))
 
                 LazyVerticalGrid(
                     cells = GridCells.Adaptive(minSize = 80.dp)
@@ -167,7 +128,7 @@ fun SearchPageWithEvent(context: Context, navController: NavHostController) {
                                 .height(32.dp)
                                 .padding(5.dp)
                                 .background(
-                                    color = FirstNavColor,
+                                    color = BackgroundLightGrey,
                                     shape = RoundedCornerShape(5.dp),
                                 ),
                             contentAlignment = Alignment.Center
@@ -188,11 +149,13 @@ fun SearchPageWithEvent(context: Context, navController: NavHostController) {
 
                     }
                 }
-
+                Spacer(modifier = Modifier.height(25.dp))
                 Text(
                     text = "热门搜索",
                     fontSize=20.sp,
                     fontWeight = FontWeight.Bold)
+                Spacer(modifier = Modifier.height(10.dp))
+
                 val hotSearch = listOf(
                     "各种方言的你好",
                     "四川话的耙耳朵是啥意思",
@@ -207,7 +170,9 @@ fun SearchPageWithEvent(context: Context, navController: NavHostController) {
                         index++
                         Row(
                             horizontalArrangement = Arrangement.End,
-                            verticalAlignment = Alignment.CenterVertically
+                            verticalAlignment = Alignment.Bottom,
+                            modifier = Modifier
+                                .padding(0.dp,0.dp,0.dp,10.dp)
                         ) {
                             Text(
                                 text = index.toString(),
@@ -216,10 +181,12 @@ fun SearchPageWithEvent(context: Context, navController: NavHostController) {
                                     FontBlack,
                                     index<=3
                                 ),
-                                fontSize = 30.sp,
+                                fontSize = 20.sp,
                                 fontWeight = FontWeight.Bold
                             )
-                            Spacer(modifier = Modifier.width(5.dp).background(Color.White))
+                            Spacer(modifier = Modifier
+                                .width(5.dp)
+                                .background(Color.White))
                             Text(
                                 text = it,
                                 fontSize=16.sp,
@@ -232,6 +199,7 @@ fun SearchPageWithEvent(context: Context, navController: NavHostController) {
         }
     }
 }
+
 
 
 private fun returnActivity(navController: NavHostController) {
