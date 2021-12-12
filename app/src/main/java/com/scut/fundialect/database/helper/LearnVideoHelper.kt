@@ -22,8 +22,33 @@ object LearnVideoHelper {
     /**
      * 自动获取下一个视频。
      * 视频内容不会重样
-     * 所有查询语句都封装好了，你一点都看不着。
+     * 所有查询语句都封装好了。
      * **/
+
+    @SuppressLint("Recycle", "Range")
+    fun search(keyStr:String): List<VideoInfo> {
+        val results = learnDB.query(
+            "commentInfo",
+            null,
+            "LIKE'%${keyStr}%'",
+            null,
+            null,
+            null,
+            null)
+        var videoInfoList: MutableList<VideoInfo> = mutableListOf<VideoInfo>()
+
+
+        if (results.moveToFirst()) {
+            do {
+                // 遍历Cursor对象，取出数据并打印
+                val id = results.getInt(results.getColumnIndex("id"))
+                videoInfoList+=VideoInfo(id)
+
+            } while (results.moveToNext())
+        }
+        results.close()
+        return videoInfoList
+    }
     fun getNextVideo():VideoInfo{
         try {
             return VideoInfo(++lastShowedVideo)
