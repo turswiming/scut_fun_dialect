@@ -2,6 +2,7 @@ package com.scut.fundialect.activity.video
 
 import android.widget.Toast
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
@@ -104,7 +105,8 @@ fun VideoPlayerWithText(gotoDubPage:()->Unit,
      *
      *
      * */
-    Box(modifier = Modifier.fillMaxSize()) {
+    Box(modifier = Modifier.fillMaxSize().background(color = Color.Black).padding(0.dp,0.dp,0.dp,60.dp),
+        contentAlignment = Alignment.Center) {
         /**
          *
          *
@@ -128,8 +130,7 @@ fun VideoPlayerWithText(gotoDubPage:()->Unit,
                 lifecycleOwner.lifecycle.removeObserver(observer)
             }
         }
-        //TODO: 2021/12/8 对视频源进行延迟赋值。
-        //videoPlayerController.setSource(VideoPlayerSource.Raw(R.raw.video1))
+        videoPlayerController.setSource(VideoPlayerSource.Raw(R.raw.video1))
         VideoPlayer2(
             videoPlayerController = videoPlayerController,
             backgroundColor = Color.Transparent,
@@ -155,7 +156,8 @@ fun VideoPlayerWithText(gotoDubPage:()->Unit,
          * */
         Box(
             modifier = Modifier
-                    .fillMaxWidth(),
+                    .fillMaxWidth()
+                .padding(0.dp,0.dp,0.dp,0.dp),
             Alignment.BottomStart
 
         ) {
@@ -303,8 +305,8 @@ gotoDubPage()
 
                 FloatButton(likeNumber.toString(),
                     image = switch(
-                        R.drawable.unlike,
-                        R.drawable.ic_launcher_foreground,//记得完善！
+                        R.drawable.like,
+                        R.drawable.unlike,//记得完善！
                         videoIsLiked
                     ),
                     onClick = {

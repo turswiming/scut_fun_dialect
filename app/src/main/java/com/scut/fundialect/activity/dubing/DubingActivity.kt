@@ -126,7 +126,7 @@ fun DubingPageWithEvent(
                 TopAppBar(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(100.dp),
+                        .height(77.dp),
                     backgroundColor = Transparent,
                     elevation = 0.dp
                 ) {
@@ -246,7 +246,92 @@ fun DubingPageWithEvent(
     
 }
 
+@ExperimentalPagerApi
+@ExperimentalFoundationApi
+@Composable
+fun DubingPageWithEvent2(
+    initPageIndex:Int =2,
+    imageId:Int = R.drawable.dubbackground,
+    navController: NavHostController,
+    context: Context,
+    dubPageContent:@Composable () -> Unit,
+    barContent:@Composable () -> Unit
 
+) {
+    Box(modifier = Modifier.fillMaxSize()) {
+        Image(alignment = Alignment.TopCenter,
+            contentScale = ContentScale.Crop,
+            painter = painterResource(id = imageId), contentDescription = null)
+        var showedCityId = remember {
+            mutableStateListOf(2,3,4,5)
+        }
+        var cityStateNow by remember { mutableStateOf(0) }
+        var cityStateLast  by remember { mutableStateOf(0) }
+        Scaffold(
+            backgroundColor = Color.Transparent,
+            topBar = {
+                /**
+                 *
+                 * 这里面是一整个上面的bar，包括搜索按钮和选择城市的按钮
+                 *
+                 * */
+//            DubingTopAppBar(cityStateNow,
+//                cityStateLast,
+//                navController = navController,
+//                onSelectPageChange = {
+//                }
+//            )
+
+
+                TopAppBar(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(77.dp),
+                    backgroundColor = Transparent,
+                    elevation = 0.dp
+                ) {
+                    Column(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .fillMaxHeight()
+                            .background(color = Transparent),
+
+                        ) {
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .height(50.dp),
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.SpaceBetween,
+                        ) {
+                            barContent()
+
+                        }
+//            var (cityStateNow, cityStateLast) = pair(ColorMode.dark,showedCityId)
+
+
+                    }
+                }
+            },
+            bottomBar ={
+                MyButtonAppBar(
+                    colorMode = ColorMode.light,
+                    gotoAnotherActivity = {gotoAnotherActivity(navController,it)},
+                    onStateChange = {
+
+                    },
+                    initPageIndex = initPageIndex
+                )
+            }
+
+        ) {
+            dubPageContent()
+
+        }
+    }
+//    var showCitySelectPage by remember { mutableStateOf(false)}
+
+}
 @ExperimentalFoundationApi
 @Composable
 private fun CitySelectPage(onselectCityChange:(CityId: Int)->Unit) {

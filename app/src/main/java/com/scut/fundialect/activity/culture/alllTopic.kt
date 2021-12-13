@@ -18,6 +18,7 @@ import com.google.accompanist.pager.ExperimentalPagerApi
 import com.scut.fundialect.MyApplication
 import com.scut.fundialect.R
 import com.scut.fundialect.activity.dubing.DubingPageWithEvent
+import com.scut.fundialect.activity.dubing.DubingPageWithEvent2
 import com.scut.fundialect.database.helper.TopicHelper
 import com.scut.fundialect.database.helper.UserHelpr
 import com.scut.fundialect.ui.theme.FontGray
@@ -30,21 +31,15 @@ fun AlllTopicPageWithEvent() {
 @ExperimentalFoundationApi
 @ExperimentalPagerApi
 @Composable
-fun AlllTopicPage(navController: NavHostController, topicId:String){
-    Toast.makeText(MyApplication.context,"开始载入compose", Toast.LENGTH_SHORT).show()
-    val topicInfo = TopicHelper.cathe[topicId.toInt()]
-    Toast.makeText(MyApplication.context,"开始载入用户数据", Toast.LENGTH_SHORT).show()
-    val uploader = UserHelpr.UserInfo(topicInfo.videoUploaderId)
-    DubingPageWithEvent(
+fun AlllTopicPage(navController: NavHostController){
+
+
+    DubingPageWithEvent2(
         initPageIndex = 1,
         R.drawable.detal,
         navController = navController,
         context = MyApplication.context,
         barContent ={
-            /**
-             * 左上角的俩大字
-             *
-             * */
             /**
              * 左上角的俩大字
              *
@@ -85,7 +80,6 @@ fun AlllTopicPage(navController: NavHostController, topicId:String){
             )
         },
         dubPageContent={
-            Toast.makeText(MyApplication.context,"开始载入内容", Toast.LENGTH_SHORT).show()
             Column(
                 Modifier
                     .fillMaxSize()

@@ -305,7 +305,7 @@ fun ScrollBoxes(
                                     .size(30.dp)
                                     .background(Color.White)
                                     .clickable {
-                                        TODO()
+
                                     }
 
                             )

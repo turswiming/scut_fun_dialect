@@ -24,6 +24,8 @@ import com.scut.fundialect.R
 import com.scut.fundialect.activity.compose.MyButtonAppBar
 import com.scut.fundialect.activity.compose.SearchTopAppBar
 import com.scut.fundialect.activity.compose.gotoAnotherActivity
+import com.scut.fundialect.activity.culture.CultureShowBox
+import com.scut.fundialect.activity.culture.toUriStr
 import com.scut.fundialect.database.helper.LearnVideoHelper
 import com.scut.fundialect.database.helper.LearnVideoHelper.search
 import com.scut.fundialect.database.helper.UserHelpr
@@ -60,7 +62,7 @@ fun SearchOutcome(
                 onSearch = {
                     searchStr = it
                 }
-            )
+            ,onValueChange = {searchStr =it })
         },
         bottomBar={
             MyButtonAppBar(
@@ -74,13 +76,16 @@ fun SearchOutcome(
         }
 
     ){
-//        Toast.makeText(context,"准备获取结果",Toast.LENGTH_SHORT).show()
         val results = search(searchStr)
-//        Toast.makeText(context,"准备显示列表",Toast.LENGTH_SHORT).show()
         LazyColumn(content = {
             items(results.size) {index->
-//                Toast.makeText(context,"准备显示每一个视频框",Toast.LENGTH_SHORT).show()
-                SearchVideoBoxWithEvent(results[index])
+                if (location==0||location==2){
+                    SearchVideoBoxWithEvent(results[index])
+
+                }
+                if (location==1){
+                    SearchVideoBox2WithEvent(results[index])
+                }
             }
         })
     }
@@ -98,6 +103,21 @@ fun SearchVideoBoxWithEvent(videoInfo: LearnVideoHelper.VideoInfo){
         videoInfo.videoUpdateTime.toLong().toDateStr(),
     )
 }
+@Composable
+fun SearchVideoBox2WithEvent(videoInfo: LearnVideoHelper.VideoInfo){
+    val userinfo =  UserHelpr.UserInfo(videoInfo.videoUploaderId)
+    Box(Modifier.width(210.dp))
+    CultureShowBox(
+        clickable = {
+        },
+        videoInfo.videoName,
+        videoInfo.videoIntroduce,
+        videoInfo.videoPicUri,
+        videoInfo.videoPicUri,
+        userinfo.userNickName,
+        videoInfo.videoUploaderId.toLong().toDateStr(),
+        videoInfo.videoLike,
+    )}
 @Composable
 @Preview
 fun SearchVideoBoxPreview(){

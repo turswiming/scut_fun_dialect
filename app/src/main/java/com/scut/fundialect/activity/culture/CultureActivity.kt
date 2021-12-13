@@ -45,7 +45,10 @@ fun CulturePageMainAll(
         navController,
         context,
         CulturePageContent = {
-            DubMainPage(navController,onCheckMore = { TODO()})
+            DubMainPage(navController,
+                onCheckMore = {
+                navController.navigate("allTopic")
+            })
         },
         barContent = {
             /**
@@ -71,7 +74,7 @@ fun CulturePageMainAll(
                 modifier = Modifier
                     .size(20.dp)
                     .clickable {
-                        navController.navigate("SearchPage/${2}")
+                        navController.navigate("SearchPage/${1}")
 
                     }
 
@@ -186,6 +189,10 @@ fun DubMainPage(navController:NavHostController,
                         selected = state == index,
                         onClick = {
                             state = index
+                            if(index==1){
+                                onCheckMore()
+
+                            }
 
                         }
                     )
@@ -270,9 +277,8 @@ fun DubMainPage(navController:NavHostController,
         Row(horizontalArrangement = Arrangement.SpaceBetween,modifier = Modifier.fillMaxWidth()) {
             Row(
                 Modifier.clickable {
-                // TODO: 2021/12/13
 
-//                navController.navigate("HotSuggested")
+                navController.navigate("HotSuggested")
             }
             ) {
                 Text(text = "热门话题",fontSize = 18.sp)
@@ -285,8 +291,7 @@ fun DubMainPage(navController:NavHostController,
                 )
             }
             Row(Modifier.clickable {
-                // TODO: 2021/12/13
-//                navController.navigate("HotSuggested")
+                navController.navigate("HotSuggested")
             }
             ) {
                 Text(text = "查看更多")

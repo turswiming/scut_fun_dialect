@@ -29,6 +29,7 @@ import androidx.navigation.compose.rememberNavController
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.scut.fundialect.MyApplication
 import com.scut.fundialect.R
+import com.scut.fundialect.activity.culture.AlllTopicPage
 import com.scut.fundialect.activity.culture.CulturePageMainAll
 import com.scut.fundialect.activity.culture.TopicDetalPage
 import com.scut.fundialect.activity.dubing.*
@@ -38,6 +39,7 @@ import com.scut.fundialect.activity.learn.LearnVideoPageWithEvent
 import com.scut.fundialect.activity.login.AdWithEvent
 import com.scut.fundialect.activity.myself.DraftVideoPlayerWithEvent
 import com.scut.fundialect.activity.myself.MyselfPageWithEvent
+import com.scut.fundialect.activity.myself.PicContainer
 import com.scut.fundialect.activity.search.SearchOutcome
 import com.scut.fundialect.activity.search.SearchPageWithEvent
 import com.scut.fundialect.database.*
@@ -113,6 +115,7 @@ class LoginActivity : BaseActivity() {
                     )
                 }
             }
+            composable("allTopic") { AlllTopicPage(navController) }
 
             composable("DubbingPage") { dubbingPageMainAll(navController, context) }
             composable("OtherWorks") { OtherWorks(navController, context) }
@@ -142,6 +145,15 @@ class LoginActivity : BaseActivity() {
                     Toast.makeText(MyApplication.context,it.toString(),Toast.LENGTH_SHORT).show()
                     DraftVideoPlayerWithEvent(navController,
                         it
+                    )
+                }
+            }
+            composable("PicContainer/{imgId}") {
+                    backStackEntry->
+                backStackEntry.arguments?.getString("imgId")?.let {
+                    Toast.makeText(MyApplication.context,it.toString(),Toast.LENGTH_SHORT).show()
+                    PicContainer(it.toInt(),navController,
+
                     )
                 }
             }

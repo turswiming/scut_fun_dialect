@@ -140,7 +140,7 @@ fun MyselfMainPage(
          * 上面的方框，包括打卡地點，粉絲，關注，詞庫等
          *
          * */
-        MyBox()
+        MyBox(navController)
         Spacer(modifier = Modifier.height(15.dp))
 
         /**
@@ -287,7 +287,7 @@ fun MyselfMainPage(
 }
 
 @Composable
-private fun MyBox() {
+private fun MyBox(navController: NavHostController) {
     Surface(
         modifier = Modifier
             .fillMaxWidth()
@@ -326,7 +326,9 @@ private fun MyBox() {
                         painter = painterResource(id = R.drawable.myself3),
                         contentDescription = null,
                         Modifier
-                            .clickable { TODO() }
+                            .clickable {
+                                navController.navigate("PicContainer/${R.drawable.mymap}")
+                            }
                             .size(45.dp, 30.dp),
                         alignment = Alignment.BottomStart
                     )
@@ -335,7 +337,9 @@ private fun MyBox() {
                     painter = painterResource(id = R.drawable.myselfchinamap),
                     contentDescription = null,
                     Modifier
-                        .clickable { TODO() }
+                        .clickable {
+                            navController.navigate("PicContainer/${R.drawable.mymap}")
+                        }
                         .size(120.dp)
 
                 )
@@ -356,9 +360,15 @@ private fun MyBox() {
                     /**
                      * 粉絲，關注和詞庫這三個按鈕
                      * */
-                    MyButton(onclick = {}, text1 = "粉丝", text2 = "123")
-                    MyButton(onclick = {}, text1 = "关注", text2 = "13")
-                    MyButton(onclick = {}, text1 = "词库", text2 = "100")
+                    MyButton(onclick = {
+                        navController.navigate("PicContainer/${R.drawable.myfans}")
+                    }, text1 = "粉丝", text2 = "123")
+                    MyButton(onclick = {
+                        navController.navigate("PicContainer/${R.drawable.mysight}")
+                    }, text1 = "关注", text2 = "13")
+                    MyButton(onclick = {
+                        navController.navigate("LearnPage")
+                    }, text1 = "词库", text2 = "100")
 
                 }
             }

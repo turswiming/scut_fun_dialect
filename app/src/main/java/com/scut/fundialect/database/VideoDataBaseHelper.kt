@@ -30,7 +30,7 @@ open class VideoDataBaseHelper(val context: Context, name:String, version:Int):
             "videoIsCollect integer default ${(0..1).random()}," +
             "videoIntroduce text default \"上传的人很懒，什么都没写\"," +
             "videoUpdateTime integer default \"上传的人很懒，什么都没写\"," +
-            "videoPicUri text default \"android.resource://${context.packageName}/${R.raw.defaultpic}\"," +
+            "videoPicUri text default \"android.resource://${context.packageName}/${R.drawable.video1}\"," +
             "videoBelongCityId integer  default 1" +
             ")"
     val initCommetDatabase = "create table "+commentTableName+" (" +
@@ -54,13 +54,13 @@ open class VideoDataBaseHelper(val context: Context, name:String, version:Int):
         repeat(5){
             val value1 = ContentValues().apply {
                 put("videoUri","android.resource://${context.packageName}/${R.raw.video1}")
-                put("videoName", "欣赏黑色")
+//                put("videoName", "欣赏黑色")
                 put("videoLike", 342)
                 put("videoIsLiked", 0)
                 put("videoCollect", 134)
                 put("videoIsCollect", 0)
-                put("videoPicUri","${toUriStr(R.raw.defaultpic)}")
-                put("videoIntroduce", "这是关于一个黑色的故事")
+                put("videoPicUri","${toUriStr(R.drawable.video1)}")
+//                put("videoIntroduce", "这是关于一个黑色的故事")
                 //SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS")
                 put("videoUpdateTime", Date().time -300000000)
                 put("videoBelongCityId", 1)
@@ -68,14 +68,14 @@ open class VideoDataBaseHelper(val context: Context, name:String, version:Int):
             db?.insert("videoInfo",null,value1)
             val value2 = ContentValues().apply {
                 put("videoUri","android.resource://${context.packageName}/${R.raw.video2}")
-                put("videoName", "欣赏蓝色")
+//                put("videoName", "欣赏蓝色")
                 put("videoLike", 3420)
                 put("videoIsLiked", 1)
                 put("videoCollect", 1304)
-                put("videoPicUri","${toUriStr(R.raw.defaultpic)}")
+                put("videoPicUri","${toUriStr(R.drawable.video2)}")
 
                 put("videoIsCollect", 0)
-                put("videoIntroduce", "这是关于一个蓝色的故事")
+//                put("videoIntroduce", "这是关于一个蓝色的故事")
                 put("videoUpdateTime", Date().time -600000000)
                 put("videoBelongCityId", 1)
 
@@ -84,14 +84,14 @@ open class VideoDataBaseHelper(val context: Context, name:String, version:Int):
             val value3 = ContentValues().apply {
                 put("videoUri","android.resource://${context.packageName}/${R.raw.video3}")
 
-                put("videoName", "欣赏橙色")
+//                put("videoName", "欣赏橙色")
                 put("videoLike", 1342)
                 put("videoIsLiked", 1)
                 put("videoCollect", 134)
-                put("videoPicUri","${toUriStr(com.scut.fundialect.R.raw.defaultpic)}")
+                put("videoPicUri","${toUriStr(com.scut.fundialect.R.drawable.video3)}")
 
                 put("videoIsCollect", 0)
-                put("videoIntroduce", "这是关于一个橙色的故事")
+//                put("videoIntroduce", "这是关于一个橙色的故事")
                 put("videoUpdateTime", Date().time -60000000)
                 put("videoBelongCityId", 1)
 
@@ -100,19 +100,35 @@ open class VideoDataBaseHelper(val context: Context, name:String, version:Int):
             val value4 = ContentValues().apply {
                 put("videoUri","android.resource://${context.packageName}/${R.raw.video4}")
 
-                put("videoName", "欣赏绿色")
+//                put("videoName", "欣赏绿色")
                 put("videoLike", 342)
                 put("videoIsLiked", 0)
                 put("videoCollect", 134)
                 put("videoIsCollect", 1)
-                put("videoPicUri","${toUriStr(com.scut.fundialect.R.raw.defaultpic)}")
+                put("videoPicUri","${toUriStr(com.scut.fundialect.R.drawable.video4)}")
 
-                put("videoIntroduce", "这是关于一个绿色的故事")
+//                put("videoIntroduce", "这是关于一个绿色的故事")
                 put("videoUpdateTime", Date().time -6000000)
                 put("videoBelongCityId", 1)
 
             }
             db?.insert("videoInfo",null,value4)
+            val value5 = ContentValues().apply {
+                put("videoUri","android.resource://${context.packageName}/${R.raw.video5}")
+
+//                put("videoName", "欣赏绿色")
+                put("videoLike", 342)
+                put("videoIsLiked", 0)
+                put("videoCollect", 134)
+                put("videoIsCollect", 1)
+                put("videoPicUri","${toUriStr(com.scut.fundialect.R.drawable.video5)}")
+
+//                put("videoIntroduce", "这是关于一个绿色的故事")
+                put("videoUpdateTime", Date().time -6000000)
+                put("videoBelongCityId", 1)
+
+            }
+            db?.insert("videoInfo",null,value5)
 
         }
 

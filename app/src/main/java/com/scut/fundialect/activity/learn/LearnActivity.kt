@@ -88,7 +88,9 @@ public fun LearnVideoPageWithEvent(context: Context, navController: NavHostContr
          *
          * **/
         MySelectedPage(
-            gotoDubPage={ TODO()},
+            gotoDubPage={
+                        navController.navigate("DubbingPage")
+            },
             showedPage1,
             onStateChange = {
                     k, value ->

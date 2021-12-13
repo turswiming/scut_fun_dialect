@@ -351,7 +351,8 @@ fun Comment(it: LearnVideoHelper.CommentInfo) {
                         isLike
                     )
                 ),
-                contentDescription = "点赞"
+                contentDescription = "点赞",
+                modifier = Modifier.size(30.dp)
             )
             Text(
                 text = numberLiked.toString(),

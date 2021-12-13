@@ -49,9 +49,14 @@ class LearnSearchActivity : BaseComposeActivity() {
 @ExperimentalFoundationApi
 @Composable
 fun SearchPageWithEvent(context: Context, navController: NavHostController,location:Int) {
+    var search by remember {
+        mutableStateOf("")
+    }
     Scaffold(
         topBar = {
-            SearchTopAppBar("",
+            SearchTopAppBar(
+
+                search,
                 onReturn = {
                     navController.popBackStack()
                 },
@@ -60,6 +65,8 @@ fun SearchPageWithEvent(context: Context, navController: NavHostController,locat
                         navController.navigate("SearchOutcomePage/${it}/${location}")
 
                     }
+                },onValueChange = {
+                    search = it
                 }
             )
         }
@@ -130,6 +137,9 @@ fun SearchPageWithEvent(context: Context, navController: NavHostController,locat
                                 .width(70.dp)
                                 .height(32.dp)
                                 .padding(5.dp)
+                                .clickable {
+                                    search+=textList[index]
+                                }
                                 .background(
                                     color = BackgroundLightGrey,
                                     shape = RoundedCornerShape(5.dp),
@@ -175,7 +185,9 @@ fun SearchPageWithEvent(context: Context, navController: NavHostController,locat
                             horizontalArrangement = Arrangement.End,
                             verticalAlignment = Alignment.Bottom,
                             modifier = Modifier
-                                .padding(0.dp,0.dp,0.dp,10.dp)
+                                .padding(0.dp,0.dp,0.dp,10.dp).clickable {
+                                    navController.navigate("SearchOutcomePage/${it}/${location}")
+                                }
                         ) {
                             Text(
                                 text = index.toString(),

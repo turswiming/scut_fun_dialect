@@ -20,7 +20,7 @@ import com.scut.fundialect.R
 import com.scut.fundialect.ui.theme.BackgroundLightGrey
 
 @Composable
-fun SearchTopAppBar(searchStrIncome:String,
+fun SearchTopAppBar(searchStrIncome:String,onValueChange:(String)->Unit,
     onReturn:()->Unit,
     onSearch:(String)->Unit,
 ) {
@@ -59,7 +59,7 @@ fun SearchTopAppBar(searchStrIncome:String,
                     .size(20.dp)
 
             )
-            var text by remember { mutableStateOf(searchStrIncome) }
+            var text =searchStrIncome
 
             Surface(
                 modifier = Modifier
@@ -70,10 +70,10 @@ fun SearchTopAppBar(searchStrIncome:String,
             ) {
                 BasicTextField(
                     maxLines = 1,
-                    value = text,
+                    value = searchStrIncome,
                     singleLine = true,
                     onValueChange = { it ->
-                        text = it
+                        onValueChange(it)
                     },
                     textStyle = TextStyle(fontSize = 20.sp),
                     modifier = Modifier
@@ -86,7 +86,7 @@ fun SearchTopAppBar(searchStrIncome:String,
                 fontSize = 18.sp,
                 modifier = Modifier
                     .clickable {
-                        onSearch(text)
+                        onSearch(searchStrIncome)
                     },
             )
 

@@ -47,7 +47,6 @@ fun TopicDetalPage(navController: NavHostController,topicId:String){
              * 左上角的俩大字
              *
              * */
-            Toast.makeText(context,"开始载入Bar",Toast.LENGTH_SHORT).show()
             Image(
                 painter = painterResource(id = R.drawable.back),
                 contentDescription = "search icon",

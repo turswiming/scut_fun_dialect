@@ -112,7 +112,7 @@ object TopicHelper {
             null,
             null,
             null)
-        var modelVideoCathe: MutableList<TopicCathe> = mutableListOf(TopicCathe(),TopicCathe())
+        var modelVideoCathe: MutableList<TopicCathe> = mutableListOf(TopicCathe())
 
 //        Toast.makeText(context,"准备读取数据库",Toast.LENGTH_SHORT).show()
         if (results.moveToFirst()) {

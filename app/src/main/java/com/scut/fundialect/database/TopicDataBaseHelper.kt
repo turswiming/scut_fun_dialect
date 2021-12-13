@@ -54,13 +54,13 @@ open class TopicDataBaseHelper(val context: Context, name:String, version:Int):
         repeat(5){
             val value1 = ContentValues().apply {
                 put("videoUri","android.resource://${context.packageName}/${R.raw.video1}")
-                put("videoName", "欣赏黑色")
+                put("videoName", "所以，冬天到底是北方冷还是南方冷？")
                 put("videoLike", 342)
                 put("videoIsLiked", 0)
                 put("videoCollect", 134)
                 put("videoIsCollect", 0)
-                put("videoPicUri","${toUriStr(R.raw.defaultpic)}")
-                put("videoIntroduce", "这是关于一个黑色的故事")
+                put("videoPicUri","${toUriStr(R.drawable.p1)}")
+                put("videoIntroduce", "冬天渐渐来啦~又到了一年一度南北冷度比拼时间！南方人体会不到北方下雪下冰雹的寒冷，北方人也理解不了不到零下的温度怎么让人手脚冰冷的~来这里，说说你的冬日感受吧！")
                 //SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS")
                 put("videoUpdateTime", Date().time -300000000)
                 put("videoBelongCityId", 1)
@@ -68,14 +68,14 @@ open class TopicDataBaseHelper(val context: Context, name:String, version:Int):
             db?.insert("videoInfo",null,value1)
             val value2 = ContentValues().apply {
                 put("videoUri","android.resource://${context.packageName}/${R.raw.video2}")
-                put("videoName", "欣赏蓝色")
+                put("videoName", "山东人的倒装句是真文学瑰宝~")
                 put("videoLike", 3420)
                 put("videoIsLiked", 1)
                 put("videoCollect", 1304)
-                put("videoPicUri","${toUriStr(R.raw.defaultpic)}")
+                put("videoPicUri","${toUriStr(R.raw.p2)}")
 
                 put("videoIsCollect", 0)
-                put("videoIntroduce", "这是关于一个蓝色的故事")
+                put("videoIntroduce", "最近，#倒装句突然有了灵魂#的话题常常挂在热搜，有9000多万人阅读并参与讨论。倒装句啊，果不其然！让我们来感受一下，倒装句的精辟之处嗷！")
                 put("videoUpdateTime", Date().time -600000000)
                 put("videoBelongCityId", 1)
 
@@ -84,46 +84,32 @@ open class TopicDataBaseHelper(val context: Context, name:String, version:Int):
             val value3 = ContentValues().apply {
                 put("videoUri","android.resource://${context.packageName}/${R.raw.video3}")
 
-                put("videoName", "欣赏橙色")
+                put("videoName", "粽子吃甜的还是咸的？")
                 put("videoLike", 1342)
                 put("videoIsLiked", 1)
                 put("videoCollect", 134)
-                put("videoPicUri","${toUriStr(com.scut.fundialect.R.raw.defaultpic)}")
+                put("videoPicUri","${toUriStr(com.scut.fundialect.R.drawable.p3)}")
 
                 put("videoIsCollect", 0)
-                put("videoIntroduce", "这是关于一个橙色的故事")
+                put("videoIntroduce", "每到端午节，各种各样的粽子争相上市，一年一度的粽子大战，也正式拉开帷幕。天下粽子，大致可分为\"京、浙、川、闽、粤\"五大流派，可盐可甜，让人一见“粽”情，欲罢不能。你喜欢那种口味？")
                 put("videoUpdateTime", Date().time -60000000)
                 put("videoBelongCityId", 1)
 
             }
-            db?.insert("videoInfo",null,value3)
-            val value4 = ContentValues().apply {
-                put("videoUri","android.resource://${context.packageName}/${R.raw.video4}")
 
-                put("videoName", "欣赏绿色")
-                put("videoLike", 342)
-                put("videoIsLiked", 0)
-                put("videoCollect", 134)
-                put("videoIsCollect", 1)
-                put("videoPicUri","${toUriStr(com.scut.fundialect.R.raw.defaultpic)}")
-
-                put("videoIntroduce", "这是关于一个绿色的故事")
-                put("videoUpdateTime", Date().time -6000000)
-                put("videoBelongCityId", 1)
-
-            }
-            db?.insert("videoInfo",null,value4)
 
         }
 
 
     }
     fun initCommentInfoDatabase(db: SQLiteDatabase?){
-        repeat(10){
+        val l1 = listOf<String>("你在南方的艳阳里大雪纷飞，我在北方的寒夜里四季如春，因为我有暖气。","南方人：“我这儿只有五度”，指，室内室外都只这个度数。",
+            "北方的冷，官方认证！","暖气是个好东西，但我们这儿没有~","属于是传的多厚都会被冻到的程度。")
+        l1.forEach {
             val value1 = ContentValues().apply {
-                put("parentId", (1..3).random())
+                put("parentId", 1)
                 put("commenterId", 2)
-                put("comment", "太哲学了，"+(2..50).random()+"简直是我看过最好看的")
+                put("comment", it)
                 put("commentTime", Date().time -100000*(0..100).random())
                 put("isLiked", (0..1).random())
                 put("numberLiked", (0..1000).random())
@@ -132,17 +118,37 @@ open class TopicDataBaseHelper(val context: Context, name:String, version:Int):
             }
             db?.insert("commentInfo",null,value1)
         }
-        repeat(30){
+        val l2 = listOf<String>("“我没说吧现在”！","“真不是这样啊我们山东人”",
+            "东北人前来挑战！不稀得说你我都","哈哈哈哈哈山东人致力于文学研究属于是","其实听起来还挺萌的如果习惯了的话")
+        l2.forEach {
             val value1 = ContentValues().apply {
-                put("parentId", (1..3).random())
-                put("commenterId", 1)
-                put("comment", "啥玩意儿啊，"+(2..5).random()+"垃圾回收站也不过如此")
+                put("parentId", 1)
+                put("commenterId", 2)
+                put("comment", it)
                 put("commentTime", Date().time -100000*(0..100).random())
                 put("isLiked", (0..1).random())
                 put("numberLiked", (0..1000).random())
+
+
             }
             db?.insert("commentInfo",null,value1)
         }
+        val l3 = listOf<String>("不会有人不喜欢吃红枣味的吧！","咸肉棕yyds！太好吃了！我馋了~",
+            "孩子才做选择，成年人我都要！","哈哈哈哈哈接地气就行 能买着什么味儿就吃什么味儿！","想念妈妈包的豆沙粽了55555555")
+        l3.forEach {
+            val value1 = ContentValues().apply {
+                put("parentId", 1)
+                put("commenterId", 2)
+                put("comment", it)
+                put("commentTime", Date().time -100000*(0..100).random())
+                put("isLiked", (0..1).random())
+                put("numberLiked", (0..1000).random())
+
+
+            }
+            db?.insert("commentInfo",null,value1)
+        }
+
 
     }
 

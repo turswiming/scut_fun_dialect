@@ -147,7 +147,6 @@ fun InDubbingPage(
                 }
             }
 
-            //TODO: 2021/12/8 对视频源进行延迟赋值。
             videoPlayerController.setSource(VideoPlayerSource.Raw(R.raw.video1))
             /**
              * 这个的高度是300dp,需要点开到videoplayer3里面再改
