@@ -101,6 +101,7 @@ object ModelVideoHelper {
     }
     lateinit var cathe:List<ModelVideoInfo.ModelVideoCathe>
 
+ @SuppressLint("Range")
  fun getTheCathe():List<ModelVideoInfo.ModelVideoCathe>{
              val results = ModelVideoHelper.modelDB.query(
             "videoInfo",
@@ -111,23 +112,39 @@ object ModelVideoHelper {
             null,
             null,
             null)
-        results.moveToFirst()
-            Toast.makeText(context,results.count.toString(),Toast.LENGTH_SHORT).show()
-        videoUri = results.getString(results.getColumnIndex("videoUri"))
-        Toast.makeText(context,videoUri,Toast.LENGTH_SHORT).show()
-            videoName = results.getString(results.getColumnIndex("videoName"))
-            videoIntroduce = results.getString(results.getColumnIndex("videoIntroduce"))
-            videoPicUri = results.getString(results.getColumnIndex("videoPicUri"))
+     var modelVideoCathe: MutableList<ModelVideoInfo.ModelVideoCathe> = mutableListOf()
 
-            videoLike = results.getInt(results.getColumnIndex("videoLike"))
-            videoUploaderId = results.getInt(results.getColumnIndex("videoUploaderId"))
-            videoCollect = results.getInt(results.getColumnIndex("videoCollect"))
-            videoUpdateTime = results.getInt(results.getColumnIndex("videoUpdateTime"))
-            videoBelongCityId = results.getInt(results.getColumnIndex("videoBelongCityId"))
-            videoIsLiked = toBool(results.getInt(results.getColumnIndex("videoIsLiked")))
-            videoIsCollect = toBool(results.getInt(results.getColumnIndex("videoIsCollect")))
-        results.close()
-        sleep(200)
+//        Toast.makeText(context,"准备读取数据库",Toast.LENGTH_SHORT).show()
+     if (results.moveToFirst()) {
+         do {
+             val videoId = results.getInt(results.getColumnIndex("id"))
+
+             val videoUri = results.getString(results.getColumnIndex("videoUri"))
+             val    videoName = results.getString(results.getColumnIndex("videoName"))
+             val    videoIntroduce = results.getString(results.getColumnIndex("videoIntroduce"))
+             val    videoPicUri = results.getString(results.getColumnIndex("videoPicUri"))
+
+             val       videoLike = results.getInt(results.getColumnIndex("videoLike"))
+             val    videoUploaderId = results.getInt(results.getColumnIndex("videoUploaderId"))
+             val    videoCollect = results.getInt(results.getColumnIndex("videoCollect"))
+             val    videoUpdateTime = results.getInt(results.getColumnIndex("videoUpdateTime"))
+             val    videoBelongCityId = results.getInt(results.getColumnIndex("videoBelongCityId"))
+             val    videoIsLiked = toBool(results.getInt(results.getColumnIndex("videoIsLiked")))
+             val    videoIsCollect = toBool(results.getInt(results.getColumnIndex("videoIsCollect")))
+             // 遍历Cursor对象，取出数据并打印
+             modelVideoCathe+= ModelVideoInfo.ModelVideoCathe(
+                 videoId,
+                 videoUri,
+                 videoName,
+                 videoIntroduce
+
+             )
+
+         } while (results.moveToNext())
+     }
+     results.close()
+//        Toast.makeText(context,"准备返回",Toast.LENGTH_SHORT).show()
+     return videoInfoList
  }
 
     @SuppressLint("Range")
@@ -295,21 +312,23 @@ class ModelVideoInfo(id:Int) {
 
     }
     @SuppressLint("Range", "Recycle")
-    class ModelVideoCathe(id:Int) {
+    class ModelVideoCathe(
+        val videoId:Int = 1,
+                          var videoUri:String = "android.resource://${context.packageName}/${R.raw.video1}",
+                          var videoName:String = "未命名视频",
+                          var videoIntroduce:String = "未命名视频",
+                          var videoPicUri:String = "android.resource://${context.packageName}/${R.raw.defaultpic}",
 
-        val videoId = id
-        var videoUri:String = "android.resource://${context.packageName}/${R.raw.video1}"
-        var videoName:String = "未命名视频"
-        var videoIntroduce:String = "未命名视频"
-        var videoPicUri:String = "android.resource://${context.packageName}/${R.raw.defaultpic}"
+                          var videoLike:Int = 0,
+                          var videoUploaderId:Int = 1,
+                          var videoCollect:Int = 0,
+                          var videoUpdateTime:Int = 10000000,
+                          var videoBelongCityId:Int = 1,
+                          var videoIsLiked:Boolean = false,
+                          var videoIsCollect:Boolean = false
+    ) {
 
-        var videoLike:Int = 0
-        var videoUploaderId:Int = 1
-        var videoCollect:Int = 0
-        var videoUpdateTime:Int = 10000000
-        var videoBelongCityId:Int = 1
-        var videoIsLiked:Boolean = false
-        var videoIsCollect:Boolean = false
+
 
 
 
