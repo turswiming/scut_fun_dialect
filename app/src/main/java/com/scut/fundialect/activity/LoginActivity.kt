@@ -8,15 +8,11 @@ import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.compositeOver
 import androidx.compose.ui.layout.ContentScale
@@ -33,10 +29,8 @@ import com.scut.fundialect.MyApplication
 import com.scut.fundialect.R
 import com.scut.fundialect.activity.dubing.*
 import com.scut.fundialect.activity.dubing.dubbingPageMainAll
-import com.scut.fundialect.activity.learn.LearnColloectPageWithEvent
+import com.scut.fundialect.activity.learn.LearnCollectPageWithEvent
 import com.scut.fundialect.activity.learn.LearnVideoPageWithEvent
-import com.scut.fundialect.activity.learn.goToSearchPage
-import com.scut.fundialect.activity.login.AdPage
 import com.scut.fundialect.activity.login.AdWithEvent
 import com.scut.fundialect.activity.myself.DraftVideoPlayerWithEvent
 import com.scut.fundialect.activity.myself.MyselfPageWithEvent
@@ -101,7 +95,7 @@ class LoginActivity : BaseActivity() {
             }
 
             composable("LearnVideoPage") { LearnVideoPageWithEvent(context,navController) }
-            composable("LearnPage") { LearnColloectPageWithEvent(context,navController) }
+            composable("LearnPage") { LearnCollectPageWithEvent(context,navController) }
 
             composable("CulturePage") {  }
 

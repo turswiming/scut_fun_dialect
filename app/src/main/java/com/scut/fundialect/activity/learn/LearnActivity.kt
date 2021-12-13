@@ -2,7 +2,6 @@ package com.scut.fundialect.activity.learn
 
 import android.content.Context
 import android.os.Bundle
-import android.widget.Toast
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
@@ -33,7 +32,6 @@ class LearnActivity : BaseComposeActivity() {
     @ExperimentalFoundationApi
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        Toast.makeText(this,"准备载入compose", Toast.LENGTH_SHORT).show()
         setContent {
             ComposeTutorialTheme {
                 // A surface container using the 'background' color from the theme
@@ -96,7 +94,6 @@ public fun LearnVideoPageWithEvent(context: Context, navController: NavHostContr
                     k, value ->
                 if(k!=0){
                     showedPage1[k-1] = value+2
-                    //Toast.makeText(context,"key\t$k\nvalue\t$value",Toast.LENGTH_SHORT).show()
                 }
             }
         )
@@ -108,9 +105,8 @@ public fun LearnVideoPageWithEvent(context: Context, navController: NavHostContr
 @ExperimentalFoundationApi
 @ExperimentalMaterialApi
 @Composable
-public fun LearnColloectPageWithEvent(context: Context, navController: NavHostController,
+public fun LearnCollectPageWithEvent(context: Context, navController: NavHostController,
 ) {
-
     var state1  by remember { mutableStateOf(0) }
     var showedPage1 = remember {
         mutableStateListOf(2,3,4,5)
@@ -138,7 +134,7 @@ public fun LearnColloectPageWithEvent(context: Context, navController: NavHostCo
                  *
                  *
                  * **/
-                MyWordLibraryPageWithEvent(navController = navController)
+            MyWordLibraryPageWithEvent(navController = navController)
 
 
         }

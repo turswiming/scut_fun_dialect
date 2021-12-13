@@ -1,5 +1,6 @@
 package com.scut.fundialect.activity.learn
 
+import android.widget.Toast
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.GridCells
@@ -25,6 +26,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.github.stuxuhai.jpinyin.PinyinFormat
 import com.github.stuxuhai.jpinyin.PinyinHelper
+import com.scut.fundialect.MyApplication.Companion.context
 import com.scut.fundialect.R
 import com.scut.fundialect.activity.compose.MyButtonAppBar
 import com.scut.fundialect.activity.compose.gotoAnotherActivity
@@ -55,9 +57,10 @@ fun preview(){
 @ExperimentalFoundationApi
 @Composable
 fun MyWordLibraryPageWithEvent(navController: NavHostController) {
-    MyWordLibraryPage(gotoAnotherActivity = {
-        gotoAnotherActivity(navController,it)
-    },
+    MyWordLibraryPage(
+        gotoAnotherActivity = {
+            gotoAnotherActivity(navController,it)
+                              },
         getCityName = { getCityName()},
         getCollectedVideo ={
             getCollectedVideo()

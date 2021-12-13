@@ -1,5 +1,6 @@
 package com.scut.fundialect.activity.dubing
 
+import android.widget.Toast
 import androidx.annotation.RestrictTo
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
@@ -23,6 +24,7 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.LifecycleOwner
 import androidx.navigation.NavHostController
+import com.scut.fundialect.MyApplication.Companion.context
 import com.scut.fundialect.R
 import com.scut.fundialect.activity.video.VideoPlayer3
 import com.scut.fundialect.activity.video.VideoPlayerSource
@@ -35,6 +37,7 @@ import java.util.*
 
 @Composable
 fun InDubbingWithEvent(navController: NavHostController,VideoId:Int){
+//    Toast.makeText(context,"准备载入compose",Toast.LENGTH_SHORT).show()
     InDubbingPage(
         onRestartClicked={
             navController.navigate("InDubbingWithEvent/${VideoId}")

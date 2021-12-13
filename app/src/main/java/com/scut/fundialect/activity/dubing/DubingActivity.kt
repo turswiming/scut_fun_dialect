@@ -1,8 +1,7 @@
 package com.scut.fundialect.activity.dubing
 
+//import androidx.compose.ui.tooling.preview.Preview
 import android.content.Context
-import android.os.Bundle
-import androidx.activity.compose.setContent
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.GridCells
@@ -11,20 +10,14 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.*
-import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.AnnotatedString
-import androidx.compose.ui.text.font.FontStyle
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
-//import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
@@ -34,38 +27,25 @@ import com.github.stuxuhai.jpinyin.PinyinHelper
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.rememberPagerState
+import com.scut.fundialect.MyApplication
+import com.scut.fundialect.MyApplication.Companion.context
 import com.scut.fundialect.R
-import com.scut.fundialect.activity.BaseComposeActivity
 import com.scut.fundialect.activity.compose.MyButtonAppBar
 import com.scut.fundialect.activity.compose.gotoAnotherActivity
-import com.scut.fundialect.activity.compose.pair
-import com.scut.fundialect.activity.learn.goToSearchPage
-import com.scut.fundialect.database.helper.*
+import com.scut.fundialect.database.helper.CityHelper
+import com.scut.fundialect.database.helper.ModelVideoHelper
 import com.scut.fundialect.database.helper.ModelVideoHelper.getCollectedModelVideo
+import com.scut.fundialect.database.helper.ModelVideoInfo
+import com.scut.fundialect.database.helper.UserHelpr
 import com.scut.fundialect.enum.ColorMode
 import com.scut.fundialect.help.switch
 import com.scut.fundialect.help.toDateStr
-import com.scut.fundialect.ui.theme.*
+import com.scut.fundialect.ui.theme.CustomOrange
+import com.scut.fundialect.ui.theme.FontWhite
+import com.scut.fundialect.ui.theme.SecondNavColor
+import com.scut.fundialect.ui.theme.Transparent
 import kotlinx.coroutines.delay
 
-class DubingActivity : BaseComposeActivity() {
-    @ExperimentalPagerApi
-    @ExperimentalFoundationApi
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContent {
-            ComposeTutorialTheme {
-                // A surface container using the 'background' color from the theme
-                /**
-                 * 这个页面的背景图放在这里。
-                 * */
-                Surface(color = MaterialTheme.colors.background) {
-//                    DubingPage(navController)
-                }
-            }
-        }
-    }
-}
 @ExperimentalFoundationApi
 @ExperimentalPagerApi
 @Composable
@@ -253,7 +233,6 @@ fun DubingPageWithEvent(
                 CitySelectPage(onselectCityChange = {
                     if (cityStateLast != 0) {
                         showedCityId[cityStateLast - 1] = it + 2
-                        //Toast.makeText(context,"key\t$k\nvalue\t$value",Toast.LENGTH_SHORT).show()
                     }
 //            showedCityId[cityStateLast] =it
                 })
