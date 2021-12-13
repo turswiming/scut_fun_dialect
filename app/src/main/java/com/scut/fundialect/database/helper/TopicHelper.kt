@@ -112,7 +112,7 @@ object TopicHelper {
             null,
             null,
             null)
-        var modelVideoCathe: MutableList<TopicCathe> = mutableListOf()
+        var modelVideoCathe: MutableList<TopicCathe> = mutableListOf(TopicCathe(),TopicCathe())
 
 //        Toast.makeText(context,"准备读取数据库",Toast.LENGTH_SHORT).show()
         if (results.moveToFirst()) {
@@ -262,10 +262,10 @@ object TopicHelper {
     }
 
     @SuppressLint("Range")
-    fun getCollectedTopic(): List<TopicInfo> {
+    fun getCollectedTopic(): List<TopicCathe> {
 
-    Toast.makeText(context,"getCollectedTopic",Toast.LENGTH_SHORT).show()
-        return listOf(TopicInfo(1), TopicInfo(2), TopicInfo(3),)
+//    Toast.makeText(context,"getCollectedTopic",Toast.LENGTH_SHORT).show()
+        return listOf(cathe[1], cathe[2], cathe[3],)
 
 
     }
@@ -290,39 +290,6 @@ object TopicHelper {
 
         var videoIsLiked:Boolean = cathe[idNow].videoIsLiked
         var videoIsCollect:Boolean = cathe[idNow].videoIsCollect
-
-//        init{
-////        videoUri = "android.resource://${context.packageName}/${R.raw.video2}"
-////        val results = ModelVideoHelper.modelDB.query(
-////            "videoInfo",
-////            null,
-////            "id = $id",
-////            null,
-////            null,
-////            null,
-////            null,
-////            null)
-////        results.moveToFirst()
-////            Toast.makeText(context,results.count.toString(),Toast.LENGTH_SHORT).show()
-////        videoUri = results.getString(results.getColumnIndex("videoUri"))
-////        Toast.makeText(context,videoUri,Toast.LENGTH_SHORT).show()
-////            videoName = results.getString(results.getColumnIndex("videoName"))
-////            videoIntroduce = results.getString(results.getColumnIndex("videoIntroduce"))
-////            videoPicUri = results.getString(results.getColumnIndex("videoPicUri"))
-////
-////            videoLike = results.getInt(results.getColumnIndex("videoLike"))
-////            videoUploaderId = results.getInt(results.getColumnIndex("videoUploaderId"))
-////            videoCollect = results.getInt(results.getColumnIndex("videoCollect"))
-////            videoUpdateTime = results.getInt(results.getColumnIndex("videoUpdateTime"))
-////            videoBelongCityId = results.getInt(results.getColumnIndex("videoBelongCityId"))
-////            videoIsLiked = toBool(results.getInt(results.getColumnIndex("videoIsLiked")))
-////            videoIsCollect = toBool(results.getInt(results.getColumnIndex("videoIsCollect")))
-////        results.close()
-////        sleep(200)
-//
-//
-//
-//        }
 
     }
     @SuppressLint("Range", "Recycle")

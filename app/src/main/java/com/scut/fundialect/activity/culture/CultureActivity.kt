@@ -252,12 +252,18 @@ fun DubMainPage(navController:NavHostController,
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
             val info =  TopicHelper.getCollectedTopic()
-            MyButton2(onclick = {
+            MyButton2(
+                onclick = {
                 navController.navigate("TopicDetalPage/${info[0].videoId}")
-            }, text1 = info[0].videoName,)
-            MyButton2(onclick = {
+            },
+                text1 = info[0].videoName,
+            )
+            MyButton2(
+                onclick = {
                 navController.navigate("TopicDetalPage/${info[1].videoId}")
-                                }, text1 = info[0].videoName,)
+                          },
+                text1 = info[0].videoName,
+            )
 
         }
         Spacer(modifier = Modifier.size(20.dp))
@@ -298,33 +304,23 @@ fun DubMainPage(navController:NavHostController,
 
         val info =  TopicHelper.getCollectedTopic()
         info.forEach {
-            CultureShowBoxWithEvent(it)
+            CultureShowBoxWithEvent(it,clickable = {
+                navController.navigate("TopicDetalPage/${it.videoId}")
+            })
             Spacer(modifier = Modifier.size(20.dp))
         }
     }
 }
 
-@Composable
-@Preview
-fun pre(){
-    Box(modifier = Modifier.size(400.dp,800.dp)) {
-        CultureShowBox(
-            "苏共中央到底有几个师？",
-            "我看反正比教皇多",
-            toUriStr(R.raw.defaultuserpic),
-            toUriStr(R.raw.defaultuserpic),
-            "托洛茨基",
-            "1919.11.10",
-            23,
-        )
-    }
-}
 
 @Composable
 
-fun CultureShowBoxWithEvent(it:TopicHelper.TopicInfo){
+fun CultureShowBoxWithEvent(it:TopicHelper.TopicCathe,clickable:()->Unit){
     val videoUploarder = UserHelpr.UserInfo(it.videoUploaderId)
     CultureShowBox(
+        clickable = {
+            clickable()
+        },
         it.videoName,
         it.videoIntroduce,
         it.videoPicUri,
@@ -336,7 +332,8 @@ fun CultureShowBoxWithEvent(it:TopicHelper.TopicInfo){
 }
 @Composable
 fun CultureShowBox(
-    name:String,
+    clickable:()->Unit,
+name:String,
     introduce:String,
     imguri:String,
     userImgUri:String,
@@ -349,7 +346,9 @@ fun CultureShowBox(
         color = Color.White,
         modifier = Modifier
             .fillMaxWidth()
-            .height(250.dp)
+            .height(250.dp).clickable {
+                clickable()
+            }
     ) {
         Column(
             modifier = Modifier

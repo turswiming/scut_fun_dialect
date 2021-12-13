@@ -52,6 +52,9 @@ fun dubbingPageMainAll(
     context: Context
 ) {
     DubingPageWithEvent(
+        initPageIndex=2,
+        R.drawable.dubbackground,
+
         navController,
         context,
         dubPageContent = {
@@ -87,6 +90,8 @@ fun dubbingPageMainAll(
 @ExperimentalFoundationApi
 @Composable
 fun DubingPageWithEvent(
+    initPageIndex:Int =2,
+    imageId:Int = R.drawable.dubbackground,
     navController: NavHostController,
     context: Context,
     dubPageContent:@Composable () -> Unit,
@@ -96,7 +101,7 @@ fun DubingPageWithEvent(
     Box(modifier = Modifier.fillMaxSize()) {
         Image(alignment = Alignment.TopCenter,
             contentScale = ContentScale.Crop,
-            painter = painterResource(id = R.drawable.dubbackground), contentDescription = null)
+            painter = painterResource(id = imageId), contentDescription = null)
         var showedCityId = remember {
             mutableStateListOf(2,3,4,5)
         }
@@ -221,7 +226,7 @@ fun DubingPageWithEvent(
                     onStateChange = {
 
                     },
-                    initPageIndex = 2
+                    initPageIndex = initPageIndex
                 )
             }
 

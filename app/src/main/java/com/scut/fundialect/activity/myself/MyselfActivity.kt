@@ -225,11 +225,11 @@ fun MyselfMainPage(
                 MyPictureShower(videos[0],navHostController = navController,
                     clickable = {
                         if(page==0){
-                            TODO()
-                        }
+                            Toast.makeText(context,"DraftVideoPlayer/${videos[0].videoId}",Toast.LENGTH_SHORT).show()
+                            navController.navigate("DraftVideoPlayer/${videos[0].videoId.toString()}")                        }
                         if(page==1){
-                            TODO()
-                        }
+                            Toast.makeText(context,"DraftVideoPlayer/${videos[0].videoId}",Toast.LENGTH_SHORT).show()
+                            navController.navigate("DraftVideoPlayer/${videos[0].videoId.toString()}")                        }
                         if(page==2){
                             Toast.makeText(context,"DraftVideoPlayer/${videos[0].videoId}",Toast.LENGTH_SHORT).show()
                             navController.navigate("DraftVideoPlayer/${videos[0].videoId.toString()}")
@@ -239,11 +239,11 @@ fun MyselfMainPage(
                 MyPictureShower(videos[1],navHostController = navController,
                     clickable = {
                         if(page==0){
-                            TODO()
-                        }
+                            Toast.makeText(context,"DraftVideoPlayer/${videos[1].videoId}",Toast.LENGTH_SHORT).show()
+                            navController.navigate("DraftVideoPlayer/${videos[1].videoId.toString()}")                        }
                         if(page==1){
-                            TODO()
-                        }
+                            Toast.makeText(context,"DraftVideoPlayer/${videos[1].videoId}",Toast.LENGTH_SHORT).show()
+                            navController.navigate("DraftVideoPlayer/${videos[1].videoId.toString()}")                        }
                         if(page==2){
                             Toast.makeText(context,"DraftVideoPlayer/${videos[1].videoId}",Toast.LENGTH_SHORT).show()
                             navController.navigate("DraftVideoPlayer/${videos[1].videoId.toString()}")

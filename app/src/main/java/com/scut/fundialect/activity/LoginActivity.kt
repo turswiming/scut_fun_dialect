@@ -106,7 +106,7 @@ class LoginActivity : BaseActivity() {
             composable("CulturePage") { CulturePageMainAll(navController,context) }
             composable("TopicDetalPage/{topicId}") {
                     backStackEntry->
-                backStackEntry.arguments?.getInt("videoId")?.let {
+                backStackEntry.arguments?.getString("topicId")?.let {
                     TopicDetalPage(
                         navController,
                         it

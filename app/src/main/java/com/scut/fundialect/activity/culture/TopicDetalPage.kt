@@ -32,12 +32,14 @@ import com.scut.fundialect.ui.theme.FontGray
 @ExperimentalFoundationApi
 @ExperimentalPagerApi
 @Composable
-fun TopicDetalPage(navController: NavHostController,topicId:Int){
+fun TopicDetalPage(navController: NavHostController,topicId:String){
     Toast.makeText(context,"开始载入compose",Toast.LENGTH_SHORT).show()
-    val topicInfo = TopicHelper.TopicInfo(topicId)
+    val topicInfo = TopicHelper.cathe[topicId.toInt()]
     Toast.makeText(context,"开始载入用户数据",Toast.LENGTH_SHORT).show()
     val uploader = UserHelpr.UserInfo(topicInfo.videoUploaderId)
     DubingPageWithEvent(
+        initPageIndex = 1,
+        R.drawable.detal,
         navController = navController,
         context = context,
         barContent ={
@@ -45,6 +47,7 @@ fun TopicDetalPage(navController: NavHostController,topicId:Int){
              * 左上角的俩大字
              *
              * */
+            Toast.makeText(context,"开始载入Bar",Toast.LENGTH_SHORT).show()
             Image(
                 painter = painterResource(id = R.drawable.back),
                 contentDescription = "search icon",
@@ -75,46 +78,57 @@ fun TopicDetalPage(navController: NavHostController,topicId:Int){
             )
         },
         dubPageContent={
+            Toast.makeText(context,"开始载入内容",Toast.LENGTH_SHORT).show()
             Column(
                 Modifier
                     .fillMaxSize()
-                    .verticalScroll(rememberScrollState())
+                    .verticalScroll(rememberScrollState()).padding(15.dp)
             ) {
+                Spacer(modifier = Modifier.height(20.dp))
+
                 TopBox(topicInfo.videoName)
+                Spacer(modifier = Modifier.height(20.dp))
+
                 Text(
-                    text = TopicHelper.getCommitNumber(topicId).toString() +"条评论",
+                    text = TopicHelper.getCommitNumber(topicInfo.videoId).toString() +"条评论",
                     color = FontGray
                 )
+                Spacer(modifier = Modifier.height(20.dp))
+
                 MiddleBox(
                     uploader.userNickName,
                     topicInfo.videoIntroduce,
                     topicInfo.videoPicUri
                 )
-                androidx.compose.material.Surface(
+                Spacer(modifier = Modifier.height(20.dp))
+                Surface(
                     shape = RoundedCornerShape(15.dp),
-                    modifier = Modifier.fillMaxWidth()
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(400.dp)
                 ) {
 //                    val commentInfos =
+                    Toast.makeText(context,"开始载入评论",Toast.LENGTH_SHORT).show()
+                    val videoCommit  = TopicHelper.getVideoComment(topicInfo.videoId)
+                    Toast.makeText(context,"开始载入评论compose",Toast.LENGTH_SHORT).show()
 
-                    LazyColumn(
-
-                    ){
-                        val videoCommit  = TopicHelper.getVideoComment(topicId)
-
-                        items(videoCommit.size){index->
-                            /**
-                             *
-                             * 这里是 每一个 评论。
-                             *
-                             * */
-                            /**
-                             *
-                             * 这里是 每一个 评论。
-                             *
-                             * */
-                            Comment(it = videoCommit[index])
+                    LazyColumn(modifier = Modifier.fillMaxSize(),
+                        content ={
+                            items(videoCommit.size){index->
+                                /**
+                                 *
+                                 * 这里是 每一个 评论。
+                                 *
+                                 * */
+                                /**
+                                 *
+                                 * 这里是 每一个 评论。
+                                 *
+                                 * */
+                                Comment(it = videoCommit[index])
+                            }
                         }
-                    }
+                    )
                 }
             }
 
@@ -129,6 +143,7 @@ fun TopicDetalPage(navController: NavHostController,topicId:Int){
  * */
 @Composable
 fun Comment(it: TopicHelper.CommentInfo) {
+    Toast.makeText(context,"开始载入每个评论",Toast.LENGTH_SHORT).show()
     var isLike by remember {
         mutableStateOf(it.isLiked )
     }
@@ -165,15 +180,15 @@ fun Comment(it: TopicHelper.CommentInfo) {
         Column(verticalArrangement = Arrangement.Top,
             horizontalAlignment = Alignment.Start,
             modifier = Modifier
-                .width(200.dp)
+                .width(250.dp)
                 .height(80.dp)) {
             Text(
                 text = commenterInfo.userNickName,
-                fontSize = 14.sp,)
+                fontSize = 18.sp,)
 
             Text(
                 text = it.comment,
-                fontSize = 12.sp,)
+                fontSize = 16.sp,)
 
         }
         Column(
@@ -200,7 +215,8 @@ fun Comment(it: TopicHelper.CommentInfo) {
                         isLike
                     )
                 ),
-                contentDescription = "点赞"
+                contentDescription = "点赞",
+                modifier = Modifier.size(30.dp)
             )
             Text(
                 text = numberLiked.toString(),
@@ -216,10 +232,11 @@ fun Comment(it: TopicHelper.CommentInfo) {
 @Composable
 fun TopBox(text:String){
     Surface(
+        shape = RoundedCornerShape(15.dp),
         elevation = 5.dp,
         modifier = Modifier
             .fillMaxWidth()
-            .height(50.dp)) {
+            .height(80.dp)) {
         Box(
             modifier = Modifier
                 .fillMaxSize()
