@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
@@ -27,6 +28,7 @@ import androidx.navigation.compose.rememberNavController
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.scut.fundialect.MyApplication
 import com.scut.fundialect.R
+import com.scut.fundialect.activity.culture.CulturePageMainAll
 import com.scut.fundialect.activity.dubing.*
 import com.scut.fundialect.activity.dubing.dubbingPageMainAll
 import com.scut.fundialect.activity.learn.LearnCollectPageWithEvent
@@ -37,6 +39,7 @@ import com.scut.fundialect.activity.myself.MyselfPageWithEvent
 import com.scut.fundialect.activity.search.SearchOutcome
 import com.scut.fundialect.activity.search.SearchPageWithEvent
 import com.scut.fundialect.database.*
+import com.scut.fundialect.database.helper.ModelVideoHelper
 import com.scut.fundialect.help.PicManager
 import com.scut.fundialect.help.VideoHelper
 import com.scut.fundialect.ui.theme.CustomBlue
@@ -97,7 +100,7 @@ class LoginActivity : BaseActivity() {
             composable("LearnVideoPage") { LearnVideoPageWithEvent(context,navController) }
             composable("LearnPage") { LearnCollectPageWithEvent(context,navController) }
 
-            composable("CulturePage") {  }
+            composable("CulturePage") { CulturePageMainAll(navController,context) }
 
             composable("DubbingPage") { dubbingPageMainAll(navController, context) }
             composable("OtherWorks") { OtherWorks(navController, context) }

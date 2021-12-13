@@ -10,18 +10,15 @@ import com.scut.fundialect.database.TopicDataBaseHelper
 
 @Suppress("unused")
 object TopicHelper {
-    var topicDB: SQLiteDatabase
-    lateinit var cathe:List<ModelVideoCathe>
 
-    init {
-        val topicDataBaseHelper = TopicDataBaseHelper(
-            MyApplication.context,
-            "Learn.db",
-            1
-        )
-        cathe = getTheCathe()
-        topicDB =topicDataBaseHelper.writableDatabase
-    }
+    val topicDataBaseHelper = TopicDataBaseHelper(
+        MyApplication.context,
+        "Learn.db",
+        1
+    )
+    var topicDB: SQLiteDatabase =topicDataBaseHelper.writableDatabase
+    var cathe:List<TopicCathe> = getTheCathe()
+
     fun getCommitNumber(videoId: Int):Int {
         return 666
     }
@@ -31,13 +28,13 @@ object TopicHelper {
      * 视频内容不会重样
      * 所有查询语句都封装好了，你一点都看不着。
      * **/
-    fun getNextVideo(): ModelVideoInfo {
+    fun getNextVideo(): TopicInfo {
         try {
-            return ModelVideoInfo(++lastShowedVideo)
+            return TopicInfo(++lastShowedVideo)
 
         } catch (e: Exception) {
             lastShowedVideo =1
-            return ModelVideoInfo(1)
+            return TopicInfo(1)
         }
     }
     @SuppressLint("Range")
@@ -102,7 +99,7 @@ object TopicHelper {
     }
 
     @SuppressLint("Range")
-    fun getTheCathe():List<ModelVideoCathe>{
+    fun getTheCathe():List<TopicCathe>{
         val results = topicDB.query(
             "videoInfo",
             null,
@@ -112,7 +109,7 @@ object TopicHelper {
             null,
             null,
             null)
-        var modelVideoCathe: MutableList<ModelVideoCathe> = mutableListOf()
+        var modelVideoCathe: MutableList<TopicCathe> = mutableListOf()
 
 //        Toast.makeText(context,"准备读取数据库",Toast.LENGTH_SHORT).show()
         if (results.moveToFirst()) {
@@ -132,7 +129,7 @@ object TopicHelper {
                 val    videoIsLiked = toBool(results.getInt(results.getColumnIndex("videoIsLiked")))
                 val    videoIsCollect = toBool(results.getInt(results.getColumnIndex("videoIsCollect")))
                 // 遍历Cursor对象，取出数据并打印
-                modelVideoCathe += ModelVideoCathe(
+                modelVideoCathe += TopicCathe(
                     videoId,
                     videoUri,
                     videoName,
@@ -261,63 +258,63 @@ object TopicHelper {
     }
 
     @SuppressLint("Range")
-    fun getCollectedModelVideo(): List<ModelVideoInfo> {
+    fun getCollectedTopic(): List<TopicInfo> {
 
 
-        return listOf(ModelVideoInfo(1), ModelVideoInfo(2), ModelVideoInfo(3),)
+        return listOf(TopicInfo(1), TopicInfo(2), TopicInfo(3),)
 
 
     }
     @SuppressLint("Range", "Recycle")
     class TopicInfo(id:Int) {
+        private val idNow =id-1
+        val videoId = cathe[idNow].videoId
+        var videoUri:String =  cathe[idNow].videoUri
+        var videoName:String = cathe[idNow].videoName
+        var videoIntroduce:String =  cathe[idNow].videoIntroduce
+        var videoPicUri:String = cathe[idNow].videoPicUri
 
-        val videoId = cathe[id].videoId
-        var videoUri:String =  cathe[id].videoUri
-        var videoName:String = cathe[id].videoName
-        var videoIntroduce:String =  cathe[id].videoIntroduce
-        var videoPicUri:String = cathe[id].videoPicUri
+        var videoLike:Int = cathe[idNow].videoLike
+        var videoUploaderId:Int = cathe[idNow].videoUploaderId
+        var videoCollect:Int = cathe[idNow].videoCollect
+        var videoUpdateTime:Int = cathe[idNow].videoUpdateTime
+        var videoBelongCityId:Int = cathe[idNow].videoBelongCityId
 
-        var videoLike:Int = cathe[id].videoLike
-        var videoUploaderId:Int = cathe[id].videoUploaderId
-        var videoCollect:Int = cathe[id].videoCollect
-        var videoUpdateTime:Int = cathe[id].videoUpdateTime
-        var videoBelongCityId:Int = cathe[id].videoBelongCityId
+        var videoIsLiked:Boolean = cathe[idNow].videoIsLiked
+        var videoIsCollect:Boolean = cathe[idNow].videoIsCollect
 
-        var videoIsLiked:Boolean = cathe[id].videoIsLiked
-        var videoIsCollect:Boolean = cathe[id].videoIsCollect
-
-        init{
-//        videoUri = "android.resource://${context.packageName}/${R.raw.video2}"
-//        val results = ModelVideoHelper.modelDB.query(
-//            "videoInfo",
-//            null,
-//            "id = $id",
-//            null,
-//            null,
-//            null,
-//            null,
-//            null)
-//        results.moveToFirst()
-//            Toast.makeText(context,results.count.toString(),Toast.LENGTH_SHORT).show()
-//        videoUri = results.getString(results.getColumnIndex("videoUri"))
-//        Toast.makeText(context,videoUri,Toast.LENGTH_SHORT).show()
-//            videoName = results.getString(results.getColumnIndex("videoName"))
-//            videoIntroduce = results.getString(results.getColumnIndex("videoIntroduce"))
-//            videoPicUri = results.getString(results.getColumnIndex("videoPicUri"))
+//        init{
+////        videoUri = "android.resource://${context.packageName}/${R.raw.video2}"
+////        val results = ModelVideoHelper.modelDB.query(
+////            "videoInfo",
+////            null,
+////            "id = $id",
+////            null,
+////            null,
+////            null,
+////            null,
+////            null)
+////        results.moveToFirst()
+////            Toast.makeText(context,results.count.toString(),Toast.LENGTH_SHORT).show()
+////        videoUri = results.getString(results.getColumnIndex("videoUri"))
+////        Toast.makeText(context,videoUri,Toast.LENGTH_SHORT).show()
+////            videoName = results.getString(results.getColumnIndex("videoName"))
+////            videoIntroduce = results.getString(results.getColumnIndex("videoIntroduce"))
+////            videoPicUri = results.getString(results.getColumnIndex("videoPicUri"))
+////
+////            videoLike = results.getInt(results.getColumnIndex("videoLike"))
+////            videoUploaderId = results.getInt(results.getColumnIndex("videoUploaderId"))
+////            videoCollect = results.getInt(results.getColumnIndex("videoCollect"))
+////            videoUpdateTime = results.getInt(results.getColumnIndex("videoUpdateTime"))
+////            videoBelongCityId = results.getInt(results.getColumnIndex("videoBelongCityId"))
+////            videoIsLiked = toBool(results.getInt(results.getColumnIndex("videoIsLiked")))
+////            videoIsCollect = toBool(results.getInt(results.getColumnIndex("videoIsCollect")))
+////        results.close()
+////        sleep(200)
 //
-//            videoLike = results.getInt(results.getColumnIndex("videoLike"))
-//            videoUploaderId = results.getInt(results.getColumnIndex("videoUploaderId"))
-//            videoCollect = results.getInt(results.getColumnIndex("videoCollect"))
-//            videoUpdateTime = results.getInt(results.getColumnIndex("videoUpdateTime"))
-//            videoBelongCityId = results.getInt(results.getColumnIndex("videoBelongCityId"))
-//            videoIsLiked = toBool(results.getInt(results.getColumnIndex("videoIsLiked")))
-//            videoIsCollect = toBool(results.getInt(results.getColumnIndex("videoIsCollect")))
-//        results.close()
-//        sleep(200)
-
-
-
-        }
+//
+//
+//        }
 
     }
     @SuppressLint("Range", "Recycle")

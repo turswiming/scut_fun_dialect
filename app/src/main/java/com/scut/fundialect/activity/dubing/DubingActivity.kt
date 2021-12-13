@@ -17,6 +17,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.AnnotatedString
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -27,15 +28,12 @@ import com.github.stuxuhai.jpinyin.PinyinHelper
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.rememberPagerState
-import com.scut.fundialect.MyApplication
-import com.scut.fundialect.MyApplication.Companion.context
 import com.scut.fundialect.R
 import com.scut.fundialect.activity.compose.MyButtonAppBar
 import com.scut.fundialect.activity.compose.gotoAnotherActivity
 import com.scut.fundialect.database.helper.CityHelper
 import com.scut.fundialect.database.helper.ModelVideoHelper
 import com.scut.fundialect.database.helper.ModelVideoHelper.getCollectedModelVideo
-import com.scut.fundialect.database.helper.ModelVideoInfo
 import com.scut.fundialect.database.helper.UserHelpr
 import com.scut.fundialect.enum.ColorMode
 import com.scut.fundialect.help.switch
@@ -64,7 +62,7 @@ fun dubbingPageMainAll(
              * 左上角的俩大字
              *
              * */
-            Text(text = "配音", fontSize = 24.sp, color = Color.White)
+            Text(text = "配音", fontSize = 24.sp, color = Color.White,fontWeight = FontWeight.Bold,modifier = Modifier.padding(20.dp,0.dp,0.dp,0.dp))
             /**
              *
              * 搜索按钮
@@ -320,7 +318,10 @@ fun DubMainPage(navController:NavHostController) {
                     .fillMaxSize()
                     .padding(15.dp)
             ) {
+//                var modelVideos:List<ModelVideoHelper.ModelVideoInfo>
                 val modelVideos = getCollectedModelVideo()
+
+
                 val pagerState = rememberPagerState(
                     //总页数
                     pageCount = modelVideos.size,
@@ -495,7 +496,8 @@ fun DubMainPage(navController:NavHostController) {
             Text(text = "热门推荐")
             Row(Modifier.clickable {
                 navController.navigate("HotSuggested")
-            }) {
+            }
+            ) {
                 Text(text = "查看更多")
                 Image(
                     painter = painterResource(id = R.drawable.back),
@@ -542,7 +544,7 @@ fun DubMainPage(navController:NavHostController) {
 }
 
 @Composable
-fun VerticalPicShower(modelVideos2: List<ModelVideoInfo>,navController: NavHostController) {
+fun VerticalPicShower(modelVideos2: List<ModelVideoHelper.ModelVideoInfo>, navController: NavHostController) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier
@@ -557,7 +559,7 @@ fun VerticalPicShower(modelVideos2: List<ModelVideoInfo>,navController: NavHostC
 
 @Composable
 fun HorizontalPicShower(
-    modelVideos: List<ModelVideoInfo>,
+    modelVideos: List<ModelVideoHelper.ModelVideoInfo>,
     navHostController: NavHostController,
     clickable:(Int)->Unit={
         navHostController.navigate("InDubbingPage/${it}")
@@ -635,7 +637,7 @@ fun HorizontalPicShower(
 
 @Composable
 fun MyPictureShower(
-    it: ModelVideoInfo,
+    it: ModelVideoHelper.ModelVideoInfo,
     navHostController: NavHostController,
     clickable:()->Unit={
     navHostController.navigate("InDubbingPage/${it.videoId}")
@@ -681,7 +683,7 @@ fun MyPictureShower(
                 modifier = Modifier
                     .size(30.dp)
                     .clickable {
-                        isCollect!=isCollect
+                        isCollect != isCollect
                         ModelVideoHelper.switchCollect(it.videoId)
                     },
                 contentDescription = "收藏按钮"

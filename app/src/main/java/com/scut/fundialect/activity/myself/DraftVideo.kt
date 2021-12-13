@@ -27,7 +27,6 @@ import com.scut.fundialect.activity.video.VideoPlayer2
 import com.scut.fundialect.activity.video.VideoPlayerSource
 import com.scut.fundialect.activity.video.rememberVideoPlayerController
 import com.scut.fundialect.database.helper.ModelVideoHelper
-import com.scut.fundialect.database.helper.ModelVideoInfo
 import com.scut.fundialect.ui.theme.FontBlack
 import com.scut.fundialect.ui.theme.FontWhite
 
@@ -99,7 +98,7 @@ fun DraftVideoPlayer(
 ) {
 //    SideEffect {
     var videoInfoState by remember {
-        mutableStateOf(ModelVideoInfo(videoId))
+        mutableStateOf(ModelVideoHelper.ModelVideoInfo(videoId))
     }
     Toast.makeText(context,videoInfoState.videoUri,Toast.LENGTH_SHORT).show()
 //    var likeNumber by remember { mutableStateOf(videoInfoState.videoLike) }

@@ -28,9 +28,9 @@ import com.scut.fundialect.activity.BaseComposeActivity
 import com.scut.fundialect.activity.compose.MyButtonAppBar
 import com.scut.fundialect.activity.compose.gotoAnotherActivity
 import com.scut.fundialect.activity.dubing.MyPictureShower
+import com.scut.fundialect.database.helper.ModelVideoHelper
 import com.scut.fundialect.database.helper.ModelVideoHelper.getCollectedModelVideo
 import com.scut.fundialect.database.helper.UserHelpr
-import com.scut.fundialect.database.helper.ModelVideoInfo
 import com.scut.fundialect.enum.ColorMode
 import com.scut.fundialect.help.PicManager.getBitmapFromUri
 import com.scut.fundialect.ui.theme.ComposeTutorialTheme
@@ -129,7 +129,7 @@ fun MyselfMainPage(
     navController: NavHostController,
     involvedTopic: () -> Unit,
     myStep: () -> Unit,
-    getVideoData:()-> List<ModelVideoInfo>,
+    getVideoData:()-> List<ModelVideoHelper.ModelVideoInfo>,
 ) {
     Column(
         Modifier
