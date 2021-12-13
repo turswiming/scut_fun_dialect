@@ -544,14 +544,14 @@ fun DubMainPage(navController:NavHostController) {
 }
 
 @Composable
-fun VerticalPicShower(modelVideos2: List<ModelVideoHelper.ModelVideoInfo>, navController: NavHostController) {
+fun VerticalPicShower(modelVideos2: List<ModelVideoHelper.ModelVideoCathe>, navController: NavHostController) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier
             .fillMaxWidth()
     ) {
         modelVideos2.forEach {
-            MyPictureShower(it,navHostController = navController)
+            MyPictureShower(it,navHostController = navController,clickable = {})
 
         }
     }
@@ -559,7 +559,7 @@ fun VerticalPicShower(modelVideos2: List<ModelVideoHelper.ModelVideoInfo>, navCo
 
 @Composable
 fun HorizontalPicShower(
-    modelVideos: List<ModelVideoHelper.ModelVideoInfo>,
+    modelVideos: List<ModelVideoHelper.ModelVideoCathe>,
     navHostController: NavHostController,
     clickable:(Int)->Unit={
         navHostController.navigate("InDubbingPage/${it}")
@@ -637,11 +637,9 @@ fun HorizontalPicShower(
 
 @Composable
 fun MyPictureShower(
-    it: ModelVideoHelper.ModelVideoInfo,
+    it: ModelVideoHelper.ModelVideoCathe,
     navHostController: NavHostController,
-    clickable:()->Unit={
-    navHostController.navigate("InDubbingPage/${it.videoId}")
-},
+    clickable:()->Unit,
     ImageSelected:Int=R.drawable.dub2,
     ImageUnSelected:Int=R.drawable.dub3,
 

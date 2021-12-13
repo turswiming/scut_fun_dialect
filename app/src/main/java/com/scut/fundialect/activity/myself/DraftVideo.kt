@@ -34,8 +34,9 @@ import com.scut.fundialect.ui.theme.FontWhite
 @Composable
 fun DraftVideoPlayerWithEvent(
     navHostController: NavHostController,
-    videoId:Int
+    videoId:String
 ){
+    Toast.makeText(context,videoId.toString(),Toast.LENGTH_SHORT).show()
     Scaffold(
         backgroundColor = Color.Black,
         topBar ={
@@ -86,7 +87,7 @@ fun DraftVideoPlayerWithEvent(
     }) {
         DraftVideoPlayer(
             navHostController,
-            videoId
+            videoId.toInt()
         )
     }
 }
@@ -97,8 +98,9 @@ fun DraftVideoPlayer(
     videoId:Int
 ) {
 //    SideEffect {
+    Toast.makeText(context,videoId.toString(),Toast.LENGTH_SHORT).show()
     var videoInfoState by remember {
-        mutableStateOf(ModelVideoHelper.ModelVideoInfo(videoId))
+        mutableStateOf(ModelVideoHelper.cathe[videoId])
     }
     Toast.makeText(context,videoInfoState.videoUri,Toast.LENGTH_SHORT).show()
 //    var likeNumber by remember { mutableStateOf(videoInfoState.videoLike) }

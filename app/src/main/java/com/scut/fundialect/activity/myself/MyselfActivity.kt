@@ -92,11 +92,10 @@ fun MyselfPageWithEvent(navController: NavHostController) {
     ) {
         MyselfMainPage(navController,
             involvedTopic ={},
-            myStep = {},
-            getVideoData = {
-                getCollectedModelVideo()
-            }
-        )
+            myStep = {}
+        ) {
+            getCollectedModelVideo()
+        }
     }
 
 }
@@ -128,7 +127,7 @@ fun MyselfMainPage(
     navController: NavHostController,
     involvedTopic: () -> Unit,
     myStep: () -> Unit,
-    getVideoData:()-> List<ModelVideoHelper.ModelVideoInfo>,
+    getVideoData: () -> List<ModelVideoHelper.ModelVideoCathe>,
 ) {
     Column(
         Modifier
@@ -204,36 +203,69 @@ fun MyselfMainPage(
         }
         Spacer(modifier = Modifier.height(15.dp))
 
+        val videos = getVideoData()
+//        Toast.makeText(context,videos[0].videoId.toString(),Toast.LENGTH_SHORT).show()
+//        Toast.makeText(context,videos[1].videoId.toString(),Toast.LENGTH_SHORT).show()
+//
+//        Toast.makeText(context,videos[2].videoId.toString(),Toast.LENGTH_SHORT).show()
+
         HorizontalPager(
             state = pagerState,
             modifier = Modifier
                 .fillMaxWidth()
                 .height(540.dp),
         ) { page ->
+
             Column(
                 horizontalAlignment = Alignment.CenterHorizontally,
                 modifier = Modifier
                     .fillMaxWidth()
             ) {
-                var videos = getVideoData()
 //                Toast.makeText(context,"${videos.size}",Toast.LENGTH_SHORT).show()
-                videos.forEach {
-                    MyPictureShower(it,navHostController = navController,
-                        clickable = {
-                            if(page==0){
-                                TODO()
-                            }
-                            if(page==1){
-                                TODO()
-                            }
-                            if(page==2){
-                                Toast.makeText(context,"准备导航",Toast.LENGTH_SHORT).show()
-                                navController.navigate("DraftVideoPlayer/${it.videoId}")
-                            }
+                MyPictureShower(videos[0],navHostController = navController,
+                    clickable = {
+                        if(page==0){
+                            TODO()
                         }
-                    )
-
-                }
+                        if(page==1){
+                            TODO()
+                        }
+                        if(page==2){
+                            Toast.makeText(context,"DraftVideoPlayer/${videos[0].videoId}",Toast.LENGTH_SHORT).show()
+                            navController.navigate("DraftVideoPlayer/${videos[0].videoId.toString()}")
+                        }
+                    }
+                )
+                MyPictureShower(videos[1],navHostController = navController,
+                    clickable = {
+                        if(page==0){
+                            TODO()
+                        }
+                        if(page==1){
+                            TODO()
+                        }
+                        if(page==2){
+                            Toast.makeText(context,"DraftVideoPlayer/${videos[1].videoId}",Toast.LENGTH_SHORT).show()
+                            navController.navigate("DraftVideoPlayer/${videos[1].videoId.toString()}")
+                        }
+                    }
+                )
+                MyPictureShower(videos[2],navHostController = navController,
+                    clickable = {
+                        if(page==0){
+                            Toast.makeText(context,"DraftVideoPlayer/${videos[2].videoId}",Toast.LENGTH_SHORT).show()
+                            navController.navigate("DraftVideoPlayer/${videos[2].videoId.toString()}")
+                        }
+                        if(page==1){
+                            Toast.makeText(context,"DraftVideoPlayer/${videos[2].videoId}",Toast.LENGTH_SHORT).show()
+                            navController.navigate("DraftVideoPlayer/${videos[2].videoId.toString()}")
+                        }
+                        if(page==2){
+                            Toast.makeText(context,"DraftVideoPlayer/${videos[2].videoId}",Toast.LENGTH_SHORT).show()
+                            navController.navigate("DraftVideoPlayer/${videos[2].videoId.toString()}")
+                        }
+                    }
+                )
 
             }
             //自动滚动

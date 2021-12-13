@@ -138,7 +138,8 @@ class LoginActivity : BaseActivity() {
             composable("MyselfPage") { MyselfPageWithEvent(navController) }
             composable("DraftVideoPlayer/{videoId}") {
                     backStackEntry->
-                backStackEntry.arguments?.getInt("videoId")?.let {
+                backStackEntry.arguments?.getString("videoId")?.let {
+                    Toast.makeText(MyApplication.context,it.toString(),Toast.LENGTH_SHORT).show()
                     DraftVideoPlayerWithEvent(navController,
                         it
                     )
