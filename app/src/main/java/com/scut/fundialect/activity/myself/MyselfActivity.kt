@@ -217,9 +217,22 @@ fun MyselfMainPage(
                     .fillMaxWidth()
             ) {
                 var videos = getVideoData()
-                Toast.makeText(context,"${videos.size}",Toast.LENGTH_SHORT).show()
+//                Toast.makeText(context,"${videos.size}",Toast.LENGTH_SHORT).show()
                 videos.forEach {
-                    MyPictureShower(it,navHostController = navController)
+                    MyPictureShower(it,navHostController = navController,
+                        clickable = {
+                            if(page==0){
+                                TODO()
+                            }
+                            if(page==1){
+                                TODO()
+                            }
+                            if(page==2){
+                                Toast.makeText(context,"准备导航",Toast.LENGTH_SHORT).show()
+                                navController.navigate("DraftVideoPlayer/${it.videoId}")
+                            }
+                        }
+                    )
 
                 }
 

@@ -533,7 +533,7 @@ fun DubMainPage(navController:NavHostController) {
         /**
          * 热门推荐 内容
          * */
-        HorizontalPicShower(modelVideos)
+        HorizontalPicShower(modelVideos,navHostController = navController)
             /**
              * 查看更多 文字和按钮
              * */
@@ -577,7 +577,17 @@ fun VerticalPicShower(modelVideos2: List<ModelVideoInfo>,navController: NavHostC
 }
 
 @Composable
-fun HorizontalPicShower(modelVideos: List<ModelVideoInfo>) {
+fun HorizontalPicShower(
+    modelVideos: List<ModelVideoInfo>,
+    navHostController: NavHostController,
+    clickable:(Int)->Unit={
+        navHostController.navigate("InDubbingPage/${it}")
+    },
+    ImageSelected:Int=R.drawable.dub2,
+    ImageUnSelected:Int=R.drawable.dub3,
+
+
+    ) {
     Row(
         horizontalArrangement = Arrangement.SpaceBetween,
         modifier = Modifier
@@ -593,7 +603,9 @@ fun HorizontalPicShower(modelVideos: List<ModelVideoInfo>) {
                 shape = RoundedCornerShape(15.dp),
                 modifier = Modifier
                     .width(120.dp)
-                    .clickable { TODO() }
+                    .clickable {
+                        clickable(it.videoId)
+                    }
             ) {
                 Image(
                     painter = rememberImagePainter(it.videoPicUri),
@@ -610,8 +622,8 @@ fun HorizontalPicShower(modelVideos: List<ModelVideoInfo>) {
                     Image(
                         painter = painterResource(
                             id = switch(
-                                R.drawable.dub2,
-                                R.drawable.dub3,
+                                ImageSelected,
+                                ImageUnSelected,
                                 isCollect
                             )
                         ),
@@ -643,7 +655,16 @@ fun HorizontalPicShower(modelVideos: List<ModelVideoInfo>) {
 }
 
 @Composable
-fun MyPictureShower(it: ModelVideoInfo,navHostController: NavHostController) {
+fun MyPictureShower(
+    it: ModelVideoInfo,
+    navHostController: NavHostController,
+    clickable:()->Unit={
+    navHostController.navigate("InDubbingPage/${it.videoId}")
+},
+    ImageSelected:Int=R.drawable.dub2,
+    ImageUnSelected:Int=R.drawable.dub3,
+
+    ) {
     var isCollect by remember {
         mutableStateOf(it.videoIsCollect)
     }
@@ -654,7 +675,7 @@ fun MyPictureShower(it: ModelVideoInfo,navHostController: NavHostController) {
             .fillMaxWidth()
             .padding(15.dp, 10.dp)
             .clickable {
-                navHostController.navigate("InDubbingPage/${it.videoId}")
+                clickable()
             }
     ) {
         Image(
@@ -673,8 +694,8 @@ fun MyPictureShower(it: ModelVideoInfo,navHostController: NavHostController) {
             Image(
                 painter = painterResource(
                     id = switch(
-                        R.drawable.dub2,
-                        R.drawable.dub3,
+                        ImageSelected,
+                        ImageUnSelected,
                         isCollect
                     )
                 ),

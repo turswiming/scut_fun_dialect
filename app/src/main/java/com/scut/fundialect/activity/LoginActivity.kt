@@ -38,6 +38,7 @@ import com.scut.fundialect.activity.learn.LearnVideoPageWithEvent
 import com.scut.fundialect.activity.learn.goToSearchPage
 import com.scut.fundialect.activity.login.AdPage
 import com.scut.fundialect.activity.login.AdWithEvent
+import com.scut.fundialect.activity.myself.DraftVideoPlayerWithEvent
 import com.scut.fundialect.activity.myself.MyselfPageWithEvent
 import com.scut.fundialect.activity.search.SearchOutcome
 import com.scut.fundialect.activity.search.SearchPageWithEvent
@@ -126,6 +127,14 @@ class LoginActivity : BaseActivity() {
             composable("ShareDubPage") { ShareDubPage(navController) }
 
             composable("MyselfPage") { MyselfPageWithEvent(navController) }
+            composable("DraftVideoPlayer/{videoId}") {
+                    backStackEntry->
+                backStackEntry.arguments?.getInt("videoId")?.let {
+                    DraftVideoPlayerWithEvent(navController,
+                        it
+                    )
+                }
+            }
 
 
 

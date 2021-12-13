@@ -3,10 +3,12 @@ package com.scut.fundialect.database.helper
 import android.annotation.SuppressLint
 import android.content.ContentValues
 import android.database.sqlite.SQLiteDatabase
+import android.widget.Toast
 import com.scut.fundialect.MyApplication
 import com.scut.fundialect.MyApplication.Companion.context
 import com.scut.fundialect.R
 import com.scut.fundialect.database.ModelVideoDataBaseHelper
+import java.lang.Thread.sleep
 
 object ModelVideoHelper {
     var modelDB: SQLiteDatabase
@@ -97,6 +99,36 @@ object ModelVideoHelper {
 
         }
     }
+    lateinit var cathe:List<ModelVideoInfo.ModelVideoCathe>
+
+ fun getTheCathe():List<ModelVideoInfo.ModelVideoCathe>{
+             val results = ModelVideoHelper.modelDB.query(
+            "videoInfo",
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null)
+        results.moveToFirst()
+            Toast.makeText(context,results.count.toString(),Toast.LENGTH_SHORT).show()
+        videoUri = results.getString(results.getColumnIndex("videoUri"))
+        Toast.makeText(context,videoUri,Toast.LENGTH_SHORT).show()
+            videoName = results.getString(results.getColumnIndex("videoName"))
+            videoIntroduce = results.getString(results.getColumnIndex("videoIntroduce"))
+            videoPicUri = results.getString(results.getColumnIndex("videoPicUri"))
+
+            videoLike = results.getInt(results.getColumnIndex("videoLike"))
+            videoUploaderId = results.getInt(results.getColumnIndex("videoUploaderId"))
+            videoCollect = results.getInt(results.getColumnIndex("videoCollect"))
+            videoUpdateTime = results.getInt(results.getColumnIndex("videoUpdateTime"))
+            videoBelongCityId = results.getInt(results.getColumnIndex("videoBelongCityId"))
+            videoIsLiked = toBool(results.getInt(results.getColumnIndex("videoIsLiked")))
+            videoIsCollect = toBool(results.getInt(results.getColumnIndex("videoIsCollect")))
+        results.close()
+        sleep(200)
+ }
 
     @SuppressLint("Range")
     fun switchCommentLike(commitId: Int) {
@@ -222,46 +254,66 @@ class ModelVideoInfo(id:Int) {
     var videoPicUri:String = "android.resource://${context.packageName}/${R.raw.defaultpic}"
 
     var videoLike:Int = 0
-    var videoUploaderId:Int = 0
+    var videoUploaderId:Int = 1
     var videoCollect:Int = 0
-    var videoUpdateTime:Int = 0
-    var videoBelongCityId:Int = 0
+    var videoUpdateTime:Int = 10000000
+    var videoBelongCityId:Int = 1
 
     var videoIsLiked:Boolean = false
     var videoIsCollect:Boolean = false
 
     init{
-        try{
-            val results = ModelVideoHelper.modelDB.query(
-                "videoInfo",
-                null,
-                "id = $id",
-                null,
-                null,
-                null,
-                null,
-                null)
-            results.moveToFirst()
-            videoUri = results.getString(results.getColumnIndex("videoUri"))
-            videoName = results.getString(results.getColumnIndex("videoName"))
-            videoIntroduce = results.getString(results.getColumnIndex("videoIntroduce"))
-            videoPicUri = results.getString(results.getColumnIndex("videoPicUri"))
+        videoUri = "android.resource://${context.packageName}/${R.raw.video2}"
+//        val results = ModelVideoHelper.modelDB.query(
+//            "videoInfo",
+//            null,
+//            "id = $id",
+//            null,
+//            null,
+//            null,
+//            null,
+//            null)
+//        results.moveToFirst()
+//            Toast.makeText(context,results.count.toString(),Toast.LENGTH_SHORT).show()
+//        videoUri = results.getString(results.getColumnIndex("videoUri"))
+//        Toast.makeText(context,videoUri,Toast.LENGTH_SHORT).show()
+//            videoName = results.getString(results.getColumnIndex("videoName"))
+//            videoIntroduce = results.getString(results.getColumnIndex("videoIntroduce"))
+//            videoPicUri = results.getString(results.getColumnIndex("videoPicUri"))
+//
+//            videoLike = results.getInt(results.getColumnIndex("videoLike"))
+//            videoUploaderId = results.getInt(results.getColumnIndex("videoUploaderId"))
+//            videoCollect = results.getInt(results.getColumnIndex("videoCollect"))
+//            videoUpdateTime = results.getInt(results.getColumnIndex("videoUpdateTime"))
+//            videoBelongCityId = results.getInt(results.getColumnIndex("videoBelongCityId"))
+//            videoIsLiked = toBool(results.getInt(results.getColumnIndex("videoIsLiked")))
+//            videoIsCollect = toBool(results.getInt(results.getColumnIndex("videoIsCollect")))
+//        results.close()
+//        sleep(200)
 
-            videoLike = results.getInt(results.getColumnIndex("videoLike"))
-            videoUploaderId = results.getInt(results.getColumnIndex("videoUploaderId"))
-            videoCollect = results.getInt(results.getColumnIndex("videoCollect"))
-            videoUpdateTime = results.getInt(results.getColumnIndex("videoUpdateTime"))
-            videoBelongCityId = results.getInt(results.getColumnIndex("videoBelongCityId"))
-            videoIsLiked = toBool(results.getInt(results.getColumnIndex("videoIsLiked")))
-            videoIsCollect = toBool(results.getInt(results.getColumnIndex("videoIsCollect")))
-            results.close()
-        }catch (e:Exception){
-
-        }
 
 
     }
+    @SuppressLint("Range", "Recycle")
+    class ModelVideoCathe(id:Int) {
 
+        val videoId = id
+        var videoUri:String = "android.resource://${context.packageName}/${R.raw.video1}"
+        var videoName:String = "未命名视频"
+        var videoIntroduce:String = "未命名视频"
+        var videoPicUri:String = "android.resource://${context.packageName}/${R.raw.defaultpic}"
+
+        var videoLike:Int = 0
+        var videoUploaderId:Int = 1
+        var videoCollect:Int = 0
+        var videoUpdateTime:Int = 10000000
+        var videoBelongCityId:Int = 1
+        var videoIsLiked:Boolean = false
+        var videoIsCollect:Boolean = false
+
+
+
+    }
 
 
     private fun toBool(int: Int):Boolean{

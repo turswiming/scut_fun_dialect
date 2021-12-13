@@ -24,9 +24,10 @@ import com.scut.fundialect.MyApplication
 import com.scut.fundialect.MyApplication.Companion.context
 import com.scut.fundialect.R
 import com.scut.fundialect.activity.video.VideoPlayer2
+import com.scut.fundialect.activity.video.VideoPlayerSource
 import com.scut.fundialect.activity.video.rememberVideoPlayerController
-import com.scut.fundialect.database.helper.DubedVideoHelper
-import com.scut.fundialect.database.helper.LearnVideoHelper
+import com.scut.fundialect.database.helper.ModelVideoHelper
+import com.scut.fundialect.database.helper.ModelVideoInfo
 import com.scut.fundialect.ui.theme.FontBlack
 import com.scut.fundialect.ui.theme.FontWhite
 
@@ -37,6 +38,7 @@ fun DraftVideoPlayerWithEvent(
     videoId:Int
 ){
     Scaffold(
+        backgroundColor = Color.Black,
         topBar ={
         TopAppBar(
             modifier = Modifier
@@ -95,19 +97,19 @@ fun DraftVideoPlayer(
     navHostController: NavHostController,
     videoId:Int
 ) {
-    Toast.makeText(MyApplication.context,"视频重组", Toast.LENGTH_SHORT).show()
 //    SideEffect {
     var videoInfoState by remember {
-        mutableStateOf(DubedVideoHelper.VideoInfo(videoId))
+        mutableStateOf(ModelVideoInfo(videoId))
     }
-    var likeNumber by remember { mutableStateOf(videoInfoState.videoLike) }
-//    var videoUploaderId by remember { mutableStateOf(videoInfo.videoUploaderId) }
-//    var videoCollect by remember { mutableStateOf(videoInfo.videoCollect) }
-//    var videoUpdateTime by remember { mutableStateOf(videoInfo.videoUpdateTime) }
-//    var videoBelongCityId by remember { mutableStateOf(videoInfo.videoBelongCityId) }
-
-    var videoIsLiked by remember { mutableStateOf(videoInfoState.videoIsLiked) }
-    var videoIsCollect by remember { mutableStateOf(videoInfoState.videoIsCollect) }
+    Toast.makeText(context,videoInfoState.videoUri,Toast.LENGTH_SHORT).show()
+//    var likeNumber by remember { mutableStateOf(videoInfoState.videoLike) }
+////    var videoUploaderId by remember { mutableStateOf(videoInfo.videoUploaderId) }
+////    var videoCollect by remember { mutableStateOf(videoInfo.videoCollect) }
+////    var videoUpdateTime by remember { mutableStateOf(videoInfo.videoUpdateTime) }
+////    var videoBelongCityId by remember { mutableStateOf(videoInfo.videoBelongCityId) }
+//
+//    var videoIsLiked by remember { mutableStateOf(videoInfoState.videoIsLiked) }
+//    var videoIsCollect by remember { mutableStateOf(videoInfoState.videoIsCollect) }
 //    }
 
     /**
@@ -125,7 +127,7 @@ fun DraftVideoPlayer(
 
 
     var commitNum by remember {
-        mutableStateOf(LearnVideoHelper.getCommitNumber(videoId))
+        mutableStateOf(ModelVideoHelper.getCommitNumber(videoId))
     }
 //    Box(modifier = Modifier.width(videoId.dp)) {
 //        val scope = rememberCoroutineScope()
@@ -159,7 +161,7 @@ fun DraftVideoPlayer(
      *
      *
      * */
-    Box(modifier = Modifier.fillMaxSize()) {
+    Box(modifier = Modifier.fillMaxSize(),contentAlignment = Alignment.Center) {
         /**
          *
          *
@@ -183,8 +185,9 @@ fun DraftVideoPlayer(
                 lifecycleOwner.lifecycle.removeObserver(observer)
             }
         }
-        //TODO: 2021/12/8 对视频源进行延迟赋值。
-        //videoPlayerController.setSource(VideoPlayerSource.Raw(R.raw.video1))
+        videoPlayerController.setSource(VideoPlayerSource.Network(videoInfoState.videoUri)
+//                Raw(R.raw.video1)
+        )
         VideoPlayer2(
             videoPlayerController = videoPlayerController,
             backgroundColor = Color.Transparent,
@@ -243,15 +246,6 @@ fun DraftVideoPlayer(
 
             }
 
-            /**
-             * 为悬浮按钮让出的空白
-             * */
-            Box(
-                modifier = Modifier
-                    .fillMaxHeight()
-                    .width(100.dp)
-                //.background(white)
-            )
         }
         /**
          *
@@ -264,32 +258,16 @@ fun DraftVideoPlayer(
          * */
         Box(
             contentAlignment = Alignment.BottomEnd,
-            modifier = Modifier.fillMaxSize()
+            modifier = Modifier.fillMaxSize().padding(10.dp)
         ) {
 
-
-            Column(
-                modifier = Modifier
-                    .height(300.dp)
-                    .width(100.dp),
-                verticalArrangement = Arrangement.SpaceBetween,
-                horizontalAlignment = Alignment.CenterHorizontally,
-
-                ) {
-                /**
-                 *
-                 * 配音的按钮。
-                 * */
-
-                FloatButton("发布",
-                    R.drawable.peiyin,
-                    onClick = {
-                        Toast.makeText(context,"视频发布",Toast.LENGTH_SHORT).show()
-                        navHostController.navigate("MyselfPage")
-                    }
-                )
-
-            }
+            FloatButton("发布",
+                R.drawable.peiyin,
+                onClick = {
+                    Toast.makeText(context,"视频发布",Toast.LENGTH_SHORT).show()
+                    navHostController.navigate("MyselfPage")
+                }
+            )
         }
 
     }
