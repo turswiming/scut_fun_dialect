@@ -40,7 +40,7 @@ class UserInfoDataBaseHelper(val context: Context,name:String,version:Int):
     }
     override fun onCreate(db: SQLiteDatabase?) {
         db?.execSQL(createUserInfo)
-        Toast.makeText(context,"准备载入李子祺数据",Toast.LENGTH_SHORT).show()
+//        Toast.makeText(context,"准备载入李子祺数据",Toast.LENGTH_SHORT).show()
         val value1 = ContentValues().apply {
             put("userNickName", "李子祺")
             put("userMail", "1431839116@qq.com")
@@ -50,7 +50,7 @@ class UserInfoDataBaseHelper(val context: Context,name:String,version:Int):
             //put("userCityId", 0)
 
         }
-        Toast.makeText(context,"准备载入锅巴数据",Toast.LENGTH_SHORT).show()
+//        Toast.makeText(context,"准备载入锅巴数据",Toast.LENGTH_SHORT).show()
         db?.insert("userinfo",null,value1)
         val value2 = ContentValues().apply {
             put("userNickName", "锅巴")

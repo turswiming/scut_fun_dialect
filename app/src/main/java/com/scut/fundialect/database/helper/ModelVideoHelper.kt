@@ -14,9 +14,10 @@ import java.lang.Thread.sleep
 
 object ModelVideoHelper {
 
+    @SuppressLint("StaticFieldLeak")
     val modelVideoDataBaseHelper = ModelVideoDataBaseHelper(
-        MyApplication.context,
-        "Learn.db",
+        context,
+        "Model.db",
         1
     )
     var modelDB: SQLiteDatabase=modelVideoDataBaseHelper.writableDatabase
@@ -102,7 +103,7 @@ object ModelVideoHelper {
 
  @SuppressLint("Range")
  fun getTheCathe():List<ModelVideoCathe>{
-     Toast.makeText(context,"开始读入缓存",Toast.LENGTH_SHORT).show()
+     Toast.makeText(context,"",Toast.LENGTH_SHORT).show()
              val results = modelDB.query(
             "videoInfo",
             null,

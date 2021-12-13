@@ -279,7 +279,7 @@ private fun ShareSheet(
  *
  * */
 @Composable
-private fun Comment(it: LearnVideoHelper.CommentInfo) {
+fun Comment(it: LearnVideoHelper.CommentInfo) {
     var isLike by remember {
         mutableStateOf(it.isLiked )
     }

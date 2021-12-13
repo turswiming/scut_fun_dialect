@@ -9,7 +9,7 @@ object Public {
     private var  VideodataInitNum =0
     set(value) {
         Looper.prepare();
-        Toast.makeText(context,"数据库已完成一个",Toast.LENGTH_SHORT).show()
+//        Toast.makeText(context,"数据库已完成一个",Toast.LENGTH_SHORT).show()
         Looper.loop();
         if(value>=3&&CityDataInit!=1){
             Looper.prepare();
@@ -21,7 +21,7 @@ object Public {
     var CityDataInit =0
         set(value) {
             Looper.prepare();
-            Toast.makeText(context,"数据库已完成一个",Toast.LENGTH_SHORT).show()
+//            Toast.makeText(context,"数据库已完成一个",Toast.LENGTH_SHORT).show()
             Looper.loop();
 
             if(VideodataInitNum>=2&&value!=1){

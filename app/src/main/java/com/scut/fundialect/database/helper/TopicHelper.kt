@@ -3,7 +3,9 @@ package com.scut.fundialect.database.helper
 import android.annotation.SuppressLint
 import android.content.ContentValues
 import android.database.sqlite.SQLiteDatabase
+import android.widget.Toast
 import com.scut.fundialect.MyApplication
+import com.scut.fundialect.MyApplication.Companion.context
 import com.scut.fundialect.R
 import com.scut.fundialect.database.ModelVideoDataBaseHelper
 import com.scut.fundialect.database.TopicDataBaseHelper
@@ -11,9 +13,10 @@ import com.scut.fundialect.database.TopicDataBaseHelper
 @Suppress("unused")
 object TopicHelper {
 
+    @SuppressLint("StaticFieldLeak")
     val topicDataBaseHelper = TopicDataBaseHelper(
         MyApplication.context,
-        "Learn.db",
+        "topic.db",
         1
     )
     var topicDB: SQLiteDatabase =topicDataBaseHelper.writableDatabase
@@ -164,7 +167,8 @@ object TopicHelper {
             null,
             null,
             null,
-            null)
+            null
+        )
         results.moveToFirst()
 //        Toast.makeText(context,"即将解析表格行数",Toast.LENGTH_SHORT).show()
         val isLiked = results.getInt(results.getColumnIndex("isLiked"))
@@ -260,13 +264,17 @@ object TopicHelper {
     @SuppressLint("Range")
     fun getCollectedTopic(): List<TopicInfo> {
 
-
+    Toast.makeText(context,"getCollectedTopic",Toast.LENGTH_SHORT).show()
         return listOf(TopicInfo(1), TopicInfo(2), TopicInfo(3),)
 
 
     }
     @SuppressLint("Range", "Recycle")
     class TopicInfo(id:Int) {
+        init {
+            Toast.makeText(context,"TopicInfo",Toast.LENGTH_SHORT).show()
+
+        }
         private val idNow =id-1
         val videoId = cathe[idNow].videoId
         var videoUri:String =  cathe[idNow].videoUri

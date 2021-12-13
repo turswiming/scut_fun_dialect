@@ -32,7 +32,6 @@ import com.scut.fundialect.database.helper.ModelVideoHelper
 import com.scut.fundialect.database.helper.ModelVideoHelper.getCollectedModelVideo
 import com.scut.fundialect.database.helper.UserHelpr
 import com.scut.fundialect.enum.ColorMode
-import com.scut.fundialect.help.PicManager.getBitmapFromUri
 import com.scut.fundialect.ui.theme.ComposeTutorialTheme
 import com.scut.fundialect.ui.theme.CustomOrange
 import com.scut.fundialect.ui.theme.Transparent

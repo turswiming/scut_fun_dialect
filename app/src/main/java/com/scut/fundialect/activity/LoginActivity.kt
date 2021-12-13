@@ -3,6 +3,7 @@ package com.scut.fundialect.activity
 
 import android.content.Context
 import android.content.Intent
+import android.database.sqlite.SQLiteDatabase
 import android.net.Uri
 import android.os.Bundle
 import android.widget.Toast
@@ -29,6 +30,7 @@ import com.google.accompanist.pager.ExperimentalPagerApi
 import com.scut.fundialect.MyApplication
 import com.scut.fundialect.R
 import com.scut.fundialect.activity.culture.CulturePageMainAll
+import com.scut.fundialect.activity.culture.TopicDetalPage
 import com.scut.fundialect.activity.dubing.*
 import com.scut.fundialect.activity.dubing.dubbingPageMainAll
 import com.scut.fundialect.activity.learn.LearnCollectPageWithEvent
@@ -40,6 +42,7 @@ import com.scut.fundialect.activity.search.SearchOutcome
 import com.scut.fundialect.activity.search.SearchPageWithEvent
 import com.scut.fundialect.database.*
 import com.scut.fundialect.database.helper.ModelVideoHelper
+import com.scut.fundialect.database.helper.TopicHelper
 import com.scut.fundialect.help.PicManager
 import com.scut.fundialect.help.VideoHelper
 import com.scut.fundialect.ui.theme.CustomBlue
@@ -59,10 +62,10 @@ class LoginActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        VideoHelper.outputVideo = File(externalCacheDir, "output_image.jpg")
-        takePhotoBtn.setOnClickListener {
-            PicManager.gitPicFromAlbum(this)
-        }
+//        VideoHelper.outputVideo = File(externalCacheDir, "output_image.jpg")
+//        takePhotoBtn.setOnClickListener {
+//            PicManager.gitPicFromAlbum(this)
+//        }
         test()
         setContent {
             Navigation(this)
@@ -101,6 +104,15 @@ class LoginActivity : BaseActivity() {
             composable("LearnPage") { LearnCollectPageWithEvent(context,navController) }
 
             composable("CulturePage") { CulturePageMainAll(navController,context) }
+            composable("TopicDetalPage/{topicId}") {
+                    backStackEntry->
+                backStackEntry.arguments?.getInt("videoId")?.let {
+                    TopicDetalPage(
+                        navController,
+                        it
+                    )
+                }
+            }
 
             composable("DubbingPage") { dubbingPageMainAll(navController, context) }
             composable("OtherWorks") { OtherWorks(navController, context) }
@@ -153,11 +165,15 @@ class LoginActivity : BaseActivity() {
     private fun test(){
         val cityDataBaseHelper = CityDataBaseHelper(this,"city.db",1)
         val cityDB = cityDataBaseHelper.writableDatabase
-        //Toast.makeText(this, "cityDB初始化成功", Toast.LENGTH_SHORT).show()
 
         val dubedVideoDataBaseHelper =DubedVideoDataBaseHelper(this,"dubed.db",1)
         val dubedDB =dubedVideoDataBaseHelper.writableDatabase
-        //Toast.makeText(this, "dubedDB初始化成功", Toast.LENGTH_SHORT).show()
+        val topicDataBaseHelper = TopicDataBaseHelper(
+            MyApplication.context,
+            "topic.db",
+            1
+        )
+        var topicDB: SQLiteDatabase = TopicHelper.topicDataBaseHelper.writableDatabase
 
         val learnVideoDataBaseHelper = LearnVideoDataBaseHelper(MyApplication.context,"Learn.db",1)
         val learnDB =learnVideoDataBaseHelper.writableDatabase
@@ -169,11 +185,7 @@ class LoginActivity : BaseActivity() {
 
         val userInfoDataBaseHelper = UserInfoDataBaseHelper(this,"userinfo.db",1)
         val userinfoDB = userInfoDataBaseHelper.writableDatabase
-//        Toast.makeText(MyApplication.context,"数据库已经预先载入完成，请您下一步操作", Toast.LENGTH_SHORT).show()
 
-//        setContent {
-//            PreviewConversation()
-//        }
 
 
 

@@ -11,7 +11,7 @@ object DubedVideoHelper {
 
     private  var dubedDB: SQLiteDatabase
     init {
-        val dubedVideoDataBaseHelper = DubedVideoDataBaseHelper(MyApplication.context,"city.db",1)
+        val dubedVideoDataBaseHelper = DubedVideoDataBaseHelper(MyApplication.context,"dubed.db",1)
         dubedDB = dubedVideoDataBaseHelper.writableDatabase
     }
     const val tableName = "DubedVideo"

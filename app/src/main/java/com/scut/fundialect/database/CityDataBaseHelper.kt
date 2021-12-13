@@ -30,27 +30,28 @@ class CityDataBaseHelper(val context: Context, name:String, version:Int):
         //以及暴力协程
         //请程序员自备降压药，谢谢。
         */
+        val fileName = "citydata.sql"
+        Toast.makeText(context, "获取文件流", Toast.LENGTH_SHORT).show()
+        val input = context.assets.open(fileName)
+        Toast.makeText(context, "对字符串做处理", Toast.LENGTH_SHORT).show()
+        var content = input.readBytes().toString(Charset.defaultCharset())
+        val contex2 = content.split("\n")
+        Toast.makeText(context, "准备逐句执行", Toast.LENGTH_SHORT).show()
+        contex2.forEach{
+            db?.execSQL(it.substring(0,it.length-1))
 
+        }
+        Toast.makeText(context, "完成城市数据库初始化", Toast.LENGTH_SHORT).show()
         //创建协程，让这段代码慢慢跑。
         //这段代码要跑10秒左右，手机可遭不住。
-        CoroutineScope(Dispatchers.Default).launch {
-            val fileName = "citydata.sql"
-            val input = context.assets.open(fileName)
-            var content = input.readBytes().toString(Charset.defaultCharset())
-            val contex2 = content.split("\n")
-            contex2.forEach{
-                db?.execSQL(it.substring(0,it.length-1))
-
-            }
-            Looper.prepare();
-            Toast.makeText(context, "完成城市数据库初始化", Toast.LENGTH_SHORT).show()
-            Looper.loop();
-            Public.CityDataInit =1
-        }
+//        CoroutineScope(Dispatchers.Default).launch {
+//
+//        }
 
     }
 
     override fun onCreate(db: SQLiteDatabase?) {
+        Toast.makeText(context, "准备初始化城市数据", Toast.LENGTH_SHORT).show()
         initCityData(db)
     }
 
